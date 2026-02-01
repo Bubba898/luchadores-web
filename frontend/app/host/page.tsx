@@ -2,10 +2,11 @@
 
 import {treaty} from "@elysiajs/eden";
 import {useEffect, useRef, useState} from "react";
-import type {App} from "../../../backend/src/index";
+import type {App} from "../../../backend/src";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3001";
 const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
+//@ts-ignore
 const api = treaty<App>(API_BASE);
 
 export default function HostPage() {
