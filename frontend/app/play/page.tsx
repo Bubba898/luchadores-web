@@ -7,6 +7,7 @@ import WaitingRoom from "./WaitingRoom";
 import PreviewScreen from "./PreviewScreen";
 import BuildScreen from "./BuildScreen";
 import VoteScreen from "./VoteScreen";
+import ResultsScreen from "./ResultsScreen";
 
 const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
 export default function PlayPage() {
@@ -35,6 +36,12 @@ export default function PlayPage() {
     }[]
   >([]);
   const [voteCounts, setVoteCounts] = useState<Record<number, number>>({});
+  const [resultsWinner, setResultsWinner] = useState<{
+    playerId: number;
+    name: string;
+    emoji: number | null;
+    placements: {id: string; x: number; y: number}[];
+  } | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -102,6 +109,14 @@ export default function PlayPage() {
             }));
           }
         }
+        if (message?.messageType === "results") {
+          if (message.winner) {
+            setResultsWinner(message.winner);
+          }
+          if (typeof message.mask === "string") {
+            setMask(message.mask);
+          }
+        }
       } catch {
         // Ignore non-JSON messages.
       }
@@ -160,6 +175,8 @@ export default function PlayPage() {
                   );
                 }}
               />
+            ) : phase === "results" ? (
+              <ResultsScreen mask={mask} winner={resultsWinner} />
             ) : (
               <WaitingRoom
                 countdownSec={countdownSec}
