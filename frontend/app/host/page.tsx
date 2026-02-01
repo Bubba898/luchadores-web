@@ -96,7 +96,8 @@ export default function HostPage() {
             <button
               type="button"
               onClick={createAndConnect}
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-zinc-950 px-6 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:translate-y-[-1px] hover:bg-zinc-900"
+              disabled={!!roomCode}
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-zinc-950 px-6 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:translate-y-[-1px] hover:bg-zinc-900 disabled:cursor-not-allowed disabled:bg-zinc-500"
             >
               Create & Connect
             </button>
