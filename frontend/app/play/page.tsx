@@ -5,6 +5,7 @@ import {useSearchParams} from "next/navigation";
 import JoinForm from "./JoinForm";
 import WaitingRoom from "./WaitingRoom";
 import PreviewScreen from "./PreviewScreen";
+import BuildScreen from "./BuildScreen";
 
 const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
 export default function PlayPage() {
@@ -113,6 +114,19 @@ export default function PlayPage() {
                 mask={mask}
                 countdownSec={countdownSec}
                 playerCount={playerCount}
+              />
+            ) : phase === "build" ? (
+              <BuildScreen
+                onPartDrop={(partId, xPercent, yPercent) => {
+                  socketRef.current?.send(
+                    JSON.stringify({
+                      messageType: "partdrop",
+                      id: partId,
+                      x: xPercent,
+                      y: yPercent,
+                    }),
+                  );
+                }}
               />
             ) : (
               <WaitingRoom

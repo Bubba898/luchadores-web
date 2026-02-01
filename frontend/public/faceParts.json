@@ -1,0 +1,22 @@
+{
+  "faceParts": [
+    { "id": "eye2", "type": 0, "image": "/faceParts/eye2.png", "weight": 10 },
+    { "id": "eye3", "type": 0, "image": "/faceParts/eye3.png", "weight": 10 },
+    { "id": "eye4", "type": 0, "image": "/faceParts/eye4.png", "weight": 10 },
+    { "id": "eye5", "type": 0, "image": "/faceParts/eye5.png", "weight": 10 },
+    { "id": "eye6", "type": 0, "image": "/faceParts/eye6.png", "weight": 10 },
+    { "id": "mouth1", "type": 2, "image": "/faceParts/mouth1.png", "weight": 10 },
+    { "id": "mouth2", "type": 2, "image": "/faceParts/mouth2.png", "weight": 10 },
+    { "id": "mouth3", "type": 2, "image": "/faceParts/mouth3.png", "weight": 10 },
+    { "id": "mouth4", "type": 2, "image": "/faceParts/mouth4.png", "weight": 10 },
+    { "id": "mouth5", "type": 2, "image": "/faceParts/mouth5.png", "weight": 10 },
+    { "id": "mouth6", "type": 2, "image": "/faceParts/mouth6.png", "weight": 10 },
+    { "id": "nose1", "type": 1, "image": "/faceParts/nose1.png", "weight": 10 },
+    { "id": "nose2", "type": 1, "image": "/faceParts/nose2.png", "weight": 10 },
+    { "id": "nose3", "type": 1, "image": "/faceParts/nose3.png", "weight": 10 },
+    { "id": "nose5", "type": 1, "image": "/faceParts/nose5.png", "weight": 10 },
+    { "id": "nose6", "type": 1, "image": "/faceParts/nose6.png", "weight": 10 },
+    { "id": "nose_real", "type": 1, "image": "/faceParts/nose_real.png", "weight": 10 },
+    { "id": "right_eye_1", "type": 0, "image": "/faceParts/right_eye_1.png", "weight": 10 }
+  ]
+}
