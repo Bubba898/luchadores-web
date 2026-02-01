@@ -22,6 +22,7 @@ type BuildItem = {
 type BuildScreenProps = {
   mask: string | null;
   partLimit: number | null;
+  countdownSec: number | null;
   onPartDrop: (partId: string, xPercent: number, yPercent: number) => void;
 };
 
@@ -38,9 +39,13 @@ const DRAG_LIFT_PX = 90;
 export default function BuildScreen({
   mask,
   partLimit,
+  countdownSec,
   onPartDrop,
 }: BuildScreenProps) {
   const [parts, setParts] = useState<FacePart[]>([]);
+  const [partSizes, setPartSizes] = useState<
+    Record<string, {w: number; h: number}>
+  >({});
   const [items, setItems] = useState<BuildItem[]>([]);
   const [spawnedCount, setSpawnedCount] = useState(0);
   const [faceScale, setFaceScale] = useState(1);
@@ -61,6 +66,22 @@ export default function BuildScreen({
       const response = await fetch("/faceParts.json");
       const data = (await response.json()) as {faceParts: FacePart[]};
       setParts(data.faceParts ?? []);
+      const sizes: Record<string, {w: number; h: number}> = {};
+      await Promise.all(
+        (data.faceParts ?? []).map(
+          (part) =>
+            new Promise<void>((resolve) => {
+              const img = new Image();
+              img.onload = () => {
+                sizes[part.id] = {w: img.naturalWidth, h: img.naturalHeight};
+                resolve();
+              };
+              img.onerror = () => resolve();
+              img.src = part.image;
+            }),
+        ),
+      );
+      setPartSizes(sizes);
     };
     loadParts();
   }, []);
@@ -242,8 +263,15 @@ export default function BuildScreen({
   return (
     <div
       ref={rootRef}
-      className="relative flex h-full flex-col pb-32 touch-none"
+      className="relative flex h-full flex-col pb-32 pt-12 touch-none"
     >
+      <div className="fixed left-0 right-0 top-0 z-20 flex items-center justify-center">
+        <div className="px-4 py-2 text-2xl font-semibold text-zinc-900">
+          {countdownSec !== null
+            ? `${countdownSec} seconds left`
+            : "--"}
+        </div>
+      </div>
       <div className="flex flex-col items-center gap-6">
         <div
           ref={faceRef}
@@ -265,6 +293,9 @@ export default function BuildScreen({
           {items
             .filter((item) => item.location === "face")
             .map((item) => (
+              (() => {
+                const size = partSizes[item.part.id];
+                return (
               <img
                 key={item.instanceId}
                 src={item.part.image}
@@ -273,10 +304,14 @@ export default function BuildScreen({
                 style={{
                   left: `${item.faceX ?? 0}%`,
                   top: `${item.faceY ?? 0}%`,
-                  transform: `translate(-50%, -50%) scale(${faceScale})`,
+                  transform: "translate(-50%, -50%)",
+                  width: size ? size.w * faceScale : undefined,
+                  height: size ? size.h * faceScale : undefined,
                 }}
                 draggable={false}
               />
+                );
+              })()
             ))}
         </div>
 
@@ -331,6 +366,11 @@ export default function BuildScreen({
             Eyes
           </button>
         </div>
+        <div className="pointer-events-none absolute left-0 right-0 top-6 z-10 mx-auto flex w-full items-center justify-between px-12 text-xs font-semibold uppercase tracking-[0.3em] text-white">
+          <span>Mouth</span>
+          <span>Nose</span>
+          <span>Eyes</span>
+        </div>
         <div className="pointer-events-none absolute inset-0 mx-auto flex w-[90%] items-center justify-center">
           <img
             src="/ui/dispenser.png"
@@ -362,8 +402,12 @@ export default function BuildScreen({
               alt={item.part.id}
               className="select-none"
               style={{
-                transform: `scale(${faceScale})`,
-                transformOrigin: "top left",
+                width: partSizes[item.part.id]
+                  ? partSizes[item.part.id].w * faceScale
+                  : undefined,
+                height: partSizes[item.part.id]
+                  ? partSizes[item.part.id].h * faceScale
+                  : undefined,
               }}
               draggable={false}
             />

@@ -110,6 +110,7 @@ export default function PlayPage() {
               <BuildScreen
                 mask={mask}
                 partLimit={partLimit}
+                countdownSec={countdownSec}
                 onPartDrop={(partId, xPercent, yPercent) => {
                   socketRef.current?.send(
                     JSON.stringify({
