@@ -10,10 +10,10 @@ To deploy the frontend application to Vercel:
 2. In the project settings, configure:
    - **Framework Preset**: Next.js
    - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build` (auto-detected)
-   - **Output Directory**: `.next` (auto-detected)
-   - **Install Command**: `npm install` (auto-detected)
 
-Vercel will automatically detect the Next.js application in the frontend directory once the Root Directory is configured.
+The `frontend/vercel.json` file is already configured with:
+- **Build Command**: `bun run build`
+- **Install Command**: `bun install`
+- **Bun Version**: 1.x
 
-Alternatively, you can deploy directly from the frontend directory by importing it as a separate project.
+Vercel will automatically detect and use these settings when deploying.
