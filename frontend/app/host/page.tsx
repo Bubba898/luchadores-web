@@ -16,6 +16,7 @@ export default function HostPage() {
   const [playerCount, setPlayerCount] = useState(0);
   const [phase, setPhase] = useState<string | null>(null);
   const [countdownSec, setCountdownSec] = useState<number | null>(null);
+  const [mask, setMask] = useState<string | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
   const hostOrigin =
     typeof window !== "undefined" ? window.location.origin : "";
@@ -79,6 +80,9 @@ export default function HostPage() {
                 : null,
             );
           }
+          if (message?.messageType === "maskselected") {
+            setMask(typeof message.mask === "string" ? message.mask : null);
+          }
         } catch {
           // Ignore non-JSON messages.
         }
@@ -132,6 +136,34 @@ export default function HostPage() {
             >
               Create & Connect
             </button>
+
+            {phase === "preview" ? (
+              <div className="mt-8 rounded-2xl border border-zinc-900/10 bg-white/80 px-5 py-6 text-center">
+                <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+                  Preview
+                </p>
+                <p className="mt-2 text-sm text-zinc-700">
+                  Remember the mask, you will need to build a face matching the
+                  mask.
+                </p>
+                <div className="mt-5 flex items-center justify-center">
+                  {mask ? (
+                    <img
+                      src={`/masks/${mask}`}
+                      alt="Mask preview"
+                      className="h-56 w-56 object-contain sm:h-64 sm:w-64"
+                    />
+                  ) : (
+                    <div className="flex h-56 w-56 items-center justify-center rounded-2xl border border-dashed border-zinc-900/20 text-sm text-zinc-500">
+                      Waiting for mask...
+                    </div>
+                  )}
+                </div>
+                <p className="mt-4 text-3xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif]">
+                  {countdownSec !== null ? `${countdownSec}s` : "--"}
+                </p>
+              </div>
+            ) : null}
 
             <div className="mt-8 rounded-2xl border border-zinc-900/10 bg-white/80 p-5">
               <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">

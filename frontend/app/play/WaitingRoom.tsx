@@ -10,17 +10,15 @@ export default function WaitingRoom({
   playerCount,
 }: WaitingRoomProps) {
   return (
-    <div className="flex flex-col gap-6">
-      <div className="rounded-2xl border border-zinc-900/10 bg-white/80 px-5 py-6 text-center">
-        <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
-          Waiting Room
-        </p>
-        <p className="mt-3 text-4xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif]">
-          {countdownSec !== null ? `${countdownSec}s` : "--"}
-        </p>
-        <p className="mt-2 text-sm text-zinc-600">Countdown to start</p>
-      </div>
-      <div className="flex items-center justify-between rounded-2xl border border-zinc-900/10 bg-white/80 px-5 py-4 text-sm text-zinc-700">
+    <div className="relative flex min-h-[70vh] flex-col items-center justify-center gap-8 pb-24 text-center">
+      <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
+        Waiting Room
+      </p>
+      <p className="text-6xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif] sm:text-7xl">
+        {countdownSec !== null ? `${countdownSec}s` : "--"}
+      </p>
+      <p className="text-lg text-zinc-600">Countdown to start</p>
+      <div className="fixed bottom-0 left-0 right-0 mx-auto flex max-w-3xl items-center justify-between border-t border-white/60 bg-white/80 px-6 py-4 text-sm text-zinc-700 backdrop-blur">
         <span>Players connected</span>
         <span className="text-lg font-semibold text-zinc-900">
           {playerCount}

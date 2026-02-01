@@ -4,6 +4,7 @@ import {useEffect, useMemo, useRef, useState} from "react";
 import {useSearchParams} from "next/navigation";
 import JoinForm from "./JoinForm";
 import WaitingRoom from "./WaitingRoom";
+import PreviewScreen from "./PreviewScreen";
 
 const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
 export default function PlayPage() {
@@ -20,6 +21,8 @@ export default function PlayPage() {
   const [showPicker, setShowPicker] = useState(false);
   const [playerCount, setPlayerCount] = useState(0);
   const [countdownSec, setCountdownSec] = useState<number | null>(null);
+  const [phase, setPhase] = useState<string | null>(null);
+  const [mask, setMask] = useState<string | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -60,9 +63,13 @@ export default function PlayPage() {
           setPlayerCount(Number(message.count) || 0);
         }
         if (message?.messageType === "phasechange") {
+          setPhase(typeof message.phase === "string" ? message.phase : null);
           if (typeof message.countdownSec === "number") {
             setCountdownSec(message.countdownSec);
           }
+        }
+        if (message?.messageType === "maskselected") {
+          setMask(typeof message.mask === "string" ? message.mask : null);
         }
       } catch {
         // Ignore non-JSON messages.
@@ -77,24 +84,42 @@ export default function PlayPage() {
       `}</style>
       <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-5 py-12 sm:px-8 sm:py-16">
         <header className="flex flex-col gap-3">
-          <p className="text-sm uppercase tracking-[0.3em] text-zinc-800/70">
-            Luchadores Players
-          </p>
-          <h1 className="text-5xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif] sm:text-6xl">
-            Join the arena.
-          </h1>
-          <p className="max-w-2xl text-lg text-zinc-900/80 [font-family:'Instrument_Sans',sans-serif]">
-            Enter the room code, choose your name, and pick an emoji mascot to
-            join the match.
-          </p>
+          {status !== "Connected" ? (
+            <>
+              <p className="text-sm uppercase tracking-[0.3em] text-zinc-800/70">
+                Luchadores Players
+              </p>
+              <h1 className="text-5xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif] sm:text-6xl">
+                Join the arena.
+              </h1>
+              <p className="max-w-2xl text-lg text-zinc-900/80 [font-family:'Instrument_Sans',sans-serif]">
+                Enter the room code, choose your name, and pick an emoji mascot
+                to join the match.
+              </p>
+            </>
+          ) : null}
         </header>
 
-        <main className="mt-10 rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] backdrop-blur sm:p-8">
+        <main
+          className={
+            status === "Connected"
+              ? "mt-10 flex-1"
+              : "mt-10 rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] backdrop-blur sm:p-8"
+          }
+        >
           {status === "Connected" ? (
-            <WaitingRoom
-              countdownSec={countdownSec}
-              playerCount={playerCount}
-            />
+            phase === "preview" ? (
+              <PreviewScreen
+                mask={mask}
+                countdownSec={countdownSec}
+                playerCount={playerCount}
+              />
+            ) : (
+              <WaitingRoom
+                countdownSec={countdownSec}
+                playerCount={playerCount}
+              />
+            )
           ) : (
             <JoinForm
               roomCode={roomCode}
