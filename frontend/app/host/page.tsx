@@ -14,9 +14,32 @@ export default function HostPage() {
   const [status, setStatus] = useState("Idle");
   const [error, setError] = useState<string | null>(null);
   const [playerCount, setPlayerCount] = useState(0);
+  const [phase, setPhase] = useState<string | null>(null);
+  const [countdownSec, setCountdownSec] = useState<number | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
   const hostOrigin =
     typeof window !== "undefined" ? window.location.origin : "";
+  const countdownTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (countdownSec === null) {
+      return;
+    }
+    if (countdownTimer.current) {
+      window.clearInterval(countdownTimer.current);
+    }
+    if (countdownSec <= 0) {
+      return;
+    }
+    countdownTimer.current = window.setInterval(() => {
+      setCountdownSec((value) => (value ? Math.max(value - 1, 0) : 0));
+    }, 1000);
+    return () => {
+      if (countdownTimer.current) {
+        window.clearInterval(countdownTimer.current);
+      }
+    };
+  }, [countdownSec]);
 
   useEffect(() => {
     return () => {
@@ -47,6 +70,14 @@ export default function HostPage() {
           const message = JSON.parse(String(event.data));
           if (message?.messageType === "playercount") {
             setPlayerCount(Number(message.count) || 0);
+          }
+          if (message?.messageType === "phasechange") {
+            setPhase(typeof message.phase === "string" ? message.phase : null);
+            setCountdownSec(
+              typeof message.countdownSec === "number"
+                ? message.countdownSec
+                : null,
+            );
           }
         } catch {
           // Ignore non-JSON messages.
@@ -129,6 +160,15 @@ export default function HostPage() {
               {roomCode && hostOrigin
                 ? `${hostOrigin}/play?code=${roomCode}`
                 : "Create a room to get a join link."}
+            </div>
+            <div className="mt-4 rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-xs text-zinc-700">
+              Phase:{" "}
+              <span className="font-semibold text-zinc-900">
+                {phase ?? "--"}
+              </span>
+              <span className="ml-3 text-zinc-600">
+                {countdownSec !== null ? `${countdownSec}s` : "--"}
+              </span>
             </div>
             <div className="mt-4 rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-xs text-zinc-700">
               Players joined:{" "}
