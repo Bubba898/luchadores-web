@@ -233,7 +233,7 @@ export default function BuildScreen({
               : item,
           ),
         );
-        const dropped = items.find((item) => item.instanceId === draggingId);
+          const dropped = items.find((item) => item.instanceId === draggingId);
         if (dropped) {
           onPartDrop(dropped.part.id, faceX, faceY);
         }

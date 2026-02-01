@@ -36,6 +36,7 @@ export default function PlayPage() {
     }[]
   >([]);
   const [voteCounts, setVoteCounts] = useState<Record<number, number>>({});
+  const [likedTargets, setLikedTargets] = useState<Record<number, boolean>>({});
   const [resultsWinner, setResultsWinner] = useState<{
     playerId: number;
     name: string;
@@ -97,6 +98,7 @@ export default function PlayPage() {
         }
         if (message?.messageType === "votegallery") {
           setVoteEntries(Array.isArray(message.entries) ? message.entries : []);
+          setLikedTargets({});
           if (typeof message.mask === "string") {
             setMask(message.mask);
           }
@@ -166,7 +168,20 @@ export default function PlayPage() {
                 mask={mask}
                 entries={voteEntries}
                 counts={voteCounts}
+                likedTargets={likedTargets}
+                countdownSec={countdownSec}
                 onVote={(targetPlayerId) => {
+                  if (likedTargets[targetPlayerId]) {
+                    return;
+                  }
+                  setLikedTargets((prev) => ({
+                    ...prev,
+                    [targetPlayerId]: true,
+                  }));
+                  setVoteCounts((prev) => ({
+                    ...prev,
+                    [targetPlayerId]: (prev[targetPlayerId] ?? 0) + 1,
+                  }));
                   socketRef.current?.send(
                     JSON.stringify({
                       messageType: "vote",

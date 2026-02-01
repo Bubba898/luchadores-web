@@ -26,16 +26,23 @@ type VoteScreenProps = {
   mask: string | null;
   entries: VoteEntry[];
   counts: Record<number, number>;
+  likedTargets: Record<number, boolean>;
+  countdownSec: number | null;
   onVote: (targetPlayerId: number) => void;
 };
 
-export default function VoteScreen({mask, entries, counts, onVote}: VoteScreenProps) {
+export default function VoteScreen({
+  mask,
+  entries,
+  counts,
+  likedTargets,
+  countdownSec,
+  onVote,
+}: VoteScreenProps) {
   const [parts, setParts] = useState<FacePart[]>([]);
   const [partSizes, setPartSizes] = useState<
     Record<string, {w: number; h: number}>
   >({});
-  const [debug, setDebug] = useState(false);
-  const [votedFor, setVotedFor] = useState<number | null>(null);
 
   useEffect(() => {
     const loadParts = async () => {
@@ -80,13 +87,14 @@ export default function VoteScreen({mask, entries, counts, onVote}: VoteScreenPr
 
   return (
     <div className="flex h-full flex-col gap-6 pb-10 pt-6">
-      <button
-        type="button"
-        onClick={() => setDebug((value) => !value)}
-        className="self-end rounded-full border border-white/60 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.2em] text-zinc-700"
-      >
-        {debug ? "Hide Debug" : "Show Debug"}
-      </button>
+      <div className="flex items-center justify-between text-sm text-zinc-700">
+        <span className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+          Vote
+        </span>
+        <span className="text-base font-semibold text-zinc-900">
+          {countdownSec !== null ? `${countdownSec}s left` : "--"}
+        </span>
+      </div>
       <div className="grid grid-cols-2 gap-4 sm:gap-6">
         {entries.map((entry) => (
           <div
@@ -96,20 +104,18 @@ export default function VoteScreen({mask, entries, counts, onVote}: VoteScreenPr
             <button
               type="button"
               onClick={() => {
-                if (votedFor !== null) {
-                  return;
-                }
-                setVotedFor(entry.playerId);
                 onVote(entry.playerId);
               }}
-              className="w-full text-left"
+              className={`w-full text-left ${
+                likedTargets[entry.playerId] ? "opacity-80" : ""
+              }`}
             >
               <VoteFace
                 faceImageSrc={faceImageSrc}
                 placements={entry.placements}
                 partMap={partMap}
                 partSizes={partSizes}
-                debug={debug}
+                debug={false}
               />
             </button>
             <div className="mt-4 flex items-center justify-between text-sm text-zinc-700">
@@ -121,14 +127,14 @@ export default function VoteScreen({mask, entries, counts, onVote}: VoteScreenPr
               </span>
               <div
                 className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
-                  votedFor === entry.playerId
+                  likedTargets[entry.playerId]
                     ? "bg-pink-500 text-white"
                     : "bg-white/80 text-zinc-700"
                 }`}
               >
                 <span
                   className={
-                    votedFor === entry.playerId
+                    likedTargets[entry.playerId]
                       ? "animate-[heart-burst_0.6s_ease-out]"
                       : ""
                   }

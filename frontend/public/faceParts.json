@@ -16,7 +16,6 @@
     { "id": "nose3", "type": 1, "image": "/faceParts/nose3.png", "weight": 10 },
     { "id": "nose5", "type": 1, "image": "/faceParts/nose5.png", "weight": 10 },
     { "id": "nose6", "type": 1, "image": "/faceParts/nose6.png", "weight": 10 },
-    { "id": "nose_real", "type": 1, "image": "/faceParts/nose_real.png", "weight": 10 },
     { "id": "right_eye_1", "type": 0, "image": "/faceParts/right_eye_1.png", "weight": 10 }
   ]
 }

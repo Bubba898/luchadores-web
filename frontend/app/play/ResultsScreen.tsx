@@ -94,6 +94,7 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
       <div className="relative w-full max-w-md">
         <ResultFace
           faceImageSrc={faceImageSrc}
+          maskSrc={mask ? `/masks/${mask}` : null}
           placements={winner.placements}
           partMap={partMap}
           partSizes={partSizes}
@@ -105,6 +106,7 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
 
 type ResultFaceProps = {
   faceImageSrc: string;
+  maskSrc: string | null;
   placements: Placement[];
   partMap: Record<string, FacePart>;
   partSizes: Record<string, {w: number; h: number}>;
@@ -112,6 +114,7 @@ type ResultFaceProps = {
 
 function ResultFace({
   faceImageSrc,
+  maskSrc,
   placements,
   partMap,
   partSizes,
@@ -120,6 +123,28 @@ function ResultFace({
 
   return (
     <div className="relative flex w-full items-center justify-center">
+      <style jsx>{`
+        @keyframes drop-in {
+          0% {
+            transform: translate(-50%, -50%) translateY(-120vh);
+            opacity: 0;
+          }
+          100% {
+            transform: translate(-50%, -50%) translateY(0);
+            opacity: 1;
+          }
+        }
+        @keyframes drop-in-mask {
+          0% {
+            transform: translateX(-50%) scale(0.75) translateY(-120vh);
+            opacity: 0;
+          }
+          100% {
+            transform: translateX(-50%) scale(0.75) translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
       <img
         src={faceImageSrc}
         alt="Face base"
@@ -149,11 +174,27 @@ function ResultFace({
               transform: "translate(-50%, -50%)",
               width: size ? size.w * faceScale : undefined,
               height: size ? size.h * faceScale : undefined,
+              animation: "drop-in 1.4s ease-out forwards",
+              animationDelay: `${index * 0.08}s`,
             }}
             draggable={false}
           />
         );
       })}
+      {maskSrc ? (
+        <img
+          src={maskSrc}
+          alt="Mask"
+          className="absolute left-1/2 top-0 h-full w-full object-contain"
+          style={{
+            transformOrigin: "top center",
+            animation: "drop-in-mask 2.6s ease-out forwards",
+            animationDelay: "0.8s",
+            zIndex: 5,
+          }}
+          draggable={false}
+        />
+      ) : null}
     </div>
   );
 }

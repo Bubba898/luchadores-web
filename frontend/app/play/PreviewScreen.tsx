@@ -21,10 +21,10 @@ export default function PreviewScreen({
           <img
             src={`/masks/${mask}`}
             alt="Mask preview"
-            className="h-[40vh] w-full max-w-3xl object-contain sm:h-[48vh]"
+            className="h-[60vh] w-full max-w-3xl object-contain sm:h-[900px]"
           />
         ) : (
-          <div className="flex h-[40vh] w-full max-w-3xl items-center justify-center rounded-2xl border border-dashed border-zinc-900/20 text-sm text-zinc-500 sm:h-[48vh]">
+          <div className="flex h-[60vh] w-full max-w-3xl items-center justify-center rounded-2xl border border-dashed border-zinc-900/20 text-sm text-zinc-500 sm:h-[900px]">
             Waiting for mask...
           </div>
         )}

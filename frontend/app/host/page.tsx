@@ -188,6 +188,13 @@ export default function HostPage() {
                 Share with players to join.
               </p>
             </div>
+            <div className="mt-6 flex items-center justify-center rounded-2xl border border-zinc-900/10 bg-white/80 p-4">
+              <img
+                src="/ui/qrcode.png"
+                alt="Join QR code"
+                className="h-64 w-64 object-contain sm:h-72 sm:w-72"
+              />
+            </div>
             <div className="mt-4 rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-xs text-zinc-700">
               {roomCode && hostOrigin
                 ? `${hostOrigin}/play?code=${roomCode}`
