@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "elysia": "latest",
     "@elysiajs/eden": "^1.4.6",
     "emoji-picker-react": "^4.17.3",
     "next": "16.1.6",
