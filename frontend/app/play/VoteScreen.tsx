@@ -10,6 +10,8 @@ type Placement = {
 
 type VoteEntry = {
   playerId: number;
+  name: string;
+  emoji: number | null;
   placements: Placement[];
 };
 
@@ -23,14 +25,17 @@ type FacePart = {
 type VoteScreenProps = {
   mask: string | null;
   entries: VoteEntry[];
+  counts: Record<number, number>;
+  onVote: (targetPlayerId: number) => void;
 };
 
-export default function VoteScreen({mask, entries}: VoteScreenProps) {
+export default function VoteScreen({mask, entries, counts, onVote}: VoteScreenProps) {
   const [parts, setParts] = useState<FacePart[]>([]);
   const [partSizes, setPartSizes] = useState<
     Record<string, {w: number; h: number}>
   >({});
   const [debug, setDebug] = useState(false);
+  const [votedFor, setVotedFor] = useState<number | null>(null);
 
   useEffect(() => {
     const loadParts = async () => {
@@ -88,13 +93,51 @@ export default function VoteScreen({mask, entries}: VoteScreenProps) {
             key={entry.playerId}
             className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.35)]"
           >
-            <VoteFace
-              faceImageSrc={faceImageSrc}
-              placements={entry.placements}
-              partMap={partMap}
-              partSizes={partSizes}
-              debug={debug}
-            />
+            <button
+              type="button"
+              onClick={() => {
+                if (votedFor !== null) {
+                  return;
+                }
+                setVotedFor(entry.playerId);
+                onVote(entry.playerId);
+              }}
+              className="w-full text-left"
+            >
+              <VoteFace
+                faceImageSrc={faceImageSrc}
+                placements={entry.placements}
+                partMap={partMap}
+                partSizes={partSizes}
+                debug={debug}
+              />
+            </button>
+            <div className="mt-4 flex items-center justify-between text-sm text-zinc-700">
+              <span className="font-medium text-zinc-900">
+                {entry.emoji !== null
+                  ? String.fromCodePoint(entry.emoji)
+                  : "🙂"}{" "}
+                {entry.name || "Player"}
+              </span>
+              <div
+                className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
+                  votedFor === entry.playerId
+                    ? "bg-pink-500 text-white"
+                    : "bg-white/80 text-zinc-700"
+                }`}
+              >
+                <span
+                  className={
+                    votedFor === entry.playerId
+                      ? "animate-[heart-burst_0.6s_ease-out]"
+                      : ""
+                  }
+                >
+                  ❤
+                </span>
+                {counts[entry.playerId] ?? 0}
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -121,6 +164,19 @@ function VoteFace({
 
   return (
     <div className="relative flex w-full items-center justify-center">
+      <style jsx>{`
+        @keyframes heart-burst {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.4);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+      `}</style>
       <img
         src={faceImageSrc}
         alt="Face base"

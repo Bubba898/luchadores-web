@@ -27,8 +27,14 @@ export default function PlayPage() {
   const [mask, setMask] = useState<string | null>(null);
   const [partLimit, setPartLimit] = useState<number | null>(null);
   const [voteEntries, setVoteEntries] = useState<
-    {playerId: number; placements: {id: string; x: number; y: number}[]}[]
+    {
+      playerId: number;
+      name: string;
+      emoji: number | null;
+      placements: {id: string; x: number; y: number}[];
+    }[]
   >([]);
+  const [voteCounts, setVoteCounts] = useState<Record<number, number>>({});
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -88,6 +94,14 @@ export default function PlayPage() {
             setMask(message.mask);
           }
         }
+        if (message?.messageType === "voteupdate") {
+          if (typeof message.targetPlayerId === "number") {
+            setVoteCounts((prev) => ({
+              ...prev,
+              [message.targetPlayerId]: Number(message.count) || 0,
+            }));
+          }
+        }
       } catch {
         // Ignore non-JSON messages.
       }
@@ -133,7 +147,19 @@ export default function PlayPage() {
                 }}
               />
             ) : phase === "vote" ? (
-              <VoteScreen mask={mask} entries={voteEntries} />
+              <VoteScreen
+                mask={mask}
+                entries={voteEntries}
+                counts={voteCounts}
+                onVote={(targetPlayerId) => {
+                  socketRef.current?.send(
+                    JSON.stringify({
+                      messageType: "vote",
+                      targetPlayerId,
+                    }),
+                  );
+                }}
+              />
             ) : (
               <WaitingRoom
                 countdownSec={countdownSec}
