@@ -24,6 +24,7 @@ export default function PlayPage() {
   const [countdownSec, setCountdownSec] = useState<number | null>(null);
   const [phase, setPhase] = useState<string | null>(null);
   const [mask, setMask] = useState<string | null>(null);
+  const [partLimit, setPartLimit] = useState<number | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -72,6 +73,11 @@ export default function PlayPage() {
         if (message?.messageType === "maskselected") {
           setMask(typeof message.mask === "string" ? message.mask : null);
         }
+        if (message?.messageType === "partlimit") {
+          setPartLimit(
+            typeof message.limit === "number" ? message.limit : null,
+          );
+        }
       } catch {
         // Ignore non-JSON messages.
       }
@@ -79,27 +85,12 @@ export default function PlayPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#e2f6ff_0%,_#b9e6ff_35%,_#7bc1ff_70%,_#3c7bd7_100%)] text-zinc-900">
+    <div className="h-[100dvh] overflow-hidden bg-[radial-gradient(circle_at_top,_#e2f6ff_0%,_#b9e6ff_35%,_#7bc1ff_70%,_#3c7bd7_100%)] text-zinc-900">
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Sans:wght@400;500;600&display=swap");
       `}</style>
       <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-5 py-12 sm:px-8 sm:py-16">
-        <header className="flex flex-col gap-3">
-          {status !== "Connected" ? (
-            <>
-              <p className="text-sm uppercase tracking-[0.3em] text-zinc-800/70">
-                Luchadores Players
-              </p>
-              <h1 className="text-5xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif] sm:text-6xl">
-                Join the arena.
-              </h1>
-              <p className="max-w-2xl text-lg text-zinc-900/80 [font-family:'Instrument_Sans',sans-serif]">
-                Enter the room code, choose your name, and pick an emoji mascot
-                to join the match.
-              </p>
-            </>
-          ) : null}
-        </header>
+        <header className="flex flex-col gap-3" />
 
         <main
           className={
@@ -117,6 +108,8 @@ export default function PlayPage() {
               />
             ) : phase === "build" ? (
               <BuildScreen
+                mask={mask}
+                partLimit={partLimit}
                 onPartDrop={(partId, xPercent, yPercent) => {
                   socketRef.current?.send(
                     JSON.stringify({

@@ -20,6 +20,8 @@ type BuildItem = {
 };
 
 type BuildScreenProps = {
+  mask: string | null;
+  partLimit: number | null;
   onPartDrop: (partId: string, xPercent: number, yPercent: number) => void;
 };
 
@@ -31,17 +33,28 @@ const SPAWN_POINTS = {
 
 const randomInRange = (min: number, max: number) =>
   Math.random() * (max - min) + min;
+const DRAG_LIFT_PX = 90;
 
-export default function BuildScreen({onPartDrop}: BuildScreenProps) {
+export default function BuildScreen({
+  mask,
+  partLimit,
+  onPartDrop,
+}: BuildScreenProps) {
   const [parts, setParts] = useState<FacePart[]>([]);
   const [items, setItems] = useState<BuildItem[]>([]);
+  const [spawnedCount, setSpawnedCount] = useState(0);
+  const [faceScale, setFaceScale] = useState(1);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState<{x: number; y: number} | null>(
+    null,
+  );
+  const [dragSize, setDragSize] = useState<{w: number; h: number} | null>(
     null,
   );
   const rootRef = useRef<HTMLDivElement | null>(null);
   const bucketRef = useRef<HTMLDivElement | null>(null);
   const faceRef = useRef<HTMLDivElement | null>(null);
+  const faceImgRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
     const loadParts = async () => {
@@ -52,6 +65,15 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
     loadParts();
   }, []);
 
+  const faceImageSrc = useMemo(() => {
+    if (!mask) {
+      return "/faces/head_base1.png";
+    }
+    const match = mask.match(/(\d+)/);
+    const index = match?.[1] ?? "1";
+    return `/faces/head_base${index}.png`;
+  }, [mask]);
+
   const partsByType = useMemo(() => {
     return {
       0: parts.filter((part) => part.type === 0),
@@ -61,6 +83,9 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
   }, [parts]);
 
   const spawnPart = (type: number) => {
+    if (partLimit !== null && spawnedCount >= partLimit) {
+      return;
+    }
     const available = partsByType[type as 0 | 1 | 2] ?? [];
     if (!available.length || !rootRef.current || !bucketRef.current) {
       return;
@@ -95,6 +120,7 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
     };
 
     setItems((prev) => [...prev, newItem]);
+    setSpawnedCount((count) => count + 1);
 
     requestAnimationFrame(() => {
       setItems((prev) =>
@@ -111,11 +137,18 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
     event: React.PointerEvent<HTMLButtonElement>,
     instanceId: string,
   ) => {
+    event.currentTarget.setPointerCapture(event.pointerId);
     const target = event.currentTarget.getBoundingClientRect();
+    const imgEl = event.currentTarget.querySelector("img");
+    const imgRect = imgEl?.getBoundingClientRect();
     setDraggingId(instanceId);
     setDragOffset({
-      x: event.clientX - target.left,
-      y: event.clientY - target.top,
+      x: event.clientX - (imgRect?.left ?? target.left),
+      y: event.clientY - (imgRect?.top ?? target.top) + DRAG_LIFT_PX,
+    });
+    setDragSize({
+      w: imgRect?.width ?? target.width,
+      h: imgRect?.height ?? target.height,
     });
     setItems((prev) =>
       prev.map((item) =>
@@ -160,8 +193,13 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
         pointerY <= faceRect.bottom;
 
       if (isOverFace) {
-        const faceX = ((pointerX - faceRect.left) / faceRect.width) * 100;
-        const faceY = ((pointerY - faceRect.top) / faceRect.height) * 100;
+        const size = dragSize ?? {w: 0, h: 0};
+        const itemLeft = pointerX - (dragOffset?.x ?? 0);
+        const itemTop = pointerY - (dragOffset?.y ?? 0);
+        const itemCenterX = itemLeft + size.w / 2;
+        const itemCenterY = itemTop + size.h / 2;
+        const faceX = ((itemCenterX - faceRect.left) / faceRect.width) * 100;
+        const faceY = ((itemCenterY - faceRect.top) / faceRect.height) * 100;
         setItems((prev) =>
           prev.map((item) =>
             item.instanceId === draggingId
@@ -190,6 +228,7 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
 
       setDraggingId(null);
       setDragOffset(null);
+      setDragSize(null);
     };
 
     window.addEventListener("pointermove", handleMove);
@@ -201,16 +240,27 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
   }, [draggingId, dragOffset, onPartDrop, items]);
 
   return (
-    <div ref={rootRef} className="relative flex h-full flex-col pb-32">
+    <div
+      ref={rootRef}
+      className="relative flex h-full flex-col pb-32 touch-none"
+    >
       <div className="flex flex-col items-center gap-6">
         <div
           ref={faceRef}
           className="relative flex w-full max-w-3xl items-center justify-center"
         >
           <img
-            src="/faces/head_base1.png"
+            ref={faceImgRef}
+            src={faceImageSrc}
             alt="Face base"
             className="w-full object-contain"
+            onLoad={(event) => {
+              const img = event.currentTarget;
+              if (img.naturalWidth > 0) {
+                const scale = img.clientWidth / img.naturalWidth;
+                setFaceScale(scale);
+              }
+            }}
           />
           {items
             .filter((item) => item.location === "face")
@@ -223,7 +273,7 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
                 style={{
                   left: `${item.faceX ?? 0}%`,
                   top: `${item.faceY ?? 0}%`,
-                  transform: "translate(-50%, -50%)",
+                  transform: `translate(-50%, -50%) scale(${faceScale})`,
                 }}
                 draggable={false}
               />
@@ -239,10 +289,25 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
             alt="Bucket"
             className="h-[95%] w-[95%] object-fill"
           />
+          <div className="absolute right-6 top-4 h-24 w-32">
+            <img
+              src="/ui/UI_Bucket_PartsTracker.png"
+              alt="Parts tracker"
+              className="h-full w-full object-contain"
+            />
+            <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-white">
+              {partLimit !== null
+                ? Math.max(partLimit - spawnedCount, 0)
+                : "∞"}
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 border-t px-6 py-5 ">
+      <div
+        className="absolute left-0 right-0 border-t px-6 pb-[env(safe-area-inset-bottom)]"
+        style={{top: "calc(100% - 20%)"}}
+      >
         <div className="mx-auto flex w-full max-w-none items-center justify-between gap-3">
           <button
             type="button"
@@ -266,7 +331,7 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
             Eyes
           </button>
         </div>
-        <div className="pointer-events-none absolute inset-0 mx-auto flex w-[90%] items-center justify-center ">
+        <div className="pointer-events-none absolute inset-0 mx-auto flex w-[90%] items-center justify-center">
           <img
             src="/ui/dispenser.png"
             alt="Dispenser"
@@ -282,7 +347,11 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
             key={item.instanceId}
             type="button"
             onPointerDown={(event) => handlePointerDown(event, item.instanceId)}
-            className="absolute rounded-2xl bg-transparent p-0 shadow-none transition-all duration-700"
+            className={
+              item.location === "dragging"
+                ? "absolute rounded-2xl bg-transparent p-0 shadow-none touch-none select-none"
+                : "absolute rounded-2xl bg-transparent p-0 shadow-none transition-all duration-700 touch-none select-none"
+            }
             style={{
               left: item.x,
               top: item.y,
@@ -292,6 +361,10 @@ export default function BuildScreen({onPartDrop}: BuildScreenProps) {
               src={item.part.image}
               alt={item.part.id}
               className="select-none"
+              style={{
+                transform: `scale(${faceScale})`,
+                transformOrigin: "top left",
+              }}
               draggable={false}
             />
           </button>
