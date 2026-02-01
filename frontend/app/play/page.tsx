@@ -6,6 +6,7 @@ import JoinForm from "./JoinForm";
 import WaitingRoom from "./WaitingRoom";
 import PreviewScreen from "./PreviewScreen";
 import BuildScreen from "./BuildScreen";
+import VoteScreen from "./VoteScreen";
 
 const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
 export default function PlayPage() {
@@ -25,6 +26,9 @@ export default function PlayPage() {
   const [phase, setPhase] = useState<string | null>(null);
   const [mask, setMask] = useState<string | null>(null);
   const [partLimit, setPartLimit] = useState<number | null>(null);
+  const [voteEntries, setVoteEntries] = useState<
+    {playerId: number; placements: {id: string; x: number; y: number}[]}[]
+  >([]);
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -78,6 +82,12 @@ export default function PlayPage() {
             typeof message.limit === "number" ? message.limit : null,
           );
         }
+        if (message?.messageType === "votegallery") {
+          setVoteEntries(Array.isArray(message.entries) ? message.entries : []);
+          if (typeof message.mask === "string") {
+            setMask(message.mask);
+          }
+        }
       } catch {
         // Ignore non-JSON messages.
       }
@@ -122,6 +132,8 @@ export default function PlayPage() {
                   );
                 }}
               />
+            ) : phase === "vote" ? (
+              <VoteScreen mask={mask} entries={voteEntries} />
             ) : (
               <WaitingRoom
                 countdownSec={countdownSec}

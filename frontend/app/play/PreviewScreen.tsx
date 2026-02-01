@@ -14,7 +14,7 @@ export default function PreviewScreen({
   return (
     <div className="relative flex min-h-[70vh] flex-col items-center justify-center gap-10 pb-28 text-center">
       <p className="text-3xl font-semibold text-zinc-900 [font-family:'Archivo_Black',sans-serif] sm:text-4xl">
-        Remember the mask, you will need to build a face matching the mask.
+        Remember the mask, you will need to build a facefor the mask.
       </p>
       <div className="mt-4 flex w-full items-center justify-center px-2 sm:px-6">
         {mask ? (

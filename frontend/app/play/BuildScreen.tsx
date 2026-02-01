@@ -207,18 +207,18 @@ export default function BuildScreen({
       const faceRect = faceRef.current.getBoundingClientRect();
       const pointerX = event.clientX;
       const pointerY = event.clientY;
+      const size = dragSize ?? {w: 0, h: 0};
+      const itemLeft = pointerX - (dragOffset?.x ?? 0);
+      const itemTop = pointerY - (dragOffset?.y ?? 0);
+      const itemCenterX = itemLeft + size.w / 2;
+      const itemCenterY = itemTop + size.h / 2;
       const isOverFace =
-        pointerX >= faceRect.left &&
-        pointerX <= faceRect.right &&
-        pointerY >= faceRect.top &&
-        pointerY <= faceRect.bottom;
+        itemCenterX >= faceRect.left &&
+        itemCenterX <= faceRect.right &&
+        itemCenterY >= faceRect.top &&
+        itemCenterY <= faceRect.bottom;
 
       if (isOverFace) {
-        const size = dragSize ?? {w: 0, h: 0};
-        const itemLeft = pointerX - (dragOffset?.x ?? 0);
-        const itemTop = pointerY - (dragOffset?.y ?? 0);
-        const itemCenterX = itemLeft + size.w / 2;
-        const itemCenterY = itemTop + size.h / 2;
         const faceX = ((itemCenterX - faceRect.left) / faceRect.width) * 100;
         const faceY = ((itemCenterY - faceRect.top) / faceRect.height) * 100;
         setItems((prev) =>
