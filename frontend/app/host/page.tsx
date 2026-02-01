@@ -13,7 +13,10 @@ export default function HostPage() {
   const [roomCode, setRoomCode] = useState<string | null>(null);
   const [status, setStatus] = useState("Idle");
   const [error, setError] = useState<string | null>(null);
+  const [playerCount, setPlayerCount] = useState(0);
   const socketRef = useRef<WebSocket | null>(null);
+  const hostOrigin =
+    typeof window !== "undefined" ? window.location.origin : "";
 
   useEffect(() => {
     return () => {
@@ -38,6 +41,16 @@ export default function HostPage() {
 
       socket.addEventListener("open", () => {
         setStatus("Host connected");
+      });
+      socket.addEventListener("message", (event) => {
+        try {
+          const message = JSON.parse(String(event.data));
+          if (message?.messageType === "playercount") {
+            setPlayerCount(Number(message.count) || 0);
+          }
+        } catch {
+          // Ignore non-JSON messages.
+        }
       });
       socket.addEventListener("close", () => {
         setStatus("Host disconnected");
@@ -110,6 +123,17 @@ export default function HostPage() {
               <p className="mt-2 text-xs text-zinc-500">
                 Share with players to join.
               </p>
+            </div>
+            <div className="mt-4 rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-xs text-zinc-700">
+              {roomCode && hostOrigin
+                ? `${hostOrigin}/play?code=${roomCode}`
+                : "Create a room to get a join link."}
+            </div>
+            <div className="mt-4 rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-xs text-zinc-700">
+              Players joined:{" "}
+              <span className="font-semibold text-zinc-900">
+                {playerCount}
+              </span>
             </div>
             <div className="mt-6 space-y-3 text-sm text-zinc-700 [font-family:'Instrument_Sans',sans-serif]">
               <p>Host socket listens on `/host`.</p>

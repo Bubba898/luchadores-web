@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@elysiajs/eden": "^1.4.6",
+    "emoji-picker-react": "^4.17.3",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
