@@ -7,7 +7,13 @@ import {playerWsRoute} from "./endpoints/player.ws";
 const app = new Elysia()
   .use(
     cors({
-      origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
+      origin: [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://192.168.178.61:3000",
+        "http://172.16.30.239",
+        "http://172.16.30.239:3000",
+      ],
     }),
   )
   .get("/", () => "Hello Elysia")
