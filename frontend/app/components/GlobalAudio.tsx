@@ -3,16 +3,34 @@
 import {useEffect, useRef, useState} from "react";
 
 const STORAGE_KEY = "luchadores-muted";
+const AUDIO_SRC = "/audio/luchador_bgm.wav";
+
+const getGlobalAudio = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  const existing = (window as any).__luchaBgm as HTMLAudioElement | undefined;
+  if (existing) {
+    return existing;
+  }
+  const audio = new Audio(AUDIO_SRC);
+  audio.loop = true;
+  audio.volume = 0.5;
+  (window as any).__luchaBgm = audio;
+  return audio;
+};
 
 export default function GlobalAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [muted, setMuted] = useState(false);
   const mutedRef = useRef(muted);
+  const listenersAttached = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
+    audioRef.current = getGlobalAudio();
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "true") {
       setMuted(true);
@@ -26,25 +44,25 @@ export default function GlobalAudio() {
     window.localStorage.setItem(STORAGE_KEY, String(muted));
     (window as any).__luchaMuted = muted;
     mutedRef.current = muted;
-    if (audioRef.current) {
-      audioRef.current.muted = muted;
-      if (muted) {
-        audioRef.current.pause();
-      } else if (audioRef.current.paused) {
-        audioRef.current.play().catch(() => {
-          // Autoplay may be blocked until user interaction.
-        });
-      }
-    }
-  }, [muted]);
-
-  useEffect(() => {
     const audio = audioRef.current;
     if (!audio) {
       return;
     }
-    audio.loop = true;
-    audio.volume = 0.5;
+    audio.muted = muted;
+    if (muted) {
+      audio.pause();
+    } else if (audio.paused) {
+      audio.play().catch(() => {
+        // Autoplay may be blocked until user interaction.
+      });
+    }
+  }, [muted]);
+
+  useEffect(() => {
+    const audio = audioRef.current ?? getGlobalAudio();
+    if (!audio) {
+      return;
+    }
     audio.muted = mutedRef.current;
 
     const tryPlay = () => {
@@ -63,17 +81,19 @@ export default function GlobalAudio() {
     };
 
     tryPlay();
-    window.addEventListener("pointerdown", handleFirstInteraction);
-    window.addEventListener("keydown", handleFirstInteraction);
+    if (!listenersAttached.current) {
+      listenersAttached.current = true;
+      window.addEventListener("pointerdown", handleFirstInteraction);
+      window.addEventListener("keydown", handleFirstInteraction);
+    }
     return () => {
-      window.removeEventListener("pointerdown", handleFirstInteraction);
-      window.removeEventListener("keydown", handleFirstInteraction);
+      // Keep listeners for the singleton audio instance.
     };
   }, []);
 
   return (
     <>
-      <audio ref={audioRef} src="/audio/luchador_bgm.wav" preload="auto" />
+      <audio ref={audioRef} src={AUDIO_SRC} preload="auto" />
       <button
         type="button"
         onClick={() => setMuted((value) => !value)}
