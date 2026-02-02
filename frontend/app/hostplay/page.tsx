@@ -169,18 +169,23 @@ export default function HostPlayPage() {
   };
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[radial-gradient(circle_at_top,_#e2f6ff_0%,_#b9e6ff_35%,_#7bc1ff_70%,_#3c7bd7_100%)] text-zinc-900">
+    <div className="h-[100dvh] overflow-hidden bg-[repeating-linear-gradient(135deg,_#0f0f12_0px,_#0f0f12_18px,_#151519_18px,_#151519_36px)] text-zinc-900">
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Space+Grotesk:wght@400;500;600&display=swap");
+        .stage-9x16 {
+          width: min(100vw, calc(100vh * 9 / 16));
+          height: min(100vh, calc(100vw * 16 / 9));
+        }
       `}</style>
-      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-5 py-10 sm:px-8 sm:py-14">
-        <main
-          className={
-            status === "Connected"
-              ? "flex-1"
-              : "flex flex-col gap-6"
-          }
-        >
+      <div className="flex h-[100dvh] w-full flex-col items-center justify-end">
+        <div className="stage-9x16 w-full overflow-hidden bg-[radial-gradient(circle_at_top,_#e2f6ff_0%,_#b9e6ff_35%,_#7bc1ff_70%,_#3c7bd7_100%)] shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]">
+          <main
+            className={
+              status === "Connected"
+                ? "flex h-full flex-col px-5 py-10 sm:px-8 sm:py-12"
+                : "flex h-full flex-col gap-6 px-5 py-10 sm:px-8 sm:py-12"
+            }
+          >
           {status === "Connected" ? (
             phase === "preview" ? (
               <PreviewScreen
@@ -325,7 +330,8 @@ export default function HostPlayPage() {
               </section>
             </>
           )}
-        </main>
+          </main>
+        </div>
       </div>
       <BackendHealthBadge />
     </div>

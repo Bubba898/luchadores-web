@@ -132,103 +132,113 @@ export default function PlayClient() {
   };
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[radial-gradient(circle_at_top,_#e2f6ff_0%,_#b9e6ff_35%,_#7bc1ff_70%,_#3c7bd7_100%)] text-zinc-900">
+    <div className="h-[100dvh] overflow-hidden bg-[repeating-linear-gradient(135deg,_#0f0f12_0px,_#0f0f12_18px,_#151519_18px,_#151519_36px)] text-zinc-900">
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Sans:wght@400;500;600&display=swap");
+        .stage-9x16 {
+          width: min(100vw, calc(100vh * 9 / 16));
+          height: min(100vh, calc(100vw * 16 / 9));
+        }
       `}</style>
-      <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-5 py-12 sm:px-8 sm:py-16">
-        <header className="flex flex-col gap-3" />
+      <div className="flex h-[100dvh] w-full flex-col items-center justify-end">
+        <div className="stage-9x16 w-full overflow-hidden bg-[radial-gradient(circle_at_top,_#e2f6ff_0%,_#b9e6ff_35%,_#7bc1ff_70%,_#3c7bd7_100%)] shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]">
+          <div className="mx-auto flex h-full w-full max-w-3xl flex-col px-5 py-10 sm:px-8 sm:py-12">
+            <header className="flex flex-col gap-3" />
 
-        <main
-          className={
-            status === "Connected"
-              ? "mt-10 flex-1"
-              : "mt-10 rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] backdrop-blur sm:p-8"
-          }
-        >
-          {status === "Connected" ? (
-            phase === "preview" ? (
-              <PreviewScreen
-                mask={mask}
-                countdownSec={countdownSec}
-                playerCount={playerCount}
-              />
-            ) : phase === "build" ? (
-              <BuildScreen
-                mask={mask}
-                partLimit={partLimit}
-                countdownSec={countdownSec}
-                onPartDrop={(partId, xPercent, yPercent) => {
-                  socketRef.current?.send(
-                    JSON.stringify({
-                      messageType: "partdrop",
-                      id: partId,
-                      x: xPercent,
-                      y: yPercent,
-                    }),
-                  );
-                }}
-              />
-            ) : phase === "vote" ? (
-              <VoteScreen
-                mask={mask}
-                entries={voteEntries}
-                counts={voteCounts}
-                likedTargets={likedTargets}
-                countdownSec={countdownSec}
-                onVote={(targetPlayerId) => {
-                  if (likedTargets[targetPlayerId]) {
-                    return;
-                  }
-                  setLikedTargets((prev) => ({
-                    ...prev,
-                    [targetPlayerId]: true,
-                  }));
-                  setVoteCounts((prev) => ({
-                    ...prev,
-                    [targetPlayerId]: (prev[targetPlayerId] ?? 0) + 1,
-                  }));
-                  socketRef.current?.send(
-                    JSON.stringify({
-                      messageType: "vote",
-                      targetPlayerId,
-                    }),
-                  );
-                }}
-              />
-            ) : phase === "results" ? (
-              <ResultsScreen mask={mask} winner={resultsWinner} />
-            ) : (
-              <WaitingRoom
-                countdownSec={countdownSec}
-                playerCount={playerCount}
-                roomCode={roomCode.trim() ? roomCode.toUpperCase() : null}
-                joinUrl={
-                  roomCode.trim() && hostOrigin
-                    ? `${hostOrigin}/play?code=${roomCode.trim().toUpperCase()}`
-                    : null
-                }
-              />
-            )
-          ) : (
-            <JoinForm
-              roomCode={roomCode}
-              name={name}
-              emoji={emoji}
-              status={status}
-              error={error}
-              showPicker={showPicker}
-              onRoomCodeChange={setRoomCode}
-              onNameChange={setName}
-              onEmojiChange={(value) => {
-                setEmoji(value);
-                setShowPicker(false);
-              }}
-              onTogglePicker={() => setShowPicker((value) => !value)}
-              onJoin={joinRoom}
-            />
-          )}
-        </main>
+            <main
+              className={
+                status === "Connected"
+                  ? "mt-8 flex-1"
+                  : "mt-8 rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] backdrop-blur sm:p-8"
+              }
+            >
+              {status === "Connected" ? (
+                phase === "preview" ? (
+                  <PreviewScreen
+                    mask={mask}
+                    countdownSec={countdownSec}
+                    playerCount={playerCount}
+                  />
+                ) : phase === "build" ? (
+                  <BuildScreen
+                    mask={mask}
+                    partLimit={partLimit}
+                    countdownSec={countdownSec}
+                    onPartDrop={(partId, xPercent, yPercent) => {
+                      socketRef.current?.send(
+                        JSON.stringify({
+                          messageType: "partdrop",
+                          id: partId,
+                          x: xPercent,
+                          y: yPercent,
+                        }),
+                      );
+                    }}
+                  />
+                ) : phase === "vote" ? (
+                  <VoteScreen
+                    mask={mask}
+                    entries={voteEntries}
+                    counts={voteCounts}
+                    likedTargets={likedTargets}
+                    countdownSec={countdownSec}
+                    onVote={(targetPlayerId) => {
+                      if (likedTargets[targetPlayerId]) {
+                        return;
+                      }
+                      setLikedTargets((prev) => ({
+                        ...prev,
+                        [targetPlayerId]: true,
+                      }));
+                      setVoteCounts((prev) => ({
+                        ...prev,
+                        [targetPlayerId]: (prev[targetPlayerId] ?? 0) + 1,
+                      }));
+                      socketRef.current?.send(
+                        JSON.stringify({
+                          messageType: "vote",
+                          targetPlayerId,
+                        }),
+                      );
+                    }}
+                  />
+                ) : phase === "results" ? (
+                  <ResultsScreen mask={mask} winner={resultsWinner} />
+                ) : (
+                  <WaitingRoom
+                    countdownSec={countdownSec}
+                    playerCount={playerCount}
+                    roomCode={roomCode.trim() ? roomCode.toUpperCase() : null}
+                    joinUrl={
+                      roomCode.trim() && hostOrigin
+                        ? `${hostOrigin}/play?code=${roomCode
+                            .trim()
+                            .toUpperCase()}`
+                        : null
+                    }
+                  />
+                )
+              ) : (
+                <JoinForm
+                  roomCode={roomCode}
+                  name={name}
+                  emoji={emoji}
+                  status={status}
+                  error={error}
+                  showPicker={showPicker}
+                  onRoomCodeChange={setRoomCode}
+                  onNameChange={setName}
+                  onEmojiChange={(value) => {
+                    setEmoji(value);
+                    setShowPicker(false);
+                  }}
+                  onTogglePicker={() => setShowPicker((value) => !value)}
+                  onJoin={joinRoom}
+                />
+              )}
+            </main>
+          </div>
+        </div>
       </div>
       <BackendHealthBadge />
     </div>

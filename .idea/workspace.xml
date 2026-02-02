@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Fixes CORS errors on deployment, shows Backend status">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/endpoints/createRoom.route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/endpoints/createRoom.route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/endpoints/host.ws.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/endpoints/host.ws.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/memory/rooms.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/memory/rooms.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/types/room.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/types/room.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/host/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/host/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/JoinForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/JoinForm.tsx" afterDir="false" />
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Reworks flow for starting a game">
+      <change beforePath="$PROJECT_DIR$/frontend/app/hostplay/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/hostplay/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/play/PlayClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/PlayClient.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/WaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/WaitingRoom.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/bun.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bun.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
     </list>
@@ -109,7 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1770028101807</updated>
       <workItem from="1770028103066" duration="611000" />
-      <workItem from="1770029163854" duration="3543000" />
+      <workItem from="1770029163854" duration="3895000" />
     </task>
     <task id="LOCAL-00001" summary="Fixes vercel buil dissues">
       <option name="closed" value="true" />
@@ -143,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770031111158</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Reworks flow for starting a game">
+      <option name="closed" value="true" />
+      <created>1770032832015</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1770032832015</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +155,7 @@
     <MESSAGE value="Fixes vercel build issues" />
     <MESSAGE value="Fixes type error in build" />
     <MESSAGE value="Fixes CORS errors on deployment, shows Backend status" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes CORS errors on deployment, shows Backend status" />
+    <MESSAGE value="Reworks flow for starting a game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reworks flow for starting a game" />
   </component>
 </project>
