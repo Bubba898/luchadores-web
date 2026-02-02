@@ -5,7 +5,15 @@ import {useEffect, useState} from "react";
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3001";
 const CHECK_INTERVAL_MS = 5000;
 
-export default function BackendHealthBadge() {
+type BackendHealthBadgeProps = {
+  position?: "fixed" | "absolute";
+  className?: string;
+};
+
+export default function BackendHealthBadge({
+  position = "fixed",
+  className = "",
+}: BackendHealthBadgeProps) {
   const [isHealthy, setIsHealthy] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -62,8 +70,12 @@ export default function BackendHealthBadge() {
         ? "bg-emerald-500"
         : "bg-red-500";
 
+  const positionClass = position === "absolute" ? "absolute" : "fixed";
+
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-3 py-2 text-xs font-semibold text-zinc-900 shadow-lg backdrop-blur">
+    <div
+      className={`${positionClass} right-4 top-4 z-50 flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-3 py-2 text-xs font-semibold text-zinc-900 shadow-lg backdrop-blur ${className}`.trim()}
+    >
       <span className={`h-2.5 w-2.5 rounded-full ${dotClass}`} />
       <span>{label}</span>
     </div>

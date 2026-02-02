@@ -23,6 +23,7 @@ type BuildScreenProps = {
   mask: string | null;
   partLimit: number | null;
   countdownSec: number | null;
+  stageScale?: number;
   onPartDrop: (partId: string, xPercent: number, yPercent: number) => void;
 };
 
@@ -40,6 +41,7 @@ export default function BuildScreen({
   mask,
   partLimit,
   countdownSec,
+  stageScale = 1,
   onPartDrop,
 }: BuildScreenProps) {
   const [parts, setParts] = useState<FacePart[]>([]);
@@ -113,20 +115,21 @@ export default function BuildScreen({
     }
 
     const part = available[Math.floor(Math.random() * available.length)];
+    const scale = stageScale || 1;
     const rootRect = rootRef.current.getBoundingClientRect();
     const bucketRect = bucketRef.current.getBoundingClientRect();
+    const rootWidth = rootRect.width / scale;
+    const rootHeight = rootRect.height / scale;
+    const bucketLeft = (bucketRect.left - rootRect.left) / scale;
+    const bucketTop = (bucketRect.top - rootRect.top) / scale;
+    const bucketWidth = bucketRect.width / scale;
+    const bucketHeight = bucketRect.height / scale;
 
     const spawn = SPAWN_POINTS[type as 0 | 1 | 2];
-    const startX = (spawn.x / 100) * rootRect.width;
-    const startY = (spawn.y / 100) * rootRect.height;
-    const targetX =
-      bucketRect.left -
-      rootRect.left +
-      randomInRange(20, bucketRect.width - 60);
-    const targetY =
-      bucketRect.top -
-      rootRect.top +
-      randomInRange(20, bucketRect.height - 60);
+    const startX = (spawn.x / 100) * rootWidth;
+    const startY = (spawn.y / 100) * rootHeight;
+    const targetX = bucketLeft + randomInRange(20, bucketWidth - 60);
+    const targetY = bucketTop + randomInRange(20, bucketHeight - 60);
 
     const instanceId = `${part.id}-${Date.now()}-${Math.random()
       .toString(16)
@@ -159,17 +162,18 @@ export default function BuildScreen({
     instanceId: string,
   ) => {
     event.currentTarget.setPointerCapture(event.pointerId);
+    const scale = stageScale || 1;
     const target = event.currentTarget.getBoundingClientRect();
     const imgEl = event.currentTarget.querySelector("img");
     const imgRect = imgEl?.getBoundingClientRect();
     setDraggingId(instanceId);
     setDragOffset({
-      x: event.clientX - (imgRect?.left ?? target.left),
-      y: event.clientY - (imgRect?.top ?? target.top) + DRAG_LIFT_PX,
+      x: (event.clientX - (imgRect?.left ?? target.left)) / scale,
+      y: (event.clientY - (imgRect?.top ?? target.top)) / scale + DRAG_LIFT_PX,
     });
     setDragSize({
-      w: imgRect?.width ?? target.width,
-      h: imgRect?.height ?? target.height,
+      w: (imgRect?.width ?? target.width) / scale,
+      h: (imgRect?.height ?? target.height) / scale,
     });
     setItems((prev) =>
       prev.map((item) =>
@@ -185,9 +189,10 @@ export default function BuildScreen({
       if (!draggingId || !dragOffset || !rootRef.current) {
         return;
       }
+      const scale = stageScale || 1;
       const rootRect = rootRef.current.getBoundingClientRect();
-      const nextX = event.clientX - rootRect.left - dragOffset.x;
-      const nextY = event.clientY - rootRect.top - dragOffset.y;
+      const nextX = (event.clientX - rootRect.left) / scale - dragOffset.x;
+      const nextY = (event.clientY - rootRect.top) / scale - dragOffset.y;
       setItems((prev) =>
         prev.map((item) =>
           item.instanceId === draggingId
@@ -203,24 +208,29 @@ export default function BuildScreen({
         setDragOffset(null);
         return;
       }
+      const scale = stageScale || 1;
       const rootRect = rootRef.current.getBoundingClientRect();
       const faceRect = faceRef.current.getBoundingClientRect();
-      const pointerX = event.clientX;
-      const pointerY = event.clientY;
+      const pointerX = (event.clientX - rootRect.left) / scale;
+      const pointerY = (event.clientY - rootRect.top) / scale;
       const size = dragSize ?? {w: 0, h: 0};
       const itemLeft = pointerX - (dragOffset?.x ?? 0);
       const itemTop = pointerY - (dragOffset?.y ?? 0);
       const itemCenterX = itemLeft + size.w / 2;
       const itemCenterY = itemTop + size.h / 2;
+      const faceLeft = (faceRect.left - rootRect.left) / scale;
+      const faceTop = (faceRect.top - rootRect.top) / scale;
+      const faceWidth = faceRect.width / scale;
+      const faceHeight = faceRect.height / scale;
       const isOverFace =
-        itemCenterX >= faceRect.left &&
-        itemCenterX <= faceRect.right &&
-        itemCenterY >= faceRect.top &&
-        itemCenterY <= faceRect.bottom;
+        itemCenterX >= faceLeft &&
+        itemCenterX <= faceLeft + faceWidth &&
+        itemCenterY >= faceTop &&
+        itemCenterY <= faceTop + faceHeight;
 
       if (isOverFace) {
-        const faceX = ((itemCenterX - faceRect.left) / faceRect.width) * 100;
-        const faceY = ((itemCenterY - faceRect.top) / faceRect.height) * 100;
+        const faceX = ((itemCenterX - faceLeft) / faceWidth) * 100;
+        const faceY = ((itemCenterY - faceTop) / faceHeight) * 100;
         setItems((prev) =>
           prev.map((item) =>
             item.instanceId === draggingId
@@ -265,7 +275,7 @@ export default function BuildScreen({
       ref={rootRef}
       className="relative flex h-full flex-col pb-32 pt-12 touch-none"
     >
-      <div className="fixed left-0 right-0 top-0 z-20 flex items-center justify-center">
+      <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-center">
         <div className="px-4 py-2 text-2xl font-semibold text-zinc-900">
           {countdownSec !== null
             ? `${countdownSec} seconds left`
@@ -317,7 +327,7 @@ export default function BuildScreen({
 
         <div
           ref={bucketRef}
-          className="relative flex w-screen -mx-5 sm:-mx-8 -my-12 justify-center"
+          className="relative -mx-5 -my-12 flex w-full justify-center"
         >
           <img
             src="/ui/UI_Bucket.png"
@@ -375,7 +385,7 @@ export default function BuildScreen({
           <img
             src="/ui/dispenser.png"
             alt="Dispenser"
-            className="w-screen object-fill"
+            className="w-full object-fill"
           />
         </div>
       </div>

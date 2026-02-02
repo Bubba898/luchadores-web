@@ -41,12 +41,12 @@ export default function WaitingRoom({
   }, [joinUrl]);
 
   return (
-    <div className="relative flex min-h-[70vh] flex-col items-center justify-center gap-8 pb-24 text-center">
+    <div className="relative flex flex-1 flex-col items-center justify-start gap-8 pt-6 pb-24 text-center">
       <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
         Waiting Room
       </p>
       {countdownSec !== null ? (
-        <p className="text-6xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif] sm:text-7xl">
+        <p className="text-6xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif]">
           {countdownSec}s
         </p>
       ) : null}
@@ -66,10 +66,10 @@ export default function WaitingRoom({
                 <img
                   src={qrDataUrl}
                   alt="Join room QR code"
-                  className="h-72 w-72 rounded-3xl bg-white/85 p-4 shadow-[0_18px_40px_-22px_rgba(0,0,0,0.5)] sm:h-80 sm:w-80"
+                  className="h-72 w-72 rounded-3xl bg-white/85 p-4 shadow-[0_18px_40px_-22px_rgba(0,0,0,0.5)]"
                 />
               ) : (
-                <div className="flex h-72 w-72 items-center justify-center rounded-3xl border border-dashed border-white/70 text-xs text-zinc-500 sm:h-80 sm:w-80">
+                <div className="flex h-72 w-72 items-center justify-center rounded-3xl border border-dashed border-white/70 text-xs text-zinc-500">
                   Generating QR...
                 </div>
               )}
@@ -78,12 +78,12 @@ export default function WaitingRoom({
           <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
             Room Code
           </p>
-          <p className="text-5xl font-semibold tracking-[0.2em] text-zinc-950 [font-family:'Archivo_Black',sans-serif] sm:text-6xl">
+          <p className="text-5xl font-semibold tracking-[0.2em] text-zinc-950 [font-family:'Archivo_Black',sans-serif]">
             {roomCode}
           </p>
         </div>
       ) : null}
-      <div className="fixed bottom-0 left-0 right-0 mx-auto flex w-full max-w-4xl items-center justify-between border-t border-white/60 bg-white/80 px-6 py-4 pb-[env(safe-area-inset-bottom)] text-sm text-zinc-700 backdrop-blur">
+      <div className="absolute bottom-0 left-0 right-0 mx-auto flex w-full max-w-4xl items-center justify-between border-t border-white/60 bg-white/80 px-6 py-4 pb-[env(safe-area-inset-bottom)] text-sm text-zinc-700 backdrop-blur">
         <span>Players connected</span>
         <span className="text-lg font-semibold text-zinc-900">
           {playerCount}

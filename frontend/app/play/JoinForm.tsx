@@ -85,11 +85,11 @@ export default function JoinForm({
         </div>
       </div>
 
-      <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+      <div className="mt-10 flex flex-col items-start gap-4">
         <button
           type="button"
           onClick={onJoin}
-          className="inline-flex w-full items-center justify-center rounded-full bg-zinc-950 px-6 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:translate-y-[-1px] hover:bg-zinc-900 sm:w-auto"
+          className="inline-flex w-full items-center justify-center rounded-full bg-zinc-950 px-6 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:translate-y-[-1px] hover:bg-zinc-900"
         >
           {joinLabel}
         </button>

@@ -163,14 +163,6 @@ export default function HostClient() {
                 onChange={setSettings}
                 disabled={!!roomCode}
               />
-              <button
-                type="button"
-                onClick={() => setSettings(DEFAULT_ROOM_SETTINGS)}
-                disabled={!!roomCode}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-zinc-900/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900/40 disabled:cursor-not-allowed disabled:border-zinc-900/10"
-              >
-                Reset settings
-              </button>
             </div>
             <button
               type="button"

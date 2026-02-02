@@ -95,7 +95,7 @@ export default function VoteScreen({
           {countdownSec !== null ? `${countdownSec}s left` : "--"}
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 gap-4">
         {entries.map((entry) => (
           <div
             key={entry.playerId}
