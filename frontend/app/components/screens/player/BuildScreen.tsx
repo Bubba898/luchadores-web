@@ -469,6 +469,7 @@ export default function BuildScreen({
             key={item.instanceId}
             onPointerDown={(event) => handlePointerDown(event, item.instanceId)}
             variant="plain"
+            suppressClickSound
             className={
               item.location === "dragging"
                 ? "absolute rounded-2xl bg-transparent p-0 shadow-none touch-none select-none"

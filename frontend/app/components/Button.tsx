@@ -51,6 +51,7 @@ type ButtonProps = {
   variant?: ButtonVariant;
   className?: string;
   disabled?: boolean;
+  suppressClickSound?: boolean;
   type?: "button" | "submit" | "reset";
   target?: string;
   rel?: string;
@@ -69,6 +70,7 @@ export default function Button({
   type = "button",
   disabled = false,
   className = "",
+  suppressClickSound = false,
   target,
   rel,
   onPointerDown,
@@ -97,7 +99,7 @@ export default function Button({
         style={style}
         onPointerDown={() => {
           setPressed(true);
-          if (!disabled) {
+          if (!disabled && !suppressClickSound) {
             playClickSound();
           }
         }}
@@ -147,7 +149,7 @@ export default function Button({
       style={style}
       onPointerDown={(event) => {
         setPressed(true);
-        if (!disabled) {
+        if (!disabled && !suppressClickSound) {
           playClickSound();
         }
         onPointerDown?.(event);

@@ -8,12 +8,17 @@ type AssetListResponse = {
 };
 
 const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg"];
+const AUDIO_EXTENSIONS = [".mp3", ".wav", ".ogg"];
 
 let preloadPromise: Promise<void> | null = null;
 let preloadDone = false;
 
 function isImageAsset(assetPath: string) {
   return IMAGE_EXTENSIONS.some((ext) => assetPath.endsWith(ext));
+}
+
+function isAudioAsset(assetPath: string) {
+  return AUDIO_EXTENSIONS.some((ext) => assetPath.endsWith(ext));
 }
 
 function preloadImage(src: string) {
@@ -23,6 +28,17 @@ function preloadImage(src: string) {
     img.onload = done;
     img.onerror = done;
     img.src = src;
+  });
+}
+
+function preloadAudio(src: string) {
+  return new Promise<void>((resolve) => {
+    const audio = new Audio();
+    const done = () => resolve();
+    audio.oncanplaythrough = done;
+    audio.onerror = done;
+    audio.src = src;
+    audio.load();
   });
 }
 
@@ -45,9 +61,11 @@ async function preloadAssets() {
       const tasks = assetList.map((asset) =>
         isImageAsset(asset)
           ? preloadImage(asset)
-          : fetch(asset, { cache: "force-cache" })
-              .then(() => undefined)
-              .catch(() => undefined),
+          : isAudioAsset(asset)
+            ? preloadAudio(asset)
+            : fetch(asset, { cache: "force-cache" })
+                .then(() => undefined)
+                .catch(() => undefined),
       );
       await Promise.all(tasks);
       preloadDone = true;
