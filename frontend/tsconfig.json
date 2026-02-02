@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "../backend/node_modules/@types", "../backend/node_modules/bun-types"]
   },
   "include": [
     "next-env.d.ts",
