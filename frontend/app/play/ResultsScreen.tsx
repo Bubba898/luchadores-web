@@ -79,7 +79,7 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
       return {leftPercent: 50, scaleClass: "scale-[0.75]"};
     }
     if (mask.includes("2")) {
-      return {leftPercent: 30, scaleClass: "scale-[0.65]"};
+      return {leftPercent: -3, scaleClass: "scale-[0.65]"};
     }
     return {leftPercent: 50, scaleClass: "scale-[0.75]"};
   }, [mask]);
@@ -205,16 +205,15 @@ function ResultFace({
             transform: "translateX(-50%)",
             transformOrigin: "top center",
             zIndex: 5,
+            opacity: 0,
+            animation: "drop-in-mask 2.6s ease-out forwards",
+            animationDelay: "0.8s",
           }}
         >
           <img
             src={maskSrc}
             alt="Mask"
             className="h-full w-full object-contain"
-            style={{
-              animation: "drop-in-mask 2.6s ease-out forwards",
-              animationDelay: "0.8s",
-            }}
             draggable={false}
           />
         </div>
