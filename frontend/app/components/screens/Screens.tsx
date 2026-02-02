@@ -68,6 +68,12 @@ export function Screens() {
   }, [injectedRoomCode, roomCode]);
 
   useEffect(() => {
+    if (injectedRoomCode && screen === "home") {
+      transitionScreen("playerJoin");
+    }
+  }, [injectedRoomCode, screen]);
+
+  useEffect(() => {
     if (countdownSec === null) {
       return;
     }

@@ -82,15 +82,16 @@ export default function PlayerWaitingRoom({
               Share to join: {joinUrl ?? "--"}
             </p>
           </div>
-          <div className="mt-auto flex w-full max-w-md justify-center pb-2">
-            <Button
-              onClick={onStart}
-              className="min-w-[220px] scale-[0.6]"
-              disabled={!canStart}
-            >
-              Start Game
-            </Button>
-          </div>
+          {canStart ? (
+            <div className="mt-auto flex w-full max-w-md justify-center pb-2">
+              <Button
+                onClick={onStart}
+                className="min-w-[220px] scale-[0.6]"
+              >
+                Start Game
+              </Button>
+            </div>
+          ) : null}
           <p className="text-2xl text-white sm:text-2xl">
             <span className="font-semibold">
               {playerCount} Players Waiting...

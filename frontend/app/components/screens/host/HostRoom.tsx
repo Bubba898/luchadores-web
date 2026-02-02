@@ -57,7 +57,7 @@ export default function HostRoom({
 
   return (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
-      <div className="absolute left-6 top-6 z-10">
+      <div className="absolute left-6 top-16 z-10">
         <Button
           variant="plain"
           onClick={() => setScreen("home")}

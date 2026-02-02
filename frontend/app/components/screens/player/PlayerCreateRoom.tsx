@@ -24,7 +24,7 @@ export default function PlayerCreateRoom({
 
   return (
     <div className="relative min-h-screen text-white aling-items-center content-center">
-      <div className="absolute left-6 top-6 z-10">
+      <div className="absolute left-6 top-16 z-10">
         <Button
           variant="plain"
           onClick={onBack}
