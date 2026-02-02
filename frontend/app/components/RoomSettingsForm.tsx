@@ -27,13 +27,8 @@ export default function RoomSettingsForm({
   onChange,
 }: RoomSettingsFormProps) {
   return (
-    <div className="grid gap-4">
-      <img
-        src="/logo.png"
-        alt="Luchadores Arena"
-        className="mx-auto w-full max-w-[220px] object-contain"
-      />
-      <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
+    <div className="grid grid-cols-2 gap-4 text-white">
+      <label className="flex flex-col gap-2 text-lg font-medium">
         Preview time (seconds)
         <input
           type="number"
@@ -49,7 +44,7 @@ export default function RoomSettingsForm({
           className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-base text-zinc-950 outline-none focus:border-zinc-900/40 disabled:cursor-not-allowed disabled:bg-zinc-100"
         />
       </label>
-      <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
+      <label className="flex flex-col gap-2 text-lg font-medium">
         Build time (seconds)
         <input
           type="number"
@@ -65,7 +60,7 @@ export default function RoomSettingsForm({
           className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-base text-zinc-950 outline-none focus:border-zinc-900/40 disabled:cursor-not-allowed disabled:bg-zinc-100"
         />
       </label>
-      <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
+      <label className="flex flex-col gap-2 text-lg font-medium">
         Vote time (seconds)
         <input
           type="number"
@@ -81,7 +76,7 @@ export default function RoomSettingsForm({
           className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-base text-zinc-950 outline-none focus:border-zinc-900/40 disabled:cursor-not-allowed disabled:bg-zinc-100"
         />
       </label>
-      <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
+      <label className="flex flex-col gap-2 text-lg font-medium">
         Parts per player
         <input
           type="number"

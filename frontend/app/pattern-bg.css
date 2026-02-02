@@ -1,0 +1,171 @@
+.pattern-chevron-bg {
+  --s: 90px;
+  --c1: #45ada8;
+  --c2: #2b3a55;
+  --g: #0000 calc(125% / 3), var(--c1) 0 calc(175% / 3), #0000 0;
+  --p: 0 0 / calc(2 * var(--s)) calc(2 * var(--s));
+  background:
+    conic-gradient(#0000 75%, var(--c1) 0)
+      calc(3 * var(--s) / 4) calc(3 * var(--s) / 4) / var(--s) var(--s),
+    linear-gradient(45deg, var(--g)) var(--p),
+    linear-gradient(-45deg, var(--g)) var(--p) var(--c2);
+  animation: chevron-shift 40s linear infinite;
+}
+
+@keyframes chevron-shift {
+  0% {
+    background-position:
+      calc(3 * var(--s) / 4) calc(3 * var(--s) / 4),
+      0 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      calc(3 * var(--s) / 4) calc(3 * var(--s) / 4),
+      calc(2 * var(--s)) calc(2 * var(--s)),
+      calc(-2 * var(--s)) calc(-2 * var(--s));
+  }
+}
+
+.pattern-orbit-bg {
+  --s: 40px;
+  --c1: #2b3a55;
+  --c2: #45ada8;
+  --_g: #0000 17.5%, var(--c1) 18% 35%, var(--c2) 35.5% 39%, #0000 40%;
+  background:
+    radial-gradient(at 100% 0, var(--_g))
+      0 calc(var(--s) / -2) / calc(2 * var(--s)) calc(2 * var(--s)),
+    radial-gradient(at 0 100%, var(--_g))
+      calc(var(--s) / 2) var(--s) / calc(2 * var(--s)) calc(2 * var(--s)),
+    conic-gradient(#0000 75%, var(--c1) 0) 0 0 / var(--s) var(--s) var(--c2);
+  animation: pattern-drift-1 80s linear infinite;
+}
+
+.pattern-fan-bg {
+  --s: 194px;
+  --c1: #a7e0dc;
+  --c2: #45ada8;
+  --c3: #2b3a55;
+  --_l: #0000 calc(25% / 3), var(--c1) 0 25%, #0000 0;
+  --_g: conic-gradient(from 120deg at 50% 87.5%, var(--c1) 120deg, #0000 0);
+  background:
+    var(--_g),
+    var(--_g) 0 calc(var(--s) / 2),
+    conic-gradient(from 180deg at 75%, var(--c2) 60deg, #0000 0),
+    conic-gradient(from 60deg at 75% 75%, var(--c1) 0 60deg, #0000 0),
+    linear-gradient(150deg, var(--_l)) 0 calc(var(--s) / 2),
+    conic-gradient(at 25% 25%, #0000 50%, var(--c2) 0 240deg, var(--c1) 0 300deg, var(--c2) 0),
+    linear-gradient(-150deg, var(--_l)) var(--c3);
+  background-size: calc(0.866 * var(--s)) var(--s);
+  animation: pattern-drift-2 90s linear infinite;
+}
+
+.pattern-rings-bg {
+  --s: 220px;
+  --c1: #2b3a55;
+  --c2: #45ada8;
+  --_g: radial-gradient(#0000 60%, var(--c1) 61% 63%, #0000 64% 77%, var(--c1) 78% 80%, #0000 81%);
+  --_c: , #0000 75%, var(--c2) 0;
+  background:
+    conic-gradient(at 12% 20% var(--_c)) calc(var(--s) * 0.44) calc(0.9 * var(--s)),
+    conic-gradient(at 12% 20% var(--_c)) calc(var(--s) * -0.06) calc(0.4 * var(--s)),
+    conic-gradient(at 20% 12% var(--_c)) calc(0.9 * var(--s)) calc(var(--s) * 0.44),
+    conic-gradient(at 20% 12% var(--_c)) calc(0.4 * var(--s)) calc(var(--s) * -0.06),
+    var(--_g),
+    var(--_g) calc(var(--s) / 2) calc(var(--s) / 2) var(--c2);
+  background-size: var(--s) var(--s);
+  animation: pattern-drift-3 85s linear infinite;
+}
+
+.pattern-arches-bg {
+  --s: 55px;
+  --c1: #f2f6f8;
+  --c2: #45ada8;
+  --c3: #2b3a55;
+  --b: calc(var(--s) / 3.67);
+  --_r: calc(1.28 * var(--s) + var(--b) / 2) at top 50%;
+  --_f: calc(99.5% - var(--b)), var(--c1) calc(101% - var(--b)) 99.5%, #0000 101%;
+  --_g0: calc(-0.8 * var(--s)), var(--c2) var(--_f);
+  --_g1: calc(-0.8 * var(--s)), var(--c3) var(--_f);
+  --_s: calc(1.8 * var(--s) + var(--b));
+  background:
+    radial-gradient(var(--_r) right var(--_g0)) calc(-1 * var(--_s)) var(--s),
+    radial-gradient(var(--_r) left var(--_g1)) var(--_s) calc(-1 * var(--s)),
+    radial-gradient(var(--_r) right var(--_g1)) calc(var(--_s) / -2) calc(-1 * var(--s)),
+    radial-gradient(var(--_r) left var(--_g0)) calc(var(--_s) / 2) var(--s),
+    linear-gradient(90deg, var(--c2) 50%, var(--c3) 0);
+  background-size: var(--_s) calc(4 * var(--s));
+  animation: pattern-drift-4 75s linear infinite;
+}
+
+@keyframes pattern-drift-1 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 600px 300px;
+  }
+}
+
+@keyframes pattern-drift-2 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -500px 400px;
+  }
+}
+
+@keyframes pattern-drift-3 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 450px -450px;
+  }
+}
+
+@keyframes pattern-drift-4 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -350px -550px;
+  }
+}
+
+.pattern-tiles-bg {
+  --s: 100px;
+  --c1: #7ad7d3;
+  --c2: #2b3a55;
+  --_s: calc(2 * var(--s)) calc(2 * var(--s));
+  --_g: var(--_s) conic-gradient(at 40% 40%, #0000 75%, var(--c1) 0);
+  --_p: var(--_s) conic-gradient(at 20% 20%, #0000 75%, var(--c2) 0);
+  background:
+    calc(0.9 * var(--s)) calc(0.9 * var(--s)) / var(--_p),
+    calc(-0.1 * var(--s)) calc(-0.1 * var(--s)) / var(--_p),
+    calc(0.7 * var(--s)) calc(0.7 * var(--s)) / var(--_g),
+    calc(-0.3 * var(--s)) calc(-0.3 * var(--s)) / var(--_g),
+    conic-gradient(from 90deg at 20% 20%, var(--c2) 25%, var(--c1) 0) 0 0 /
+      var(--s) var(--s);
+  animation: tiles-shift 55s linear infinite;
+}
+
+@keyframes tiles-shift {
+  0% {
+    background-position:
+      calc(0.9 * var(--s)) calc(0.9 * var(--s)),
+      calc(-0.1 * var(--s)) calc(-0.1 * var(--s)),
+      calc(0.7 * var(--s)) calc(0.7 * var(--s)),
+      calc(-0.3 * var(--s)) calc(-0.3 * var(--s)),
+      0 0;
+  }
+  100% {
+    background-position:
+      calc(2.9 * var(--s)) calc(1.9 * var(--s)),
+      calc(-2.1 * var(--s)) calc(-1.1 * var(--s)),
+      calc(2.7 * var(--s)) calc(1.7 * var(--s)),
+      calc(-2.3 * var(--s)) calc(-1.3 * var(--s)),
+      calc(2 * var(--s)) calc(2 * var(--s));
+  }
+}

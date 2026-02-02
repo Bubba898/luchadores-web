@@ -15,6 +15,7 @@ export default function BackendHealthBadge({
   className = "",
 }: BackendHealthBadgeProps) {
   const [isHealthy, setIsHealthy] = useState<boolean | null>(null);
+  const [showOfflineNote, setShowOfflineNote] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -57,6 +58,12 @@ export default function BackendHealthBadge({
     };
   }, []);
 
+  useEffect(() => {
+    if (isHealthy !== false) {
+      setShowOfflineNote(false);
+    }
+  }, [isHealthy]);
+
   const label =
     isHealthy === null
       ? "Checking backend..."
@@ -73,11 +80,27 @@ export default function BackendHealthBadge({
   const positionClass = position === "absolute" ? "absolute" : "fixed";
 
   return (
-    <div
-      className={`${positionClass} right-4 top-4 z-50 flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-3 py-2 text-xs font-semibold text-zinc-900 shadow-lg backdrop-blur ${className}`.trim()}
-    >
-      <span className={`h-2.5 w-2.5 rounded-full ${dotClass}`} />
-      <span>{label}</span>
+    <div className={`${positionClass} right-4 top-4 z-50 ${className}`.trim()}>
+      <div
+        className={`relative flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-3 py-2 text-xs font-semibold text-zinc-900 shadow-lg backdrop-blur [font-family:var(--font-geist-sans),sans-serif] ${isHealthy === false ? "cursor-pointer" : ""}`.trim()}
+        style={{textShadow: "none"}}
+        onClick={() => {
+          if (isHealthy === false) {
+            setShowOfflineNote((value) => !value);
+          }
+        }}
+      >
+        <span className={`h-2.5 w-2.5 rounded-full ${dotClass}`} />
+        <span>{label}</span>
+      </div>
+      {isHealthy === false && showOfflineNote ? (
+        <div
+          className="absolute right-0 mt-3 w-64 rounded-2xl border border-black/10 bg-white/95 px-4 py-3 text-xs font-medium text-zinc-800 shadow-xl [font-family:var(--font-geist-sans),sans-serif]"
+          style={{textShadow: "none"}}
+        >
+          Backend is starting up and should be available within a few minutes.
+        </div>
+      ) : null}
     </div>
   );
 }

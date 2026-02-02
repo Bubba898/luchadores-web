@@ -133,7 +133,7 @@ export default function Button({
             <img
               src={backgroundSrc}
               alt=""
-              className="h-full w-full scale-[0.9] translate-y-[-8px] object-fill saturate-[0.8]"
+              className="h-full w-full scale-[0.9] translate-y-[-12%] object-fill saturate-[0.8]"
               draggable={false}
             />
           </span>

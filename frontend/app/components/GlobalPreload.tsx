@@ -67,12 +67,13 @@ export default function GlobalPreload({
   const [transitionState, setTransitionState] = useState<
     "idle" | "cover" | "reveal"
   >("idle");
+  const transitionTimers = useRef<number[]>([]);
   const showTransitionDebug =
     typeof window !== "undefined" &&
     window.location.search.includes("debugTransition=1");
+
   const pathname = usePathname();
   const previousPath = useRef(pathname);
-  const transitionTimers = useRef<number[]>([]);
 
   useEffect(() => {
     let active = true;

@@ -5,9 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Loading 1">
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/LoadingScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostClient.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/screenState.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/animated-squares-bg.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/animated-squares-bg.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/blobs-bg.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/BackendHealthBadge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/BackendHealthBadge.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/Button.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/components/GlobalPreload.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/GlobalPreload.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/screen-transitions.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/screen-transitions.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/triangle-grid-bg.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +32,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="109" />
+    <option name="cachedIndexableFilesCount" value="126" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,10 +58,10 @@
     &quot;accountId&quot;: &quot;15ddf938-38bf-47d1-9c95-4bd650a0f233&quot;
   }
 }</component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -64,7 +89,7 @@
     "git-widget-placeholder": "main",
     "javascript.preferred.runtime.type.id": "bun",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/yannickwiggers/PycharmProjects/luchadores-web/frontend/public/fonts",
+    "last_opened_file_path": "/Users/yannickwiggers/PycharmProjects/luchadores-web/frontend/app/components/screens/host",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -90,6 +115,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/app/components/screens/host" />
       <recent name="$PROJECT_DIR$/frontend/public/fonts" />
       <recent name="$PROJECT_DIR$/frontend/public" />
       <recent name="$PROJECT_DIR$/frontend/public/ui/button" />

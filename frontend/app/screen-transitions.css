@@ -1,10 +1,13 @@
 .screen-wipe {
   position: fixed;
   inset: 0 -50%;
-  background: #000;
+  background: #45ada8;
+  z-index: 600;
   transform: skewX(45deg);
   opacity: 0;
   pointer-events: none;
+  isolation: isolate;
+  overflow: hidden;
   -webkit-mask:
     linear-gradient(90deg, #0000 50%, #000F 0) 0,
     linear-gradient(90deg, #0000 50%, #000F 0) 0;
@@ -13,14 +16,30 @@
   mask-composite: exclude;
 }
 
+.screen-wipe::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  transform: skewX(-45deg);
+  transform-origin: center;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 55%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
 .screen-wipe--cover {
   opacity: 1;
-  animation: screen-wipe-cover 0.6s linear forwards;
+  animation: screen-wipe-cover 0.2s linear forwards;
 }
 
 .screen-wipe--reveal {
   opacity: 1;
-  animation: screen-wipe-reveal 0.6s linear forwards;
+  animation: screen-wipe-reveal 0.3s linear backwards;
 }
 
 @keyframes screen-wipe-cover {
@@ -30,13 +49,14 @@
   }
   to {
     -webkit-mask-position: 100px, 0;
-    opacity: 100;
+    opacity: 1;
   }
 }
 
 @keyframes screen-wipe-reveal {
   from {
     -webkit-mask-position: 100px, 0;
+    opacity: 1;
   }
   to {
     -webkit-mask-position: 200px, 0;
