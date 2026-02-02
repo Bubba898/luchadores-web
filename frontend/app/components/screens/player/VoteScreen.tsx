@@ -2,7 +2,7 @@
 
 import {useEffect, useMemo, useState} from "react";
 import Button from "../../../components/Button";
-import {getMaskLayout} from "@/app/components/screens/maskLayout";
+import {getVoteMaskLayout} from "@/app/components/screens/maskLayout";
 
 type Placement = {
   id: string;
@@ -89,7 +89,7 @@ export default function VoteScreen({
     return `/faces/head_base${index}.png`;
   }, [mask]);
 
-  const maskLayout = useMemo(() => getMaskLayout(mask), [mask]);
+  const maskLayout = useMemo(() => getVoteMaskLayout(mask), [mask]);
   const maskSrc = mask ? `/masks/${mask}` : null;
 
   return (

@@ -7,10 +7,10 @@ type RoomSettings = {
 };
 
 export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
-  previewTimeSec: 7,
-  buildTimeSec: 20,
+  previewTimeSec: 10,
+  buildTimeSec: 45,
   voteTimeSec: 20,
-  partsPerPlayer: 5,
+  partsPerPlayer: 8,
   showMaskOnVote: false,
 };
 

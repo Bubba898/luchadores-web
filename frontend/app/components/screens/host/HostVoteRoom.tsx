@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from "react";
 import {useFaceAssets} from "@/app/components/screens/host/useFaceAssets";
-import {getMaskLayout} from "@/app/components/screens/maskLayout";
+import {getVoteMaskLayout} from "@/app/components/screens/maskLayout";
 
 type Placement = {
   id: string;
@@ -45,7 +45,7 @@ export default function HostVoteRoom({
     return `/faces/head_base${index}.png`;
   }, [mask]);
 
-  const maskLayout = useMemo(() => getMaskLayout(mask), [mask]);
+  const maskLayout = useMemo(() => getVoteMaskLayout(mask), [mask]);
   const maskSrc = mask ? `/masks/${mask}` : null;
 
   return (
