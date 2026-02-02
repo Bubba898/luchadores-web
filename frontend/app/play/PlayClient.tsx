@@ -26,7 +26,6 @@ export default function PlayClient() {
   const [emoji, setEmoji] = useState<string>("");
   const [status, setStatus] = useState("Idle");
   const [error, setError] = useState<string | null>(null);
-  const [showPicker, setShowPicker] = useState(false);
   const [playerCount, setPlayerCount] = useState(0);
   const [countdownSec, setCountdownSec] = useState<number | null>(null);
   const [phase, setPhase] = useState<string | null>(null);
@@ -270,14 +269,9 @@ export default function PlayClient() {
                   emoji={emoji}
                   status={status}
                   error={error}
-                  showPicker={showPicker}
                   onRoomCodeChange={setRoomCode}
                   onNameChange={setName}
-                  onEmojiChange={(value) => {
-                    setEmoji(value);
-                    setShowPicker(false);
-                  }}
-                  onTogglePicker={() => setShowPicker((value) => !value)}
+                  onEmojiChange={setEmoji}
                   onJoin={joinRoom}
                 />
               )}

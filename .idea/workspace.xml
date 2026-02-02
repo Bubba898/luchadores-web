@@ -4,27 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Loading 1">
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/LoadingScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostClient.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/app/components/screens/screenState.tsx" afterDir="false" />
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="changes backgrounds">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/animated-squares-bg.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/animated-squares-bg.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/blobs-bg.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/BackendHealthBadge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/BackendHealthBadge.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/GlobalPreload.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/GlobalPreload.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/screen-transitions.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/screen-transitions.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/triangle-grid-bg.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/host/HostClient.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/host/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/hostplay/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/play/BuildScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/BuildScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/play/JoinForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/JoinForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/play/PlayClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/PlayClient.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/play/PreviewScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/PreviewScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/play/ResultsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/ResultsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/play/VoteScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/VoteScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/ui/dispenser.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/ui/dispenser.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +201,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770044927926</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="splits up host room">
+      <option name="closed" value="true" />
+      <created>1770054562376</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1770054562376</updated>
+    </task>
+    <task id="LOCAL-00010" summary="changes backgrounds">
+      <option name="closed" value="true" />
+      <created>1770054894934</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1770054894934</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,6 +233,8 @@
     <MESSAGE value="Fixes sclaing" />
     <MESSAGE value="Make home screen pretty" />
     <MESSAGE value="Loading 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Loading 1" />
+    <MESSAGE value="splits up host room" />
+    <MESSAGE value="changes backgrounds" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes backgrounds" />
   </component>
 </project>

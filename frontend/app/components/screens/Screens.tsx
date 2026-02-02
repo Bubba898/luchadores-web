@@ -9,9 +9,23 @@ import HostPreviewRoom from "@/app/components/screens/host/HostPreviewRoom";
 import HostBuildRoom from "@/app/components/screens/host/HostBuildRoom";
 import HostVoteRoom from "@/app/components/screens/host/HostVoteRoom";
 import HostResultsRoom from "@/app/components/screens/host/HostResultsRoom";
+import PlayerCreateRoom from "@/app/components/screens/player/PlayerCreateRoom";
+import PlayerSettingsRoom from "@/app/components/screens/player/PlayerSettingsRoom";
+import PlayerWaitingRoom from "@/app/components/screens/player/PlayerWaitingRoom";
+import PlayerPreviewRoom from "@/app/components/screens/player/PlayerPreviewRoom";
+import PlayerBuildRoom from "@/app/components/screens/player/PlayerBuildRoom";
+import PlayerVoteRoom from "@/app/components/screens/player/PlayerVoteRoom";
+import PlayerResultsRoom from "@/app/components/screens/player/PlayerResultsRoom";
+import {treaty} from "@elysiajs/eden";
+import type {App} from "../../../../backend/src";
 
 
 export function Screens() {
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3001";
+  const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
+  //@ts-ignore
+  const api = treaty<App>(API_BASE);
+
   const searchParams = useSearchParams();
   const injectedRoomCode = useMemo(
     () => searchParams.get("roomCode") ?? undefined,
@@ -38,6 +52,13 @@ export function Screens() {
     placements: {id: string; x: number; y: number}[];
   } | null>(null);
   const [resultsVotes, setResultsVotes] = useState<number | null>(null);
+  const [partLimit, setPartLimit] = useState<number | null>(null);
+  const [likedTargets, setLikedTargets] = useState<Record<number, boolean>>({});
+  const [playerName, setPlayerName] = useState("");
+  const [playerEmoji, setPlayerEmoji] = useState<string>("");
+  const [playerStatus, setPlayerStatus] = useState("Idle");
+  const [playerError, setPlayerError] = useState<string | null>(null);
+  const [isCreatingRoom, setIsCreatingRoom] = useState(false);
 
   useEffect(() => {
     if (injectedRoomCode && !roomCode) {
@@ -70,7 +91,9 @@ export function Screens() {
   >("idle");
 
   const hostSocketRef = useRef<WebSocket | null>(null);
+  const playerSocketRef = useRef<WebSocket | null>(null);
   const countdownTimer = useRef<number | null>(null);
+  const flowRef = useRef<null | "host" | "player">(null);
 
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
@@ -85,6 +108,9 @@ export function Screens() {
     });
 
   const onHostMessage = (event: any) => {
+      if (flowRef.current !== "host") {
+        return;
+      }
       try {
         const message = JSON.parse(String(event.data));
         if (message?.messageType === "playercount") {
@@ -146,12 +172,130 @@ export function Screens() {
       }
     }
 
+  const onPlayerMessage = (event: any) => {
+    if (flowRef.current !== "player") {
+      return;
+    }
+    try {
+      const message = JSON.parse(String(event.data));
+      if (message?.messageType === "playercount") {
+        setPlayerCount(Number(message.count) || 0);
+      }
+      if (message?.messageType === "phasechange") {
+        if (typeof message.phase === "string") {
+          if (message.phase === "join") {
+            transitionScreen("playerWaitingRoom");
+          } else if (message.phase === "preview") {
+            transitionScreen("playerPreview");
+          } else if (message.phase === "build") {
+            transitionScreen("playerBuild");
+          } else if (message.phase === "vote") {
+            transitionScreen("playerVote");
+          } else if (message.phase === "results") {
+            transitionScreen("playerResults");
+          }
+        }
+        setCountdownSec(
+          typeof message.countdownSec === "number"
+            ? message.countdownSec
+            : null,
+        );
+      }
+      if (message?.messageType === "maskselected") {
+        setMask(typeof message.mask === "string" ? message.mask : null);
+      }
+      if (message?.messageType === "partlimit") {
+        setPartLimit(typeof message.limit === "number" ? message.limit : null);
+      }
+      if (message?.messageType === "votegallery") {
+        setVoteEntries(Array.isArray(message.entries) ? message.entries : []);
+        setLikedTargets({});
+        if (typeof message.mask === "string") {
+          setMask(message.mask);
+        }
+      }
+      if (message?.messageType === "voteupdate") {
+        if (typeof message.targetPlayerId === "number") {
+          setVoteCounts((prev) => ({
+            ...prev,
+            [message.targetPlayerId]: Number(message.count) || 0,
+          }));
+        }
+      }
+      if (message?.messageType === "results") {
+        if (message.winner) {
+          setResultsWinner(message.winner);
+        }
+        if (typeof message.mask === "string") {
+          setMask(message.mask);
+        }
+      }
+    } catch {
+      // Ignore non-JSON messages.
+    }
+  };
+
+  const connectHostSocketForPlayer = (code: string) => {
+    hostSocketRef.current?.close();
+    const socket = new WebSocket(`${WS_BASE}/host?code=${code.trim()}`);
+    hostSocketRef.current = socket;
+    socket.addEventListener("message", onHostMessage);
+  };
+
+  const connectPlayerSocket = () => {
+    setPlayerError(null);
+    if (!roomCode?.trim() || !playerName.trim() || !playerEmoji) {
+      setPlayerError("Please enter name and pick an emoji.");
+      return;
+    }
+    setPlayerStatus("Connecting...");
+    const emojiCode = playerEmoji.codePointAt(0);
+    const query = new URLSearchParams({
+      code: roomCode.trim().toUpperCase(),
+      name: playerName.trim(),
+      emoji: emojiCode ? String(emojiCode) : "",
+    });
+    const socket = new WebSocket(`${WS_BASE}/player?${query.toString()}`);
+    playerSocketRef.current = socket;
+    socket.addEventListener("open", () => {
+      setPlayerStatus("Connected");
+      transitionScreen("playerWaitingRoom");
+    });
+    socket.addEventListener("close", () => setPlayerStatus("Disconnected"));
+    socket.addEventListener("error", () => setPlayerError("Socket error"));
+    socket.addEventListener("message", onPlayerMessage);
+  };
+
   const handleStartGame = () => {
     const socket = hostSocketRef.current;
     if (!socket || socket.readyState !== WebSocket.OPEN) {
       return;
     }
     socket.send(JSON.stringify({messageType: "start"}));
+  };
+
+  const handleCreatePlayerRoom = async (settings: {
+    previewTimeSec: number;
+    buildTimeSec: number;
+    voteTimeSec: number;
+    partsPerPlayer: number;
+  }) => {
+    setIsCreatingRoom(true);
+    setPlayerError(null);
+    try {
+      const {data, error} = await api.rooms.post(settings);
+      if (error || !data) {
+        throw new Error("Create room failed");
+      }
+      setRoomCode(data.code);
+      connectHostSocketForPlayer(data.code);
+      transitionScreen("playerJoin");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setPlayerError(message);
+    } finally {
+      setIsCreatingRoom(false);
+    }
   };
 
   const handleScreenReady = () => {
@@ -163,6 +307,13 @@ export function Screens() {
     await delay(200)
     const shouldWaitForReady = nextScreen !== screen;
     const readyPromise = shouldWaitForReady ? waitForNextScreenReady() : Promise.resolve();
+    if (nextScreen.startsWith("host")) {
+      flowRef.current = "host";
+    } else if (nextScreen.startsWith("player")) {
+      flowRef.current = "player";
+    } else {
+      flowRef.current = null;
+    }
     setScreen(nextScreen)
     await readyPromise;
     await delay(100)
@@ -211,6 +362,120 @@ export function Screens() {
           roomCode={roomCode}
           playerCount={playerCount}
           onStart={handleStartGame}
+        />
+      )
+    }
+    {
+      screen === "playerCreate" && (
+        <PlayerCreateRoom
+          onReady={handleScreenReady}
+          onCreate={handleCreatePlayerRoom}
+          isCreating={isCreatingRoom}
+        />
+      )
+    }
+    {
+      screen === "playerJoin" && (
+        <PlayerSettingsRoom
+          onReady={handleScreenReady}
+          roomCode={roomCode}
+          showRoomCode={!roomCode}
+          name={playerName}
+          emoji={playerEmoji}
+          status={playerStatus}
+          error={playerError}
+          onRoomCodeChange={(value) => setRoomCode(value.toUpperCase())}
+          onNameChange={setPlayerName}
+          onEmojiChange={(value) => {
+            setPlayerEmoji(value);
+          }}
+          onJoin={connectPlayerSocket}
+        />
+      )
+    }
+    {
+      screen === "playerWaitingRoom" && (
+        <PlayerWaitingRoom
+          onReady={handleScreenReady}
+          roomCode={roomCode}
+          playerCount={playerCount}
+          joinUrl={
+            roomCode
+              ? `${typeof window !== "undefined" ? window.location.origin : ""}?roomCode=${roomCode}`
+              : null
+          }
+          canStart={hostSocketRef.current?.readyState === WebSocket.OPEN}
+          onStart={handleStartGame}
+        />
+      )
+    }
+    {
+      screen === "playerPreview" && (
+        <PlayerPreviewRoom
+          onReady={handleScreenReady}
+          mask={mask}
+          countdownSec={countdownSec}
+          playerCount={playerCount}
+        />
+      )
+    }
+    {
+      screen === "playerBuild" && (
+        <PlayerBuildRoom
+          onReady={handleScreenReady}
+          mask={mask}
+          partLimit={partLimit}
+          countdownSec={countdownSec}
+          onPartDrop={(partId, xPercent, yPercent) => {
+            playerSocketRef.current?.send(
+              JSON.stringify({
+                messageType: "partdrop",
+                id: partId,
+                x: xPercent,
+                y: yPercent,
+              }),
+            );
+          }}
+        />
+      )
+    }
+    {
+      screen === "playerVote" && (
+        <PlayerVoteRoom
+          onReady={handleScreenReady}
+          mask={mask}
+          entries={voteEntries}
+          counts={voteCounts}
+          likedTargets={likedTargets}
+          countdownSec={countdownSec}
+          onVote={(targetPlayerId) => {
+            if (likedTargets[targetPlayerId]) {
+              return;
+            }
+            setLikedTargets((prev) => ({
+              ...prev,
+              [targetPlayerId]: true,
+            }));
+            setVoteCounts((prev) => ({
+              ...prev,
+              [targetPlayerId]: (prev[targetPlayerId] ?? 0) + 1,
+            }));
+            playerSocketRef.current?.send(
+              JSON.stringify({
+                messageType: "vote",
+                targetPlayerId,
+              }),
+            );
+          }}
+        />
+      )
+    }
+    {
+      screen === "playerResults" && (
+        <PlayerResultsRoom
+          onReady={handleScreenReady}
+          mask={mask}
+          winner={resultsWinner}
         />
       )
     }

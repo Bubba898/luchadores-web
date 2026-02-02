@@ -88,11 +88,11 @@ export default function VoteScreen({
 
   return (
     <div className="flex h-full flex-col gap-6 pb-10 pt-6">
-      <div className="flex items-center justify-between text-sm text-zinc-700">
+      <div className="flex items-center justify-between text-sm">
         <span className="text-xs uppercase tracking-[0.2em] text-zinc-500">
           Vote
         </span>
-        <span className="text-base font-semibold text-zinc-900">
+        <span className="text-base font-semibold ">
           {countdownSec !== null ? `${countdownSec}s left` : "--"}
         </span>
       </div>
@@ -119,8 +119,8 @@ export default function VoteScreen({
                 debug={false}
               />
             </Button>
-            <div className="mt-4 flex items-center justify-between text-sm text-zinc-700">
-              <span className="font-medium text-zinc-900">
+            <div className="mt-4 flex items-center justify-between text-sm ">
+              <span className="font-medium ">
                 {entry.emoji !== null
                   ? String.fromCodePoint(entry.emoji)
                   : "🙂"}{" "}
@@ -130,7 +130,7 @@ export default function VoteScreen({
                 className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
                   likedTargets[entry.playerId]
                     ? "bg-pink-500 text-white"
-                    : "bg-white/80 text-zinc-700"
+                    : "bg-white/80"
                 }`}
               >
                 <span

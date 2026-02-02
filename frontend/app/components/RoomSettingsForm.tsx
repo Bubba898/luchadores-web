@@ -28,7 +28,7 @@ export default function RoomSettingsForm({
 }: RoomSettingsFormProps) {
   return (
     <div className="grid grid-cols-2 gap-4 text-white">
-      <label className="flex flex-col gap-2 text-lg font-medium">
+      <label className="flex flex-col gap-2 text-sm font-semibold uppercase tracking-[0.08em] whitespace-nowrap">
         Preview time (seconds)
         <input
           type="number"
@@ -44,7 +44,7 @@ export default function RoomSettingsForm({
           className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-base text-zinc-950 outline-none focus:border-zinc-900/40 disabled:cursor-not-allowed disabled:bg-zinc-100"
         />
       </label>
-      <label className="flex flex-col gap-2 text-lg font-medium">
+      <label className="flex flex-col gap-2 text-sm font-semibold uppercase tracking-[0.08em] whitespace-nowrap">
         Build time (seconds)
         <input
           type="number"
@@ -60,7 +60,7 @@ export default function RoomSettingsForm({
           className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-base text-zinc-950 outline-none focus:border-zinc-900/40 disabled:cursor-not-allowed disabled:bg-zinc-100"
         />
       </label>
-      <label className="flex flex-col gap-2 text-lg font-medium">
+      <label className="flex flex-col gap-2 text-sm font-semibold uppercase tracking-[0.08em] whitespace-nowrap">
         Vote time (seconds)
         <input
           type="number"
@@ -76,7 +76,7 @@ export default function RoomSettingsForm({
           className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-base text-zinc-950 outline-none focus:border-zinc-900/40 disabled:cursor-not-allowed disabled:bg-zinc-100"
         />
       </label>
-      <label className="flex flex-col gap-2 text-lg font-medium">
+      <label className="flex flex-col gap-2 text-sm font-semibold uppercase tracking-[0.08em] whitespace-nowrap">
         Parts per player
         <input
           type="number"

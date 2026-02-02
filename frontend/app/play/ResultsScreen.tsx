@@ -74,30 +74,42 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
     return `/faces/head_base${index}.png`;
   }, [mask]);
 
+  const maskLayout = useMemo(() => {
+    if (!mask) {
+      return {leftPercent: 50, scaleClass: "scale-[0.75]"};
+    }
+    if (mask.includes("2")) {
+      return {leftPercent: 30, scaleClass: "scale-[0.65]"};
+    }
+    return {leftPercent: 50, scaleClass: "scale-[0.75]"};
+  }, [mask]);
+
   if (!winner) {
     return (
-      <div className="flex h-full items-center justify-center text-lg text-zinc-700">
+      <div className="flex h-full items-center justify-center text-lg ">
         Waiting for results...
       </div>
     );
   }
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-6 pb-10 pt-6 text-center">
-      <h2 className="text-3xl font-semibold text-zinc-900 [font-family:'Archivo_Black',sans-serif]">
-        Winner
+    <div className="relative flex h-full flex-col items-center pb-8 pt-6 text-center">
+      <h2 className="font-medium text-6xl font-semibold">
+        WINNER!
       </h2>
-      <div className="text-lg font-medium text-zinc-700">
+      <div className="text-lg font-medium ">
         {winner.emoji !== null ? String.fromCodePoint(winner.emoji) : "🙂"}{" "}
         {winner.name || "Player"}
       </div>
-      <div className="relative w-full max-w-md">
+      <div className="absolute bottom-0 left-1/2 w-full max-w-md -translate-x-1/2">
         <ResultFace
           faceImageSrc={faceImageSrc}
           maskSrc={mask ? `/masks/${mask}` : null}
           placements={winner.placements}
           partMap={partMap}
           partSizes={partSizes}
+          maskLeftPercent={maskLayout.leftPercent}
+          maskScaleClass={maskLayout.scaleClass}
         />
       </div>
     </div>
@@ -110,6 +122,8 @@ type ResultFaceProps = {
   placements: Placement[];
   partMap: Record<string, FacePart>;
   partSizes: Record<string, {w: number; h: number}>;
+  maskLeftPercent: number;
+  maskScaleClass: string;
 };
 
 function ResultFace({
@@ -118,6 +132,8 @@ function ResultFace({
   placements,
   partMap,
   partSizes,
+  maskLeftPercent,
+  maskScaleClass,
 }: ResultFaceProps) {
   const [faceScale, setFaceScale] = useState(1);
 
@@ -136,11 +152,11 @@ function ResultFace({
         }
         @keyframes drop-in-mask {
           0% {
-            transform: translateX(-50%) scale(0.75) translateY(-120vh);
+            transform: translateY(-120vh);
             opacity: 0;
           }
           100% {
-            transform: translateX(-50%) scale(0.75) translateY(0);
+            transform: translateY(0);
             opacity: 1;
           }
         }
@@ -182,18 +198,26 @@ function ResultFace({
         );
       })}
       {maskSrc ? (
-        <img
-          src={maskSrc}
-          alt="Mask"
-          className="absolute left-1/2 top-0 h-full w-full object-contain"
+        <div
+          className={`absolute top-0 h-full w-full ${maskScaleClass}`}
           style={{
+            left: `${maskLeftPercent}%`,
+            transform: "translateX(-50%)",
             transformOrigin: "top center",
-            animation: "drop-in-mask 2.6s ease-out forwards",
-            animationDelay: "0.8s",
             zIndex: 5,
           }}
-          draggable={false}
-        />
+        >
+          <img
+            src={maskSrc}
+            alt="Mask"
+            className="h-full w-full object-contain"
+            style={{
+              animation: "drop-in-mask 2.6s ease-out forwards",
+              animationDelay: "0.8s",
+            }}
+            draggable={false}
+          />
+        </div>
       ) : null}
     </div>
   );
