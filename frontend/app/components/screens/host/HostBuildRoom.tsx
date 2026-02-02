@@ -23,7 +23,7 @@ export default function HostBuildRoom({
             Build your faces!
           </p>
           <p className="mt-8 text-6xl font-semibold text-white sm:text-4xl">
-            {countdownSec !== null ? `${countdownSec} seconds left` : "--"}
+            {countdownSec !== null ? `${countdownSec}` : "--"}
           </p>
         </div>
       </div>

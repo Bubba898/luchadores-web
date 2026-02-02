@@ -98,7 +98,7 @@ export default function VoteScreen({
     <div className="flex h-full flex-col gap-6 pb-6 pt-6">
       <div className="flex items-center justify-between text-sm">
         <span className="text-base font-semibold ">
-          {countdownSec !== null ? `${countdownSec} Seconds left to vote` : "--"}
+          {countdownSec !== null ? `${countdownSec}` : "--"}
         </span>
       </div>
       <div className="flex-1 overflow-y-auto pb-4">

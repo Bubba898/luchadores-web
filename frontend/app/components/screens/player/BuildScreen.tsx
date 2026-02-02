@@ -339,7 +339,7 @@ export default function BuildScreen({
       <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-center">
         <div className="px-4 py-2 text-2xl font-semibold ">
           {countdownSec !== null
-            ? `${countdownSec} seconds left`
+            ? `${countdownSec}`
             : "--"}
         </div>
       </div>

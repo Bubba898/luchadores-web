@@ -30,7 +30,7 @@ export default function PreviewScreen({
         )}
       </div>
       <p className="text-3xl font-semibold  [font-family:'Archivo_Black',sans-serif]">
-        {countdownSec !== null ? `${countdownSec}s` : "--"}
+        {countdownSec !== null ? `${countdownSec}` : "--"}
       </p>
     </div>
   );

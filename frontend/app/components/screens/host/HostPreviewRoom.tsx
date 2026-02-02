@@ -42,7 +42,7 @@ export default function HostPreviewRoom({
             )}
           </div>
           <p className="mt-6 text-6xl font-semibold text-white sm:text-4xl">
-            {countdownSec !== null ? `${countdownSec} seconds left`  : "--"}
+            {countdownSec !== null ? `${countdownSec}`  : "--"}
           </p>
         </div>
       </div>
