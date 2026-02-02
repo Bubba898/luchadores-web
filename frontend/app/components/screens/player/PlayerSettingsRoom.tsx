@@ -66,7 +66,8 @@ export default function PlayerSettingsRoom({
           <img
             src="/logo.png"
             alt="Luchadores Arena"
-            className="w-[260px] max-w-[40vw] object-contain"
+            data-home-logo
+            className="w-[260px] max-w-[40vw] object-contain cursor-pointer"
           />
           <div className="mt-10 w-full max-w-2xl">
             {showRoomCode ? (

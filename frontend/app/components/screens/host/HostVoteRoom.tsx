@@ -71,7 +71,7 @@ export default function HostVoteRoom({
             {entries.map((entry) => (
               <div
                 key={entry.playerId}
-                className="flex flex-col items-center text-center text-white"
+                className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-4 text-center text-zinc-900 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.35)]"
               >
                 <FaceDisplay
                   faceImageSrc={faceImageSrc}
@@ -84,15 +84,15 @@ export default function HostVoteRoom({
                   showMask={showMaskOnVote}
                   showParts={sizesReady}
                 />
-                <p className="mt-4 text-base text-white/90">
+                <div className="mt-4 flex items-center justify-between text-sm">
                   {entry.emoji !== null
                     ? String.fromCodePoint(entry.emoji)
                     : "🙂"}{" "}
                   {entry.name || "Player"}
-                </p>
-                <p className="mt-1 text-lg font-semibold text-white">
-                  {counts[entry.playerId] ?? 0} votes
-                </p>
+                  <div className="flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-700">
+                    ❤ {counts[entry.playerId] ?? 0}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

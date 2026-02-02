@@ -34,13 +34,12 @@ export default function PlayerResultsRoom({
       <PlayerStageShell>
         <div className="relative flex h-full w-full flex-col">
           <ResultsScreen mask={mask} winner={winner} />
-          {onRestart ? (
+          {onRestart && canRestart ? (
             <div className="pointer-events-none absolute top-40 left-1/2 flex -translate-x-1/2 justify-center">
               <div className="pointer-events-auto">
                 <Button
                   onClick={onRestart}
                   className="min-w-[200px] scale-[0.6]"
-                  disabled={!canRestart}
                 >
                   Restart
                 </Button>

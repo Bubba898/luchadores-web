@@ -112,7 +112,8 @@ export default function LoadingScreen({
             <img
               src="/logo.png"
               alt="Los Luchadores"
-              className="w-[1080px] max-w-[70vw] object-contain"
+              data-home-logo
+              className="w-[1080px] max-w-[70vw] object-contain cursor-pointer"
             />
             <div className="h-20 w-20 animate-spin rounded-full border-4 border-white/40 border-t-white" />
             <span className="text-2xl tracking-wide">Loading game...</span>

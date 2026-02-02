@@ -69,7 +69,8 @@ export default function HostWaitingRoom({
         <img
           src="/logo.png"
           alt="Luchadores Arena"
-          className="w-[1080px] max-w-[70vw] object-contain"
+          data-home-logo
+          className="w-[1080px] max-w-[70vw] object-contain cursor-pointer"
         />
         <div className="-mt-20 flex w-full flex-1 flex-col items-center text-center">
           <p className="text-2xl text-white sm:text-2xl">

@@ -42,7 +42,8 @@ export default function PlayerCreateRoom({
           <img
             src="/logo.png"
             alt="Luchadores Arena"
-            className="w-[260px] max-w-[40vw] object-contain"
+            data-home-logo
+            className="w-[260px] max-w-[40vw] object-contain cursor-pointer"
           />
           <div className="w-full scale-[0.7]">
             <RoomSettingsForm settings={settings} onChange={setSettings} />

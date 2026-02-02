@@ -74,7 +74,8 @@ export default function HostRoom({
         <img
           src="/logo.png"
           alt="Luchadores Arena"
-          className="w-[1080px] max-w-[70vw] object-contain"
+          data-home-logo
+          className="w-[1080px] max-w-[70vw] object-contain cursor-pointer"
         />
         <div className="mt-6 w-full">
           <RoomSettingsForm

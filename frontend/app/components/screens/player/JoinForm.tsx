@@ -48,7 +48,8 @@ export default function JoinForm({
         <img
           src="/logo.png"
           alt="Luchadores Arena"
-          className="mx-auto w-full max-w-[220px] object-contain"
+          data-home-logo
+          className="mx-auto w-full max-w-[220px] object-contain cursor-pointer"
         />
       </div>
       <div className="flex flex-col gap-5">

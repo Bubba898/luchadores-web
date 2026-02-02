@@ -74,6 +74,26 @@ export function Screens() {
   }, [injectedRoomCode, screen]);
 
   useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) {
+        return;
+      }
+      const logo = target.closest("[data-home-logo]");
+      if (!logo) {
+        return;
+      }
+      if (screen !== "home") {
+        transitionScreen("home");
+      }
+    };
+    document.addEventListener("click", handler);
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  }, [screen]);
+
+  useEffect(() => {
     if (countdownSec === null) {
       return;
     }
@@ -352,6 +372,13 @@ export function Screens() {
       flowRef.current = "player";
     } else {
       flowRef.current = null;
+    }
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has("roomCode")) {
+        url.searchParams.delete("roomCode");
+        window.history.replaceState({}, "", url.toString());
+      }
     }
     setScreen(nextScreen)
     await readyPromise;

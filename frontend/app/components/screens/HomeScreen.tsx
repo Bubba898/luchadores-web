@@ -55,7 +55,8 @@ export default function HomeScreen({
           <img
             src="/logo.png"
             alt="Luchadores Arena"
-            className="w-[1080px] max-w-[70vw] object-contain"
+            data-home-logo
+            className="w-[1080px] max-w-[70vw] object-contain cursor-pointer"
           />
         </header>
 
@@ -70,7 +71,7 @@ export default function HomeScreen({
             <Button onClick={() => setScreen("hostRoom")} className="min-w-[360px]">
               Host Room
             </Button>
-            <span className="text-white text-xl w-200 text-center" style={{
+            <span className="text-white text-xl w-full text-center" style={{
               textShadow:
                 "-1px -1px 0 rgba(0,0,0,0.6), 1px -1px 0 rgba(0,0,0,0.6), -1px 1px 0 rgba(0,0,0,0.6), 1px 1px 0 rgba(0,0,0,0.6)",
             }}>
