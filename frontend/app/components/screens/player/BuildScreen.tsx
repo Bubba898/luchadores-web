@@ -37,6 +37,66 @@ const SPAWN_POINTS = {
 const randomInRange = (min: number, max: number) =>
   Math.random() * (max - min) + min;
 const DRAG_LIFT_PX = 90;
+const FACEPART_SFX = {
+  0: [
+    "/audio/sfx/FaceParts/Eyes/eye2.wav",
+    "/audio/sfx/FaceParts/Eyes/eye3.wav",
+    "/audio/sfx/FaceParts/Eyes/eye4.wav",
+    "/audio/sfx/FaceParts/Eyes/eye5.wav",
+    "/audio/sfx/FaceParts/Eyes/eye6.wav",
+    "/audio/sfx/FaceParts/Eyes/eye7.wav",
+    "/audio/sfx/FaceParts/Eyes/eye8.wav",
+    "/audio/sfx/FaceParts/Eyes/right_eye1.wav",
+  ],
+  1: [
+    "/audio/sfx/FaceParts/Nose/nose1.wav",
+    "/audio/sfx/FaceParts/Nose/nose2.wav",
+    "/audio/sfx/FaceParts/Nose/nose3.wav",
+    "/audio/sfx/FaceParts/Nose/nose5.wav",
+    "/audio/sfx/FaceParts/Nose/nose6.wav",
+    "/audio/sfx/FaceParts/Nose/nose7.wav",
+  ],
+  2: [
+    "/audio/sfx/FaceParts/Mouth/mouth1.wav",
+    "/audio/sfx/FaceParts/Mouth/mouth2.wav",
+    "/audio/sfx/FaceParts/Mouth/mouth3.wav",
+    "/audio/sfx/FaceParts/Mouth/mouth4.wav",
+    "/audio/sfx/FaceParts/Mouth/mouth5.wav",
+    "/audio/sfx/FaceParts/Mouth/mouth6.wav",
+    "/audio/sfx/FaceParts/Mouth/mouth7.wav",
+  ],
+} as const;
+let facepartAudioPool: Record<number, HTMLAudioElement[]> | null = null;
+
+const playFacePartSound = (type: number) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+  if ((window as any).__luchaMuted) {
+    return;
+  }
+  if (!facepartAudioPool) {
+    facepartAudioPool = {};
+    Object.entries(FACEPART_SFX).forEach(([key, sources]) => {
+      facepartAudioPool[Number(key)] = sources.map((src) => {
+        const audio = new Audio(src);
+        audio.volume = 0.7;
+        return audio;
+      });
+    });
+  }
+  const pool = facepartAudioPool?.[type];
+  if (!pool || pool.length === 0) {
+    return;
+  }
+  const audio = pool[Math.floor(Math.random() * pool.length)];
+  try {
+    audio.currentTime = 0;
+    void audio.play();
+  } catch {
+    // Ignore playback errors.
+  }
+};
 
 export default function BuildScreen({
   mask,
@@ -163,6 +223,10 @@ export default function BuildScreen({
     instanceId: string,
   ) => {
     event.currentTarget.setPointerCapture(event.pointerId);
+    const picked = items.find((item) => item.instanceId === instanceId);
+    if (picked) {
+      playFacePartSound(picked.part.type);
+    }
     const scale = stageScale || 1;
     const target = event.currentTarget.getBoundingClientRect();
     const imgEl = event.currentTarget.querySelector("img");
@@ -244,11 +308,16 @@ export default function BuildScreen({
               : item,
           ),
         );
-          const dropped = items.find((item) => item.instanceId === draggingId);
+        const dropped = items.find((item) => item.instanceId === draggingId);
         if (dropped) {
           onPartDrop(dropped.part.id, faceX, faceY);
+          playFacePartSound(dropped.part.type);
         }
       } else {
+        const dropped = items.find((item) => item.instanceId === draggingId);
+        if (dropped) {
+          playFacePartSound(dropped.part.type);
+        }
         setItems((prev) =>
           prev.map((item) =>
             item.instanceId === draggingId

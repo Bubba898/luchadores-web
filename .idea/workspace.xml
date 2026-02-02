@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Adds option to show mask during votes">
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Fixes mask placement on vote screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/maskLayout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/maskLayout.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/BuildScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/BuildScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770059590905</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fixes mask placement on vote screen">
+      <option name="closed" value="true" />
+      <created>1770059853393</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1770059853393</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,6 +282,7 @@
     <MESSAGE value="More refactor" />
     <MESSAGE value="Small styleing stuff" />
     <MESSAGE value="Adds option to show mask during votes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds option to show mask during votes" />
+    <MESSAGE value="Fixes mask placement on vote screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes mask placement on vote screen" />
   </component>
 </project>

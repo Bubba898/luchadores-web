@@ -7,6 +7,41 @@ import type {CSSProperties, ReactNode} from "react";
 const BUTTON_BG = "/ui/button/UI_ButtonBG.png";
 const BUTTON_BG_PRESSED = "/ui/button/UI_ButtonBG_Pressed.png";
 const BUTTON_FRAME = "/ui/button/UI_Button_Container.png";
+const CLICK_SFX = [
+  "/audio/sfx/click1.wav",
+  "/audio/sfx/click2.wav",
+  "/audio/sfx/click3.wav",
+  "/audio/sfx/click4.wav",
+  "/audio/sfx/click5.wav",
+];
+let clickAudioPool: HTMLAudioElement[] | null = null;
+
+const playClickSound = () => {
+  if (typeof window === "undefined") {
+    return;
+  }
+  if ((window as any).__luchaMuted) {
+    return;
+  }
+  if (!clickAudioPool) {
+    clickAudioPool = CLICK_SFX.map((src) => {
+      const audio = new Audio(src);
+      audio.volume = 0.6;
+      return audio;
+    });
+  }
+  const audio =
+    clickAudioPool[Math.floor(Math.random() * clickAudioPool.length)];
+  if (!audio) {
+    return;
+  }
+  try {
+    audio.currentTime = 0;
+    void audio.play();
+  } catch {
+    // Ignore playback errors.
+  }
+};
 
 type ButtonVariant = "ui" | "plain";
 
@@ -60,7 +95,12 @@ export default function Button({
         tabIndex={disabled ? -1 : 0}
         className={`${composedClass} ${disabled ? "pointer-events-none opacity-60" : ""}`.trim()}
         style={style}
-        onPointerDown={() => setPressed(true)}
+        onPointerDown={() => {
+          setPressed(true);
+          if (!disabled) {
+            playClickSound();
+          }
+        }}
         onPointerUp={() => setPressed(false)}
         onPointerLeave={() => setPressed(false)}
       >
@@ -107,6 +147,9 @@ export default function Button({
       style={style}
       onPointerDown={(event) => {
         setPressed(true);
+        if (!disabled) {
+          playClickSound();
+        }
         onPointerDown?.(event);
       }}
       onPointerUp={(event) => {
