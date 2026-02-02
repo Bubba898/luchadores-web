@@ -35,6 +35,7 @@ export default function HostVoteRoom({
   }, [onReady]);
 
   const {partMap, partSizes} = useFaceAssets();
+  const sizesReady = Object.keys(partSizes).length > 0;
 
   const faceImageSrc = useMemo(() => {
     if (!mask) {
@@ -52,7 +53,7 @@ export default function HostVoteRoom({
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
       <div className="absolute inset-0 -z-10">
         <div className="pattern-orbit-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_rgba(0,0,0,0.45)_60%,_rgba(0,0,0,0.75)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 vignette-strong" />
       </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
         <div className="mt-8 flex w-full flex-col items-center text-center">
@@ -81,6 +82,7 @@ export default function HostVoteRoom({
                   maskLeftPercent={maskLayout.leftPercent}
                   maskScaleClass={maskLayout.scaleClass}
                   showMask={showMaskOnVote}
+                  showParts={sizesReady}
                 />
                 <p className="mt-4 text-base text-white/90">
                   {entry.emoji !== null
@@ -109,6 +111,7 @@ type FaceDisplayProps = {
   maskLeftPercent: number;
   maskScaleClass: string;
   showMask: boolean;
+  showParts: boolean;
 };
 
 function FaceDisplay({
@@ -120,6 +123,7 @@ function FaceDisplay({
   maskLeftPercent,
   maskScaleClass,
   showMask,
+  showParts,
 }: FaceDisplayProps) {
   const [faceScale, setFaceScale] = useState(1);
 
@@ -137,7 +141,8 @@ function FaceDisplay({
         }}
       />
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-1 bg-black/80" />
-      {placements.map((placement, index) => {
+      {showParts
+        ? placements.map((placement, index) => {
         const part = partMap[placement.id];
         const imageSrc = part?.image ?? `/faceParts/${placement.id}.png`;
         const size = part?.id ? partSizes[part.id] : undefined;
@@ -158,8 +163,9 @@ function FaceDisplay({
             }}
             draggable={false}
           />
-        );
-      })}
+        )
+      })
+        : null}
       {showMask && maskSrc ? (
         <img
           src={maskSrc}

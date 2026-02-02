@@ -4,13 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Fixes mask placement on vote screen">
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Suppressed double face part pickup sound">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/Button.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostBuildRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostBuildRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/BuildScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/BuildScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerWaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerWaitingRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/ResultsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/ResultsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,7 +272,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770059853393</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Adds sfx, gh link">
+      <option name="closed" value="true" />
+      <created>1770060951693</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1770060951693</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Suppressed double face part pickup sound">
+      <option name="closed" value="true" />
+      <created>1770061223135</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1770061223135</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,6 +312,8 @@
     <MESSAGE value="Small styleing stuff" />
     <MESSAGE value="Adds option to show mask during votes" />
     <MESSAGE value="Fixes mask placement on vote screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes mask placement on vote screen" />
+    <MESSAGE value="Adds sfx, gh link" />
+    <MESSAGE value="Suppressed double face part pickup sound" />
+    <option name="LAST_COMMIT_MESSAGE" value="Suppressed double face part pickup sound" />
   </component>
 </project>

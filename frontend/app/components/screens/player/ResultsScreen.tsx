@@ -33,6 +33,7 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
   const [partSizes, setPartSizes] = useState<
     Record<string, {w: number; h: number}>
   >({});
+  const [sizesReady, setSizesReady] = useState(false);
 
   useEffect(() => {
     const loadParts = async () => {
@@ -55,6 +56,7 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
         ),
       );
       setPartSizes(sizes);
+      setSizesReady(true);
     };
     loadParts();
   }, []);
@@ -103,6 +105,7 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
           partSizes={partSizes}
           maskLeftPercent={maskLayout.leftPercent}
           maskScaleClass={maskLayout.scaleClass}
+          showParts={sizesReady}
         />
       </div>
     </div>
@@ -117,6 +120,7 @@ type ResultFaceProps = {
   partSizes: Record<string, {w: number; h: number}>;
   maskLeftPercent: number;
   maskScaleClass: string;
+  showParts: boolean;
 };
 
 function ResultFace({
@@ -127,6 +131,7 @@ function ResultFace({
   partSizes,
   maskLeftPercent,
   maskScaleClass,
+  showParts,
 }: ResultFaceProps) {
   const [faceScale, setFaceScale] = useState(1);
 
@@ -165,7 +170,8 @@ function ResultFace({
           }
         }}
       />
-      {placements.map((placement, index) => {
+      {showParts
+        ? placements.map((placement, index) => {
         const part = partMap[placement.id];
         const imageSrc = part?.image ?? `/faceParts/${placement.id}.png`;
         const size = part?.id ? partSizes[part.id] : undefined;
@@ -188,8 +194,9 @@ function ResultFace({
             }}
             draggable={false}
           />
-        );
-      })}
+        )
+      })
+        : null}
       {maskSrc ? (
         <div
           className={`absolute top-0 h-full w-full ${maskScaleClass}`}

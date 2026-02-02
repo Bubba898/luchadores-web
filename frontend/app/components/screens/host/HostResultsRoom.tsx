@@ -33,6 +33,7 @@ export default function HostResultsRoom({
   }, [onReady]);
 
   const {partMap, partSizes} = useFaceAssets();
+  const sizesReady = Object.keys(partSizes).length > 0;
 
   const faceImageSrc = useMemo(() => {
     if (!mask) {
@@ -47,7 +48,7 @@ export default function HostResultsRoom({
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
       <div className="absolute inset-0 -z-10">
         <div className="pattern-rings-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08)_0%,_rgba(0,0,0,0.45)_60%,_rgba(0,0,0,0.78)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 vignette-strong" />
       </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
         <div className="mt-40 flex w-full flex-1 flex-col items-center text-center">
@@ -66,6 +67,7 @@ export default function HostResultsRoom({
                 placements={winner.placements}
                 partMap={partMap}
                 partSizes={partSizes}
+                showParts={sizesReady}
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center rounded-2xl border border-dashed border-white/40 text-sm text-white/70">
@@ -97,6 +99,7 @@ type FaceDisplayProps = {
   placements: Placement[];
   partMap: Record<string, {id: string; image: string}>;
   partSizes: Record<string, {w: number; h: number}>;
+  showParts: boolean;
 };
 
 function FaceDisplay({
@@ -104,6 +107,7 @@ function FaceDisplay({
   placements,
   partMap,
   partSizes,
+  showParts,
 }: FaceDisplayProps) {
   const [faceScale, setFaceScale] = useState(1);
 
@@ -120,7 +124,8 @@ function FaceDisplay({
           }
         }}
       />
-      {placements.map((placement, index) => {
+      {showParts
+        ? placements.map((placement, index) => {
         const part = partMap[placement.id];
         const imageSrc = part?.image ?? `/faceParts/${placement.id}.png`;
         const size = part?.id ? partSizes[part.id] : undefined;
@@ -141,8 +146,9 @@ function FaceDisplay({
             }}
             draggable={false}
           />
-        );
-      })}
+        )
+      })
+        : null}
     </div>
   );
 }

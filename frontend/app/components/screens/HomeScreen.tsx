@@ -19,7 +19,7 @@ export default function HomeScreen({
     <>
       <div className="absolute inset-0 -z-10">
         <div className="host-eye-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.0)_0%,_rgba(0,0,0,0.3)_50%,_rgba(0,0,0,0.6)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 vignette-strong" />
       </div>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Space+Grotesk:wght@400;500;600&display=swap");

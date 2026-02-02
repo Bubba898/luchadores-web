@@ -37,38 +37,32 @@ const SPAWN_POINTS = {
 const randomInRange = (min: number, max: number) =>
   Math.random() * (max - min) + min;
 const DRAG_LIFT_PX = 90;
-const FACEPART_SFX = {
-  0: [
-    "/audio/sfx/FaceParts/Eyes/eye2.wav",
-    "/audio/sfx/FaceParts/Eyes/eye3.wav",
-    "/audio/sfx/FaceParts/Eyes/eye4.wav",
-    "/audio/sfx/FaceParts/Eyes/eye5.wav",
-    "/audio/sfx/FaceParts/Eyes/eye6.wav",
-    "/audio/sfx/FaceParts/Eyes/eye7.wav",
-    "/audio/sfx/FaceParts/Eyes/eye8.wav",
-    "/audio/sfx/FaceParts/Eyes/right_eye1.wav",
-  ],
-  1: [
-    "/audio/sfx/FaceParts/Nose/nose1.wav",
-    "/audio/sfx/FaceParts/Nose/nose2.wav",
-    "/audio/sfx/FaceParts/Nose/nose3.wav",
-    "/audio/sfx/FaceParts/Nose/nose5.wav",
-    "/audio/sfx/FaceParts/Nose/nose6.wav",
-    "/audio/sfx/FaceParts/Nose/nose7.wav",
-  ],
-  2: [
-    "/audio/sfx/FaceParts/Mouth/mouth1.wav",
-    "/audio/sfx/FaceParts/Mouth/mouth2.wav",
-    "/audio/sfx/FaceParts/Mouth/mouth3.wav",
-    "/audio/sfx/FaceParts/Mouth/mouth4.wav",
-    "/audio/sfx/FaceParts/Mouth/mouth5.wav",
-    "/audio/sfx/FaceParts/Mouth/mouth6.wav",
-    "/audio/sfx/FaceParts/Mouth/mouth7.wav",
-  ],
-} as const;
-let facepartAudioPool: Record<number, HTMLAudioElement[]> | null = null;
+const FACEPART_SFX: Record<string, string> = {
+  eye2: "/audio/sfx/FaceParts/Eyes/eye2.wav",
+  eye3: "/audio/sfx/FaceParts/Eyes/eye3.wav",
+  eye4: "/audio/sfx/FaceParts/Eyes/eye4.wav",
+  eye5: "/audio/sfx/FaceParts/Eyes/eye5.wav",
+  eye6: "/audio/sfx/FaceParts/Eyes/eye6.wav",
+  eye7: "/audio/sfx/FaceParts/Eyes/eye7.wav",
+  eye8: "/audio/sfx/FaceParts/Eyes/eye8.wav",
+  right_eye_1: "/audio/sfx/FaceParts/Eyes/right_eye1.wav",
+  mouth1: "/audio/sfx/FaceParts/Mouth/mouth1.wav",
+  mouth2: "/audio/sfx/FaceParts/Mouth/mouth2.wav",
+  mouth3: "/audio/sfx/FaceParts/Mouth/mouth3.wav",
+  mouth4: "/audio/sfx/FaceParts/Mouth/mouth4.wav",
+  mouth5: "/audio/sfx/FaceParts/Mouth/mouth5.wav",
+  mouth6: "/audio/sfx/FaceParts/Mouth/mouth6.wav",
+  mouth7: "/audio/sfx/FaceParts/Mouth/mouth7.wav",
+  nose1: "/audio/sfx/FaceParts/Nose/nose1.wav",
+  nose2: "/audio/sfx/FaceParts/Nose/nose2.wav",
+  nose3: "/audio/sfx/FaceParts/Nose/nose3.wav",
+  nose5: "/audio/sfx/FaceParts/Nose/nose5.wav",
+  nose6: "/audio/sfx/FaceParts/Nose/nose6.wav",
+  nose7: "/audio/sfx/FaceParts/Nose/nose7.wav",
+};
+let facepartAudioPool: Record<string, HTMLAudioElement> | null = null;
 
-const playFacePartSound = (type: number) => {
+const playFacePartSound = (partId: string) => {
   if (typeof window === "undefined") {
     return;
   }
@@ -77,19 +71,16 @@ const playFacePartSound = (type: number) => {
   }
   if (!facepartAudioPool) {
     facepartAudioPool = {};
-    Object.entries(FACEPART_SFX).forEach(([key, sources]) => {
-      facepartAudioPool[Number(key)] = sources.map((src) => {
-        const audio = new Audio(src);
-        audio.volume = 0.7;
-        return audio;
-      });
+    Object.entries(FACEPART_SFX).forEach(([key, src]) => {
+      const audio = new Audio(src);
+      audio.volume = 0.7;
+      facepartAudioPool![key] = audio;
     });
   }
-  const pool = facepartAudioPool?.[type];
-  if (!pool || pool.length === 0) {
+  const audio = facepartAudioPool?.[partId];
+  if (!audio) {
     return;
   }
-  const audio = pool[Math.floor(Math.random() * pool.length)];
   try {
     audio.currentTime = 0;
     void audio.play();
@@ -225,7 +216,7 @@ export default function BuildScreen({
     event.currentTarget.setPointerCapture(event.pointerId);
     const picked = items.find((item) => item.instanceId === instanceId);
     if (picked) {
-      playFacePartSound(picked.part.type);
+      playFacePartSound(picked.part.id);
     }
     const scale = stageScale || 1;
     const target = event.currentTarget.getBoundingClientRect();
@@ -311,12 +302,12 @@ export default function BuildScreen({
         const dropped = items.find((item) => item.instanceId === draggingId);
         if (dropped) {
           onPartDrop(dropped.part.id, faceX, faceY);
-          playFacePartSound(dropped.part.type);
+          playFacePartSound(dropped.part.id);
         }
       } else {
         const dropped = items.find((item) => item.instanceId === draggingId);
         if (dropped) {
-          playFacePartSound(dropped.part.type);
+          playFacePartSound(dropped.part.id);
         }
         setItems((prev) =>
           prev.map((item) =>

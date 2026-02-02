@@ -47,6 +47,7 @@ export default function VoteScreen({
   const [partSizes, setPartSizes] = useState<
     Record<string, {w: number; h: number}>
   >({});
+  const [sizesReady, setSizesReady] = useState(false);
 
   useEffect(() => {
     const loadParts = async () => {
@@ -69,6 +70,7 @@ export default function VoteScreen({
         ),
       );
       setPartSizes(sizes);
+      setSizesReady(true);
     };
     loadParts();
   }, []);
@@ -106,11 +108,11 @@ export default function VoteScreen({
               key={entry.playerId}
               className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.35)]"
             >
-              <Button
-                variant="plain"
-                onClick={() => {
-                  onVote(entry.playerId);
-                }}
+            <Button
+              variant="plain"
+              onClick={() => {
+                onVote(entry.playerId);
+              }}
                 className={`w-full text-left ${
                   likedTargets[entry.playerId] ? "opacity-80" : ""
                 }`}
@@ -124,6 +126,7 @@ export default function VoteScreen({
                   maskLeftPercent={maskLayout.leftPercent}
                   maskScaleClass={maskLayout.scaleClass}
                   showMask={showMaskOnVote}
+                  showParts={sizesReady}
                   debug={false}
                 />
               </Button>
@@ -170,6 +173,7 @@ type VoteFaceProps = {
   maskLeftPercent: number;
   maskScaleClass: string;
   showMask: boolean;
+  showParts: boolean;
   debug: boolean;
 };
 
@@ -182,6 +186,7 @@ function VoteFace({
   maskLeftPercent,
   maskScaleClass,
   showMask,
+  showParts,
   debug,
 }: VoteFaceProps) {
   const [faceScale, setFaceScale] = useState(1);
@@ -213,7 +218,8 @@ function VoteFace({
         }}
       />
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-1 bg-black/80" />
-      {placements.map((placement, index) => {
+      {showParts
+        ? placements.map((placement, index) => {
         const part = partMap[placement.id];
         const imageSrc = part?.image ?? `/faceParts/${placement.id}.png`;
         const size = part?.id ? partSizes[part.id] : undefined;
@@ -234,8 +240,9 @@ function VoteFace({
             }}
             draggable={false}
           />
-        );
-      })}
+        )
+      })
+        : null}
       {showMask && maskSrc ? (
         <img
           src={maskSrc}
