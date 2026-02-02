@@ -43,7 +43,7 @@ function preloadAudio(src: string) {
 }
 
 async function fetchAssetList() {
-  const response = await fetch("/api/preload", { cache: "no-store" });
+  const response = await fetch("/api/preload", { cache: "force-cache" });
   if (!response.ok) {
     return [];
   }

@@ -4,26 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Suppressed double face part pickup sound">
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Go hom eon logo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostBuildRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostBuildRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/BuildScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/BuildScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerWaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerWaitingRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/ResultsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/ResultsScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/api/preload/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/api/preload/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/LoadingScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/LoadingScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/next.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +95,7 @@
     <option name="spentUsd" value="0.3173775" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="3" />
+    <option name="suspendCountdown" value="2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -288,7 +273,55 @@
       <option name="project" value="LOCAL" />
       <updated>1770061223135</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Styling">
+      <option name="closed" value="true" />
+      <created>1770061616608</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1770061616608</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fixes global audio">
+      <option name="closed" value="true" />
+      <created>1770061682859</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1770061682859</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Fixes compile error">
+      <option name="closed" value="true" />
+      <created>1770061740757</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1770061740757</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1770062127018</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1770062127019</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Timer fixes">
+      <option name="closed" value="true" />
+      <created>1770062207411</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1770062207411</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Go hom eon logo">
+      <option name="closed" value="true" />
+      <created>1770063034722</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1770063034722</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,6 +347,12 @@
     <MESSAGE value="Fixes mask placement on vote screen" />
     <MESSAGE value="Adds sfx, gh link" />
     <MESSAGE value="Suppressed double face part pickup sound" />
-    <option name="LAST_COMMIT_MESSAGE" value="Suppressed double face part pickup sound" />
+    <MESSAGE value="Styling" />
+    <MESSAGE value="Fixes global audio" />
+    <MESSAGE value="Fixes compile error" />
+    <MESSAGE value="Fixes" />
+    <MESSAGE value="Timer fixes" />
+    <MESSAGE value="Go hom eon logo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Go hom eon logo" />
   </component>
 </project>

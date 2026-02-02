@@ -55,7 +55,7 @@ export async function GET() {
     { assets },
     {
       headers: {
-        "Cache-Control": "no-store",
+        "Cache-Control": "public, max-age=31536000, immutable",
       },
     },
   );

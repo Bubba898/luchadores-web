@@ -585,7 +585,6 @@ export function Screens() {
           onReady={handleScreenReady}
           mask={mask}
           winner={resultsWinner}
-          votes={resultsVotes}
           onRestart={handleRestartGame}
         />
       )
