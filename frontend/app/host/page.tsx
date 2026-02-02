@@ -90,8 +90,8 @@ export default function HostPage() {
       socket.addEventListener("close", () => {
         setStatus("Host disconnected");
       });
-      socket.addEventListener("error", (event) => {
-        setError("Host socket error", event);
+      socket.addEventListener("error", () => {
+        setError("Host socket error");
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
