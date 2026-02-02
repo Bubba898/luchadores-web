@@ -11,14 +11,14 @@ export const playerWsRoute = new Elysia().ws("/player", {
   query: playerJoinQuery,
   open(ws) {
     const {code, name, emoji} = ws.data.query;
-    //@ts-ignore
+    // @ts-ignore - Type mismatch between Elysia WebSocket and ServerWebSocket type
     const player = joinPlayer(code, name, emoji ?? null, ws.raw);
     if (!player) {
       ws.close(1008, "Room not found");
     }
   },
   close(ws) {
-    //@ts-ignore
+    // @ts-ignore - Type mismatch between Elysia WebSocket and ServerWebSocket type
     leavePlayerBySocket(ws.raw);
   },
   message(ws, message) {
@@ -53,4 +53,5 @@ export const playerWsRoute = new Elysia().ws("/player", {
       // Ignore malformed messages.
     }
   },
+
 });
