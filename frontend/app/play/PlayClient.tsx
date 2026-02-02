@@ -46,6 +46,8 @@ export default function PlayClient() {
     placements: {id: string; x: number; y: number}[];
   } | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
+  const hostOrigin =
+    typeof window !== "undefined" ? window.location.origin : "";
 
   useEffect(() => {
     if (countdownSec === null) {
@@ -86,9 +88,11 @@ export default function PlayClient() {
         }
         if (message?.messageType === "phasechange") {
           setPhase(typeof message.phase === "string" ? message.phase : null);
-          if (typeof message.countdownSec === "number") {
-            setCountdownSec(message.countdownSec);
-          }
+          setCountdownSec(
+            typeof message.countdownSec === "number"
+              ? message.countdownSec
+              : null,
+          );
         }
         if (message?.messageType === "maskselected") {
           setMask(typeof message.mask === "string" ? message.mask : null);
@@ -198,6 +202,12 @@ export default function PlayClient() {
               <WaitingRoom
                 countdownSec={countdownSec}
                 playerCount={playerCount}
+                roomCode={roomCode.trim() ? roomCode.toUpperCase() : null}
+                joinUrl={
+                  roomCode.trim() && hostOrigin
+                    ? `${hostOrigin}/play?code=${roomCode.trim().toUpperCase()}`
+                    : null
+                }
               />
             )
           ) : (

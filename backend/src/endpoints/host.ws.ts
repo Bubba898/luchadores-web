@@ -1,5 +1,5 @@
 import {Elysia, t} from "elysia";
-import {joinHost} from "../memory/rooms";
+import {advanceFromJoinPhase, joinHost} from "../memory/rooms";
 import {Host} from "../types/room";
 
 const hostJoinQuery = t.Object({
@@ -15,6 +15,23 @@ export const hostWsRoute = new Elysia().ws("/host", {
     const room = joinHost(code, host);
     if (!room) {
       ws.close(1008, "Room not found");
+    }
+  },
+  message(ws, message) {
+    try {
+      const raw =
+        typeof message === "string"
+          ? message
+          : message instanceof Uint8Array
+            ? Buffer.from(message).toString()
+            : JSON.stringify(message);
+      const parsed = JSON.parse(raw) as {messageType?: string};
+      if (parsed.messageType === "start") {
+        //@ts-ignore
+        advanceFromJoinPhase(ws.raw);
+      }
+    } catch {
+      // Ignore malformed messages.
     }
   },
 });

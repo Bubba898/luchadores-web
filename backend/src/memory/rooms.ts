@@ -9,7 +9,6 @@ const phaseTimers = new Map<string, ReturnType<typeof setTimeout>>();
 const PHASE_ORDER: Phase[] = ["join", "preview", "build", "vote", "results"];
 const MASKS = ["mask1.png", "mask2.png", "mask3.png"];
 export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
-  joinTimeSec: 20,
   previewTimeSec: 7,
   buildTimeSec: 20,
   voteTimeSec: 20,
@@ -45,7 +44,6 @@ export const joinHost = (code: string, host: Host): Room | null => {
   }
   room.host = host;
   startPhase(room, "join");
-  scheduleNextPhase(room);
   broadcastPlayerCount(room);
   console.log("[rooms] host joined", {code});
   return room;
@@ -85,7 +83,7 @@ export const joinPlayer = (
 export const broadcastPhaseChange = (
   room: Room,
   phase: Phase,
-  countdownSec: number,
+  countdownSec: number | null,
 ) => {
   const payload = JSON.stringify({
     messageType: "phasechange",
@@ -282,7 +280,7 @@ setInterval(cleanupExpiredRooms, ROOM_CLEANUP_INTERVAL_MS);
 const getPhaseDurationSec = (room: Room, phase: Phase) => {
   switch (phase) {
     case "join":
-      return room.settings.joinTimeSec;
+      return 0;
     case "preview":
       return room.settings.previewTimeSec;
     case "build":
@@ -299,7 +297,7 @@ const startPhase = (room: Room, phase: Phase) => {
   const durationSec = getPhaseDurationSec(room, phase);
   room.phaseEndsAt =
     durationSec > 0 ? Date.now() + durationSec * 1000 : null;
-  broadcastPhaseChange(room, phase, durationSec);
+  broadcastPhaseChange(room, phase, durationSec > 0 ? durationSec : null);
   if (phase === "preview" && MASKS.length > 0) {
     const mask = MASKS[Math.floor(Math.random() * MASKS.length)];
     room.maskId = mask;
@@ -366,4 +364,27 @@ const scheduleNextPhase = (room: Room) => {
     scheduleNextPhase(room);
   }, durationSec * 1000);
   phaseTimers.set(room.code, timer);
+};
+
+const clearPhaseTimer = (room: Room) => {
+  const existingTimer = phaseTimers.get(room.code);
+  if (existingTimer) {
+    clearTimeout(existingTimer);
+    phaseTimers.delete(room.code);
+  }
+};
+
+export const advanceFromJoinPhase = (hostSocket: Host["socket"]) => {
+  for (const room of rooms.values()) {
+    if (room.host?.socket !== hostSocket) {
+      continue;
+    }
+    if (room.phase !== "join") {
+      return;
+    }
+    clearPhaseTimer(room);
+    startPhase(room, "preview");
+    scheduleNextPhase(room);
+    return;
+  }
 };

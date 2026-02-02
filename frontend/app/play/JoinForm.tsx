@@ -9,6 +9,8 @@ type JoinFormProps = {
   status: string;
   error: string | null;
   showPicker: boolean;
+  showRoomCode?: boolean;
+  joinLabel?: string;
   onRoomCodeChange: (value: string) => void;
   onNameChange: (value: string) => void;
   onEmojiChange: (value: string) => void;
@@ -23,6 +25,8 @@ export default function JoinForm({
   status,
   error,
   showPicker,
+  showRoomCode = true,
+  joinLabel = "Join Room",
   onRoomCodeChange,
   onNameChange,
   onEmojiChange,
@@ -32,15 +36,17 @@ export default function JoinForm({
   return (
     <>
       <div className="flex flex-col gap-5">
-        <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
-          Room Code
-          <input
-            value={roomCode}
-            onChange={(event) => onRoomCodeChange(event.target.value)}
-            placeholder="ABCD"
-            className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-4 text-xl uppercase tracking-[0.2em] text-zinc-950 outline-none focus:border-zinc-900/40"
-          />
-        </label>
+        {showRoomCode ? (
+          <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
+            Room Code
+            <input
+              value={roomCode}
+              onChange={(event) => onRoomCodeChange(event.target.value)}
+              placeholder="ABCD"
+              className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-4 text-xl uppercase tracking-[0.2em] text-zinc-950 outline-none focus:border-zinc-900/40"
+            />
+          </label>
+        ) : null}
         <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
           Name
           <input
@@ -85,7 +91,7 @@ export default function JoinForm({
           onClick={onJoin}
           className="inline-flex w-full items-center justify-center rounded-full bg-zinc-950 px-6 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:translate-y-[-1px] hover:bg-zinc-900 sm:w-auto"
         >
-          Join Room
+          {joinLabel}
         </button>
         <div className="text-sm text-zinc-600">
           Status: <span className="font-medium text-zinc-900">{status}</span>

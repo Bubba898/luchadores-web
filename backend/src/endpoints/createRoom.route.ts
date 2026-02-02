@@ -3,7 +3,6 @@ import {createRoom, DEFAULT_ROOM_SETTINGS} from "../memory/rooms";
 import {RoomSettings} from "../types/room";
 
 const createRoomBody = t.Object({
-  joinTimeSec: t.Optional(t.Number()),
   previewTimeSec: t.Optional(t.Number()),
   buildTimeSec: t.Optional(t.Number()),
   voteTimeSec: t.Optional(t.Number()),

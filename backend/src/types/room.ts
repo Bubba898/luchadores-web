@@ -4,7 +4,6 @@ import {Player} from "./player";
 export type Phase = "join" | "preview" | "build" | "vote" | "results";
 
 export type RoomSettings = {
-  joinTimeSec: number;
   previewTimeSec: number;
   buildTimeSec: number;
   voteTimeSec: number;
