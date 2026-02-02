@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
+import {useEffect} from "react";
 import Button from "@/app/components/Button";
 import {ScreenState} from "@/app/components/screens/screenState";
 
@@ -15,24 +15,10 @@ export default function HomeScreen({
     onReady?.();
   }, [onReady]);
 
-  const patternOptions = useMemo(
-    () => [
-      {label: "Chevron", className: "pattern-chevron-bg"},
-      {label: "Orbit", className: "pattern-orbit-bg"},
-      {label: "Fan", className: "pattern-fan-bg"},
-      {label: "Rings", className: "pattern-rings-bg"},
-      {label: "Arches", className: "pattern-arches-bg"},
-      {label: "Tiles", className: "pattern-tiles-bg"},
-    ],
-    [],
-  );
-  const [patternIndex, setPatternIndex] = useState(0);
-  const currentPattern = patternOptions[patternIndex % patternOptions.length];
-
   return (
     <>
       <div className="absolute inset-0 -z-10">
-        <div className={`${currentPattern.className} h-full w-full`} />
+        <div className="host-eye-bg h-full w-full" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.0)_0%,_rgba(0,0,0,0.3)_50%,_rgba(0,0,0,0.6)_100%)]" />
       </div>
       <style jsx global>{`
@@ -57,15 +43,6 @@ export default function HomeScreen({
             </Button>
             <Button onClick={() => setScreen("hostRoom")} className="min-w-[360px]">
               Host Room
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setPatternIndex((prev) => (prev + 1) % patternOptions.length);
-              }}
-              className="min-w-[360px]"
-            >
-              Pattern: {currentPattern.label}
             </Button>
             <span className="text-white text-xl w-200 text-center" style={{
               textShadow:

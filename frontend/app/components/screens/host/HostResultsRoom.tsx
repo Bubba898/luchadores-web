@@ -43,7 +43,7 @@ export default function HostResultsRoom({
   return (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
       <div className="absolute inset-0 -z-10">
-        <div className="host-eye-bg h-full w-full" />
+        <div className="pattern-rings-bg h-full w-full" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08)_0%,_rgba(0,0,0,0.45)_60%,_rgba(0,0,0,0.78)_100%)]" />
       </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
