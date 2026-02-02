@@ -1,5 +1,8 @@
 # Luchadores Web
 
+Play the game!
+https://luchadores-web.vercel.app/host
+
 This is a monorepo containing the Luchadores web application.
 
 ## Project Structure

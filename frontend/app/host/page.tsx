@@ -3,6 +3,7 @@
 import {treaty} from "@elysiajs/eden";
 import {useEffect, useRef, useState} from "react";
 import type {App} from "../../../backend/src";
+import BackendHealthBadge from "../components/BackendHealthBadge";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3001";
 const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
@@ -222,6 +223,7 @@ export default function HostPage() {
           </aside>
         </main>
       </div>
+      <BackendHealthBadge />
     </div>
   );
 }

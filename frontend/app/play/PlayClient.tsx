@@ -8,6 +8,7 @@ import PreviewScreen from "./PreviewScreen";
 import BuildScreen from "./BuildScreen";
 import VoteScreen from "./VoteScreen";
 import ResultsScreen from "./ResultsScreen";
+import BackendHealthBadge from "../components/BackendHealthBadge";
 
 const WS_BASE = process.env.NEXT_PUBLIC_WS_BASE ?? "ws://localhost:3001";
 
@@ -219,6 +220,7 @@ export default function PlayClient() {
           )}
         </main>
       </div>
+      <BackendHealthBadge />
     </div>
   );
 }
