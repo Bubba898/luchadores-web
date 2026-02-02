@@ -76,12 +76,18 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
 
   const maskLayout = useMemo(() => {
     if (!mask) {
-      return {leftPercent: 50, scaleClass: "scale-[0.75]"};
+      return {leftPercent: 0, scaleClass: "scale-[0.75]"};
+    }
+    if (mask.includes("1")) {
+      return {leftPercent: 0, scaleClass: "scale-[0.72]"};
     }
     if (mask.includes("2")) {
       return {leftPercent: -3, scaleClass: "scale-[0.65]"};
     }
-    return {leftPercent: 50, scaleClass: "scale-[0.75]"};
+    if (mask.includes("3")) {
+      return {leftPercent: 0, scaleClass: "scale-[0.75]"};
+    }
+    return {leftPercent: 0, scaleClass: "scale-[0.75]"};
   }, [mask]);
 
   if (!winner) {

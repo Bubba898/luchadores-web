@@ -134,7 +134,7 @@ export default function VoteScreen({
                   className={
                     likedTargets[entry.playerId]
                       ? "animate-[heart-burst_0.6s_ease-out]"
-                      : ""
+                      : "text-pink-500"
                   }
                 >
                   ❤
@@ -192,6 +192,7 @@ function VoteFace({
           }
         }}
       />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-1 bg-black/80" />
       {placements.map((placement, index) => {
         const part = partMap[placement.id];
         const imageSrc = part?.image ?? `/faceParts/${placement.id}.png`;

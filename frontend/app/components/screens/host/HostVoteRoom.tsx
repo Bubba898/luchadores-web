@@ -116,6 +116,7 @@ function FaceDisplay({
           }
         }}
       />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-1 bg-black/80" />
       {placements.map((placement, index) => {
         const part = partMap[placement.id];
         const imageSrc = part?.image ?? `/faceParts/${placement.id}.png`;
