@@ -9,10 +9,12 @@ export default function PlayerCreateRoom({
   onReady,
   onCreate,
   isCreating,
+  onBack,
 }: {
   onReady?: () => void,
   onCreate: (settings: typeof DEFAULT_ROOM_SETTINGS) => void,
   isCreating?: boolean,
+  onBack?: () => void,
 }) {
   useEffect(() => {
     onReady?.();
@@ -22,6 +24,15 @@ export default function PlayerCreateRoom({
 
   return (
     <div className="relative min-h-screen text-white aling-items-center content-center">
+      <div className="absolute left-6 top-6 z-10">
+        <Button
+          variant="plain"
+          onClick={onBack}
+          className="text-white text-sm uppercase tracking-[0.2em]"
+        >
+          Back
+        </Button>
+      </div>
       <div className="absolute inset-0 -z-10">
         <div className="pattern-arches-bg h-full w-full" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.12)_0%,_rgba(0,0,0,0.55)_100%)]" />

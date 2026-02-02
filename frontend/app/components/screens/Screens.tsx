@@ -120,6 +120,11 @@ export function Screens() {
           if(typeof message.phase === "string") {
             if(message.phase === "join") {
               transitionScreen("hostWaitingRoom")
+              setMask(null);
+              setVoteEntries([]);
+              setVoteCounts({});
+              setResultsWinner(null);
+              setResultsVotes(null);
             } else if (message.phase === "preview") {
               transitionScreen("hostPreview")
             } else if (message.phase === "build") {
@@ -185,6 +190,12 @@ export function Screens() {
         if (typeof message.phase === "string") {
           if (message.phase === "join") {
             transitionScreen("playerWaitingRoom");
+            setMask(null);
+            setVoteEntries([]);
+            setVoteCounts({});
+            setLikedTargets({});
+            setResultsWinner(null);
+            setResultsVotes(null);
           } else if (message.phase === "preview") {
             transitionScreen("playerPreview");
           } else if (message.phase === "build") {
@@ -272,6 +283,14 @@ export function Screens() {
       return;
     }
     socket.send(JSON.stringify({messageType: "start"}));
+  };
+
+  const handleRestartGame = () => {
+    const socket = hostSocketRef.current;
+    if (!socket || socket.readyState !== WebSocket.OPEN) {
+      return;
+    }
+    socket.send(JSON.stringify({messageType: "restart"}));
   };
 
   const handleCreatePlayerRoom = async (settings: {
@@ -371,6 +390,7 @@ export function Screens() {
           onReady={handleScreenReady}
           onCreate={handleCreatePlayerRoom}
           isCreating={isCreatingRoom}
+          onBack={() => transitionScreen("home")}
         />
       )
     }
@@ -384,6 +404,7 @@ export function Screens() {
           emoji={playerEmoji}
           status={playerStatus}
           error={playerError}
+          onBack={() => transitionScreen("home")}
           onRoomCodeChange={(value) => setRoomCode(value.toUpperCase())}
           onNameChange={setPlayerName}
           onEmojiChange={(value) => {
@@ -476,6 +497,8 @@ export function Screens() {
           onReady={handleScreenReady}
           mask={mask}
           winner={resultsWinner}
+          canRestart={hostSocketRef.current?.readyState === WebSocket.OPEN}
+          onRestart={handleRestartGame}
         />
       )
     }
@@ -514,6 +537,7 @@ export function Screens() {
           mask={mask}
           winner={resultsWinner}
           votes={resultsVotes}
+          onRestart={handleRestartGame}
         />
       )
     }

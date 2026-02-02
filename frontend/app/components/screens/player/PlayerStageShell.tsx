@@ -3,7 +3,13 @@
 import {useEffect, useState} from "react";
 import type {CSSProperties, ReactNode} from "react";
 
-export default function PlayerStageShell({children}: {children: ReactNode}) {
+export default function PlayerStageShell({
+  children,
+  onScaleChange,
+}: {
+  children: ReactNode,
+  onScaleChange?: (scale: number) => void,
+}) {
   const stageWidth = 390;
   const stageHeight = (stageWidth * 16) / 9;
   const [stageScale, setStageScale] = useState(1);
@@ -14,12 +20,14 @@ export default function PlayerStageShell({children}: {children: ReactNode}) {
         window.innerWidth / stageWidth,
         window.innerHeight / stageHeight,
       );
-      setStageScale(Number.isFinite(nextScale) ? nextScale : 1);
+      const safeScale = Number.isFinite(nextScale) ? nextScale : 1;
+      setStageScale(safeScale);
+      onScaleChange?.(safeScale);
     };
     updateScale();
     window.addEventListener("resize", updateScale);
     return () => window.removeEventListener("resize", updateScale);
-  }, [stageHeight, stageWidth]);
+  }, [onScaleChange, stageHeight, stageWidth]);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useState} from "react";
 import {useFaceAssets} from "@/app/components/screens/host/useFaceAssets";
+import Button from "@/app/components/Button";
 
 type Placement = {
   id: string;
@@ -19,11 +20,13 @@ export default function HostResultsRoom({
   mask,
   winner,
   votes,
+  onRestart,
 }: {
   onReady?: () => void,
   mask: string | null,
   winner: Winner | null,
   votes: number | null,
+  onRestart?: () => void,
 }) {
   useEffect(() => {
     onReady?.();
@@ -47,7 +50,7 @@ export default function HostResultsRoom({
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08)_0%,_rgba(0,0,0,0.45)_60%,_rgba(0,0,0,0.78)_100%)]" />
       </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
-        <div className="mt-40 flex w-full flex-col items-center text-center">
+        <div className="mt-40 flex w-full flex-1 flex-col items-center text-center">
           <p className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
             And the winner is:
           </p>
@@ -75,6 +78,14 @@ export default function HostResultsRoom({
               {votes ?? 0} votes
             </p>
           ) : null}
+        </div>
+        <div className="mt-auto flex w-full justify-center pb-2">
+          <Button
+            onClick={onRestart}
+            className="min-w-[220px]"
+          >
+            Restart
+          </Button>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useRef, useState} from "react";
-import Button from "../components/Button";
+import Button from "../../../components/Button";
 
 type FacePart = {
   id: string;
@@ -283,6 +283,12 @@ export default function BuildScreen({
             : "--"}
         </div>
       </div>
+        <div className="px-4 py-2 text-sm font-semibold text-center">
+          Click on the containers on the bottom of the screen to get different face parts
+        </div>
+        <div className="px-4 py-2 text-xs font-semibold text-center">
+          Then drag them on the face
+        </div>
       <div className="flex flex-col items-center gap-6">
         <div
           ref={faceRef}
@@ -292,7 +298,7 @@ export default function BuildScreen({
             ref={faceImgRef}
             src={faceImageSrc}
             alt="Face base"
-            className="w-full object-contain"
+            className="w-7/8 object-contain"
             onLoad={(event) => {
               const img = event.currentTarget;
               if (img.naturalWidth > 0) {
@@ -328,20 +334,20 @@ export default function BuildScreen({
 
         <div
           ref={bucketRef}
-          className="relative -mx-5 -my-12 flex w-full justify-center"
+          className="relative -mx-5 -my-12 flex w-full justify-center h-1/2"
         >
           <img
             src="/ui/UI_Bucket.png"
             alt="Bucket"
             className="h-[95%] w-[95%] object-fill"
           />
-          <div className="absolute right-6 top-4 h-24 w-32">
+          <div className="absolute right-[-6px] top-[-6px] h-24 w-32">
             <img
               src="/ui/UI_Bucket_PartsTracker.png"
               alt="Parts tracker"
               className="h-full w-full object-contain"
             />
-            <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-white">
+            <div className="absolute inset-0 top-2 flex items-center justify-center text-4xl font-semibold text-white">
               {partLimit !== null
                 ? Math.max(partLimit - spawnedCount, 0)
                 : "∞"}
@@ -351,37 +357,33 @@ export default function BuildScreen({
       </div>
 
       <div
-        className="absolute left-0 right-0 border-t px-6 pb-[env(safe-area-inset-bottom)]"
+        className="absolute left-0 right-0 bottom-[-80px] px-6 pb-[env(safe-area-inset-bottom)]"
         style={{top: "calc(100% - 20%)"}}
       >
-        <div className="mx-auto flex w-full max-w-none items-center justify-between gap-3">
+        <div className="relative bottom-20 mx-auto flex w-full max-w-none items-center justify-between gap-3">
           <Button
             variant="plain"
             onClick={() => spawnPart(2)}
-            className="flex h-80 flex-1 items-center justify-center rounded-2xl bg-transparent px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
+            className="flex h-120 flex-1 items-center justify-center rounded-2xl  px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
           >
-            Mouth
+-
           </Button>
           <Button
             variant="plain"
             onClick={() => spawnPart(1)}
-            className="flex h-80 flex-1 items-center justify-center rounded-2xl bg-transparent px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
+            className="flex h-120 flex-1 items-center justify-center rounded-2xl  px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
           >
-            Nose
+-
           </Button>
           <Button
             variant="plain"
             onClick={() => spawnPart(0)}
-            className="flex h-80 flex-1 items-center justify-center rounded-2xl bg-transparent px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
+            className="flex h-120 flex-1 items-center justify-center rounded-2xl  px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
           >
-            Eyes
+-
           </Button>
         </div>
-        <div className="pointer-events-none absolute left-0 right-0 top-6 z-10 mx-auto flex w-full items-center justify-between px-12 text-xs font-semibold uppercase tracking-[0.3em] text-white">
-          <span>Mouth</span>
-          <span>Nose</span>
-          <span>Eyes</span>
-        </div>
+
         <div className="pointer-events-none absolute inset-0 mx-auto flex w-[90%] items-center justify-center">
           <img
             src="/ui/dispenser.png"

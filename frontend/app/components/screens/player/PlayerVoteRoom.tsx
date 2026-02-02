@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import VoteScreen from "@/app/play/VoteScreen";
+import VoteScreen from "./VoteScreen";
 import PlayerStageShell from "@/app/components/screens/player/PlayerStageShell";
 
 type VoteEntry = {

@@ -9,10 +9,10 @@ const phaseTimers = new Map<string, ReturnType<typeof setTimeout>>();
 const PHASE_ORDER: Phase[] = ["join", "preview", "build", "vote", "results"];
 const MASKS = ["mask1.png", "mask2.png", "mask3.png"];
 export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
-  previewTimeSec: 7,
-  buildTimeSec: 20,
+  previewTimeSec: 10,
+  buildTimeSec: 45,
   voteTimeSec: 20,
-  partsPerPlayer: 5,
+  partsPerPlayer: 8,
 };
 
 export const createRoom: (settings: RoomSettings) => Room = (settings) => {
@@ -385,6 +385,27 @@ export const advanceFromJoinPhase = (hostSocket: Host["socket"]) => {
     clearPhaseTimer(room);
     startPhase(room, "preview");
     scheduleNextPhase(room);
+    return;
+  }
+};
+
+export const restartRoom = (hostSocket: Host["socket"]) => {
+  for (const room of rooms.values()) {
+    if (room.host?.socket !== hostSocket) {
+      continue;
+    }
+    clearPhaseTimer(room);
+    room.phase = "join";
+    room.phaseEndsAt = null;
+    room.maskId = null;
+    for (const player of room.players) {
+      player.placements = [];
+    }
+    voteCounts.delete(room.code);
+    voterSelections.delete(room.code);
+    lastVoteGallery.delete(room.code);
+    broadcastPhaseChange(room, "join", null);
+    broadcastPlayerCount(room);
     return;
   }
 };

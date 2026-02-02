@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useState} from "react";
-import Button from "../components/Button";
+import Button from "../../../components/Button";
 
 type Placement = {
   id: string;
@@ -89,11 +89,8 @@ export default function VoteScreen({
   return (
     <div className="flex h-full flex-col gap-6 pb-10 pt-6">
       <div className="flex items-center justify-between text-sm">
-        <span className="text-xs uppercase tracking-[0.2em] text-zinc-500">
-          Vote
-        </span>
         <span className="text-base font-semibold ">
-          {countdownSec !== null ? `${countdownSec}s left` : "--"}
+          {countdownSec !== null ? `${countdownSec} Seconds left to vote` : "--"}
         </span>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -129,7 +126,7 @@ export default function VoteScreen({
               <div
                 className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
                   likedTargets[entry.playerId]
-                    ? "bg-pink-500 text-white"
+                    ? "bg-pink-500 "
                     : "bg-white/80"
                 }`}
               >

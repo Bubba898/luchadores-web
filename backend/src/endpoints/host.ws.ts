@@ -1,5 +1,5 @@
 import {Elysia, t} from "elysia";
-import {advanceFromJoinPhase, joinHost} from "../memory/rooms";
+import {advanceFromJoinPhase, joinHost, restartRoom} from "../memory/rooms";
 import {Host} from "../types/room";
 
 const hostJoinQuery = t.Object({
@@ -29,6 +29,10 @@ export const hostWsRoute = new Elysia().ws("/host", {
       if (parsed.messageType === "start") {
         //@ts-ignore
         advanceFromJoinPhase(ws.raw);
+      }
+      if (parsed.messageType === "restart") {
+        //@ts-ignore
+        restartRoom(ws.raw);
       }
     } catch {
       // Ignore malformed messages.

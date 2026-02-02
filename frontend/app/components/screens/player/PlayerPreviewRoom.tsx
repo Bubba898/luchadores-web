@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import PreviewScreen from "@/app/play/PreviewScreen";
+import PreviewScreen from "./PreviewScreen";
 import PlayerStageShell from "@/app/components/screens/player/PlayerStageShell";
 
 export default function PlayerPreviewRoom({

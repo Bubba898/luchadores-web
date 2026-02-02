@@ -32,12 +32,6 @@ export default function PreviewScreen({
       <p className="text-3xl font-semibold  [font-family:'Archivo_Black',sans-serif]">
         {countdownSec !== null ? `${countdownSec}s` : "--"}
       </p>
-      <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-3xl items-center justify-between border-t border-white/60 bg-white/80 px-6 py-4 pb-[env(safe-area-inset-bottom)] text-sm text-zinc-700 backdrop-blur">
-        <span>Players connected</span>
-        <span className="text-lg font-semibold text-zinc-900">
-          {playerCount}
-        </span>
-      </div>
     </div>
   );
 }

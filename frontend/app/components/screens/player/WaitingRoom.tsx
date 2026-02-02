@@ -83,12 +83,6 @@ export default function WaitingRoom({
           </p>
         </div>
       ) : null}
-      <div className="absolute bottom-0 left-0 right-0 mx-auto flex w-full max-w-4xl items-center justify-between border-t border-white/60 bg-white/80 px-6 py-4 pb-[env(safe-area-inset-bottom)] text-sm text-zinc-700 backdrop-blur">
-        <span>Players connected</span>
-        <span className="text-lg font-semibold text-zinc-900">
-          {playerCount}
-        </span>
-      </div>
     </div>
   );
 }
