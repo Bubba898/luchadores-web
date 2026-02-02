@@ -13,6 +13,7 @@ export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
   buildTimeSec: 45,
   voteTimeSec: 20,
   partsPerPlayer: 8,
+  showMaskOnVote: false,
 };
 
 export const createRoom: (settings: RoomSettings) => Room = (settings) => {
@@ -161,6 +162,7 @@ export const broadcastVoteGallery = (room: Room) => {
     messageType: "votegallery",
     mask: room.maskId,
     entries,
+    showMaskOnVote: room.settings.showMaskOnVote,
   });
   room.host?.socket.send(payload);
   for (const player of room.players) {

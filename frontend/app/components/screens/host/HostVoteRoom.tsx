@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useState} from "react";
 import {useFaceAssets} from "@/app/components/screens/host/useFaceAssets";
+import {getMaskLayout} from "@/app/components/screens/maskLayout";
 
 type Placement = {
   id: string;
@@ -20,12 +21,14 @@ export default function HostVoteRoom({
   entries,
   counts,
   countdownSec,
+  showMaskOnVote = false,
 }: {
   onReady?: () => void,
   mask: string | null,
   entries: VoteEntry[],
   counts: Record<number, number>,
   countdownSec: number | null,
+  showMaskOnVote?: boolean,
 }) {
   useEffect(() => {
     onReady?.();
@@ -41,6 +44,9 @@ export default function HostVoteRoom({
     const index = match?.[1] ?? "1";
     return `/faces/head_base${index}.png`;
   }, [mask]);
+
+  const maskLayout = useMemo(() => getMaskLayout(mask), [mask]);
+  const maskSrc = mask ? `/masks/${mask}` : null;
 
   return (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
@@ -59,29 +65,35 @@ export default function HostVoteRoom({
             Vote for your favorite faces!
           </p>
         </div>
-        <div className="mt-8 grid w-full grid-cols-2 gap-6 lg:grid-cols-3">
-          {entries.map((entry) => (
-            <div
-              key={entry.playerId}
-              className="flex flex-col items-center text-center text-white"
-            >
-              <FaceDisplay
-                faceImageSrc={faceImageSrc}
-                placements={entry.placements}
-                partMap={partMap}
-                partSizes={partSizes}
-              />
-              <p className="mt-4 text-base text-white/90">
-                {entry.emoji !== null
-                  ? String.fromCodePoint(entry.emoji)
-                  : "🙂"}{" "}
-                {entry.name || "Player"}
-              </p>
-              <p className="mt-1 text-lg font-semibold text-white">
-                {counts[entry.playerId] ?? 0} votes
-              </p>
-            </div>
-          ))}
+        <div className="mt-8 w-full flex-1 overflow-y-auto pb-6">
+          <div className="grid w-full grid-cols-2 gap-6 lg:grid-cols-3">
+            {entries.map((entry) => (
+              <div
+                key={entry.playerId}
+                className="flex flex-col items-center text-center text-white"
+              >
+                <FaceDisplay
+                  faceImageSrc={faceImageSrc}
+                  maskSrc={maskSrc}
+                  placements={entry.placements}
+                  partMap={partMap}
+                  partSizes={partSizes}
+                  maskLeftPercent={maskLayout.leftPercent}
+                  maskScaleClass={maskLayout.scaleClass}
+                  showMask={showMaskOnVote}
+                />
+                <p className="mt-4 text-base text-white/90">
+                  {entry.emoji !== null
+                    ? String.fromCodePoint(entry.emoji)
+                    : "🙂"}{" "}
+                  {entry.name || "Player"}
+                </p>
+                <p className="mt-1 text-lg font-semibold text-white">
+                  {counts[entry.playerId] ?? 0} votes
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -90,16 +102,24 @@ export default function HostVoteRoom({
 
 type FaceDisplayProps = {
   faceImageSrc: string;
+  maskSrc: string | null;
   placements: Placement[];
   partMap: Record<string, {id: string; image: string}>;
   partSizes: Record<string, {w: number; h: number}>;
+  maskLeftPercent: number;
+  maskScaleClass: string;
+  showMask: boolean;
 };
 
 function FaceDisplay({
   faceImageSrc,
+  maskSrc,
   placements,
   partMap,
   partSizes,
+  maskLeftPercent,
+  maskScaleClass,
+  showMask,
 }: FaceDisplayProps) {
   const [faceScale, setFaceScale] = useState(1);
 
@@ -140,6 +160,20 @@ function FaceDisplay({
           />
         );
       })}
+      {showMask && maskSrc ? (
+        <img
+          src={maskSrc}
+          alt="Mask"
+          className={`absolute top-0 h-full w-full object-contain ${maskScaleClass}`}
+          style={{
+            left: `${maskLeftPercent}%`,
+            transform: "translateX(-50%)",
+            transformOrigin: "top center",
+            zIndex: 5,
+          }}
+          draggable={false}
+        />
+      ) : null}
     </div>
   );
 }

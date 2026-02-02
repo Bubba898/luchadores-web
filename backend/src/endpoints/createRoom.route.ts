@@ -7,6 +7,7 @@ const createRoomBody = t.Object({
   buildTimeSec: t.Optional(t.Number()),
   voteTimeSec: t.Optional(t.Number()),
   partsPerPlayer: t.Optional(t.Number()),
+  showMaskOnVote: t.Optional(t.Boolean()),
 });
 
 export const createRoomRoute = new Elysia().post(

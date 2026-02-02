@@ -16,6 +16,7 @@ export default function PlayerVoteRoom({
   counts,
   likedTargets,
   countdownSec,
+  showMaskOnVote,
   onVote,
 }: {
   onReady?: () => void,
@@ -24,6 +25,7 @@ export default function PlayerVoteRoom({
   counts: Record<number, number>,
   likedTargets: Record<number, boolean>,
   countdownSec: number | null,
+  showMaskOnVote?: boolean,
   onVote: (targetPlayerId: number) => void,
 }) {
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function PlayerVoteRoom({
           counts={counts}
           likedTargets={likedTargets}
           countdownSec={countdownSec}
+          showMaskOnVote={showMaskOnVote}
           onVote={onVote}
         />
       </PlayerStageShell>

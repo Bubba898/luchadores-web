@@ -52,6 +52,7 @@ export function Screens() {
     placements: {id: string; x: number; y: number}[];
   } | null>(null);
   const [resultsVotes, setResultsVotes] = useState<number | null>(null);
+  const [showMaskOnVote, setShowMaskOnVote] = useState(false);
   const [partLimit, setPartLimit] = useState<number | null>(null);
   const [likedTargets, setLikedTargets] = useState<Record<number, boolean>>({});
   const [playerName, setPlayerName] = useState("");
@@ -125,6 +126,7 @@ export function Screens() {
               setVoteCounts({});
               setResultsWinner(null);
               setResultsVotes(null);
+              setShowMaskOnVote(false);
             } else if (message.phase === "preview") {
               transitionScreen("hostPreview")
             } else if (message.phase === "build") {
@@ -149,6 +151,11 @@ export function Screens() {
           setVoteCounts({});
           if (typeof message.mask === "string") {
             setMask(message.mask);
+          }
+          if (typeof message.showMaskOnVote === "boolean") {
+            setShowMaskOnVote(message.showMaskOnVote);
+          } else {
+            setShowMaskOnVote(false);
           }
         }
         if (message?.messageType === "voteupdate") {
@@ -196,6 +203,7 @@ export function Screens() {
             setLikedTargets({});
             setResultsWinner(null);
             setResultsVotes(null);
+            setShowMaskOnVote(false);
           } else if (message.phase === "preview") {
             transitionScreen("playerPreview");
           } else if (message.phase === "build") {
@@ -223,6 +231,11 @@ export function Screens() {
         setLikedTargets({});
         if (typeof message.mask === "string") {
           setMask(message.mask);
+        }
+        if (typeof message.showMaskOnVote === "boolean") {
+          setShowMaskOnVote(message.showMaskOnVote);
+        } else {
+          setShowMaskOnVote(false);
         }
       }
       if (message?.messageType === "voteupdate") {
@@ -298,6 +311,7 @@ export function Screens() {
     buildTimeSec: number;
     voteTimeSec: number;
     partsPerPlayer: number;
+    showMaskOnVote: boolean;
   }) => {
     setIsCreatingRoom(true);
     setPlayerError(null);
@@ -469,6 +483,7 @@ export function Screens() {
           counts={voteCounts}
           likedTargets={likedTargets}
           countdownSec={countdownSec}
+          showMaskOnVote={showMaskOnVote}
           onVote={(targetPlayerId) => {
             if (likedTargets[targetPlayerId]) {
               return;
@@ -527,6 +542,7 @@ export function Screens() {
           entries={voteEntries}
           counts={voteCounts}
           countdownSec={countdownSec}
+          showMaskOnVote={showMaskOnVote}
         />
       )
     }

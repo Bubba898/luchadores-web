@@ -8,6 +8,7 @@ export type RoomSettings = {
   buildTimeSec: number;
   voteTimeSec: number;
   partsPerPlayer: number;
+  showMaskOnVote: boolean;
 }
 
 export type WS = ServerWebSocket<{

@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useState} from "react";
+import {getMaskLayout} from "@/app/components/screens/maskLayout";
 
 type Placement = {
   id: string;
@@ -74,21 +75,7 @@ export default function ResultsScreen({mask, winner}: ResultsScreenProps) {
     return `/faces/head_base${index}.png`;
   }, [mask]);
 
-  const maskLayout = useMemo(() => {
-    if (!mask) {
-      return {leftPercent: 0, scaleClass: "scale-[0.75]"};
-    }
-    if (mask.includes("1")) {
-      return {leftPercent: 0, scaleClass: "scale-[0.72]"};
-    }
-    if (mask.includes("2")) {
-      return {leftPercent: -3, scaleClass: "scale-[0.65]"};
-    }
-    if (mask.includes("3")) {
-      return {leftPercent: 0, scaleClass: "scale-[0.75]"};
-    }
-    return {leftPercent: 0, scaleClass: "scale-[0.75]"};
-  }, [mask]);
+  const maskLayout = useMemo(() => getMaskLayout(mask), [mask]);
 
   if (!winner) {
     return (

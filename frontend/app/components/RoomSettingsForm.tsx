@@ -3,6 +3,7 @@ type RoomSettings = {
   buildTimeSec: number;
   voteTimeSec: number;
   partsPerPlayer: number;
+  showMaskOnVote: boolean;
 };
 
 export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
@@ -10,6 +11,7 @@ export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
   buildTimeSec: 20,
   voteTimeSec: 20,
   partsPerPlayer: 5,
+  showMaskOnVote: false,
 };
 
 type RoomSettingsFormProps = {
@@ -91,6 +93,21 @@ export default function RoomSettingsForm({
           }
           className="rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-3 text-base text-zinc-950 outline-none focus:border-zinc-900/40 disabled:cursor-not-allowed disabled:bg-zinc-100"
         />
+      </label>
+      <label className="col-span-2 flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.08em]">
+        <input
+          type="checkbox"
+          checked={settings.showMaskOnVote}
+          disabled={disabled}
+          onChange={(event) =>
+            onChange({
+              ...settings,
+              showMaskOnVote: event.target.checked,
+            })
+          }
+          className="h-5 w-5 accent-white"
+        />
+        Show masks during vote
       </label>
     </div>
   );

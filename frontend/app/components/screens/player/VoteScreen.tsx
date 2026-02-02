@@ -2,6 +2,7 @@
 
 import {useEffect, useMemo, useState} from "react";
 import Button from "../../../components/Button";
+import {getMaskLayout} from "@/app/components/screens/maskLayout";
 
 type Placement = {
   id: string;
@@ -29,6 +30,7 @@ type VoteScreenProps = {
   counts: Record<number, number>;
   likedTargets: Record<number, boolean>;
   countdownSec: number | null;
+  showMaskOnVote?: boolean;
   onVote: (targetPlayerId: number) => void;
 };
 
@@ -38,6 +40,7 @@ export default function VoteScreen({
   counts,
   likedTargets,
   countdownSec,
+  showMaskOnVote = false,
   onVote,
 }: VoteScreenProps) {
   const [parts, setParts] = useState<FacePart[]>([]);
@@ -86,64 +89,73 @@ export default function VoteScreen({
     return `/faces/head_base${index}.png`;
   }, [mask]);
 
+  const maskLayout = useMemo(() => getMaskLayout(mask), [mask]);
+  const maskSrc = mask ? `/masks/${mask}` : null;
+
   return (
-    <div className="flex h-full flex-col gap-6 pb-10 pt-6">
+    <div className="flex h-full flex-col gap-6 pb-6 pt-6">
       <div className="flex items-center justify-between text-sm">
         <span className="text-base font-semibold ">
           {countdownSec !== null ? `${countdownSec} Seconds left to vote` : "--"}
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        {entries.map((entry) => (
-          <div
-            key={entry.playerId}
-            className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.35)]"
-          >
-            <Button
-              variant="plain"
-              onClick={() => {
-                onVote(entry.playerId);
-              }}
-              className={`w-full text-left ${
-                likedTargets[entry.playerId] ? "opacity-80" : ""
-              }`}
+      <div className="flex-1 overflow-y-auto pb-4">
+        <div className="grid grid-cols-2 gap-4">
+          {entries.map((entry) => (
+            <div
+              key={entry.playerId}
+              className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.35)]"
             >
-              <VoteFace
-                faceImageSrc={faceImageSrc}
-                placements={entry.placements}
-                partMap={partMap}
-                partSizes={partSizes}
-                debug={false}
-              />
-            </Button>
-            <div className="mt-4 flex items-center justify-between text-sm ">
-              <span className="font-medium ">
-                {entry.emoji !== null
-                  ? String.fromCodePoint(entry.emoji)
-                  : "🙂"}{" "}
-                {entry.name || "Player"}
-              </span>
-              <div
-                className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
-                  likedTargets[entry.playerId]
-                    ? "bg-pink-500 "
-                    : "bg-white/80"
+              <Button
+                variant="plain"
+                onClick={() => {
+                  onVote(entry.playerId);
+                }}
+                className={`w-full text-left ${
+                  likedTargets[entry.playerId] ? "opacity-80" : ""
                 }`}
               >
-                <span
-                  className={
-                    likedTargets[entry.playerId]
-                      ? "animate-[heart-burst_0.6s_ease-out]"
-                      : "text-pink-500"
-                  }
-                >
-                  ❤
+                <VoteFace
+                  faceImageSrc={faceImageSrc}
+                  maskSrc={maskSrc}
+                  placements={entry.placements}
+                  partMap={partMap}
+                  partSizes={partSizes}
+                  maskLeftPercent={maskLayout.leftPercent}
+                  maskScaleClass={maskLayout.scaleClass}
+                  showMask={showMaskOnVote}
+                  debug={false}
+                />
+              </Button>
+              <div className="mt-4 flex items-center justify-between text-sm ">
+                <span className="font-medium ">
+                  {entry.emoji !== null
+                    ? String.fromCodePoint(entry.emoji)
+                    : "🙂"}{" "}
+                  {entry.name || "Player"}
                 </span>
-                {counts[entry.playerId] ?? 0}
+                <div
+                  className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
+                    likedTargets[entry.playerId]
+                      ? "bg-pink-500 "
+                      : "bg-white/80"
+                  }`}
+                >
+                  <span
+                    className={
+                      likedTargets[entry.playerId]
+                        ? "animate-[heart-burst_0.6s_ease-out]"
+                        : "text-pink-500"
+                    }
+                  >
+                    ❤
+                  </span>
+                  {counts[entry.playerId] ?? 0}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -151,17 +163,25 @@ export default function VoteScreen({
 
 type VoteFaceProps = {
   faceImageSrc: string;
+  maskSrc: string | null;
   placements: Placement[];
   partMap: Record<string, FacePart>;
   partSizes: Record<string, {w: number; h: number}>;
+  maskLeftPercent: number;
+  maskScaleClass: string;
+  showMask: boolean;
   debug: boolean;
 };
 
 function VoteFace({
   faceImageSrc,
+  maskSrc,
   placements,
   partMap,
   partSizes,
+  maskLeftPercent,
+  maskScaleClass,
+  showMask,
   debug,
 }: VoteFaceProps) {
   const [faceScale, setFaceScale] = useState(1);
@@ -216,6 +236,20 @@ function VoteFace({
           />
         );
       })}
+      {showMask && maskSrc ? (
+        <img
+          src={maskSrc}
+          alt="Mask"
+          className={`absolute top-0 h-full w-full object-contain ${maskScaleClass}`}
+          style={{
+            left: `${maskLeftPercent}%`,
+            transform: "translateX(-50%)",
+            transformOrigin: "top center",
+            zIndex: 5,
+          }}
+          draggable={false}
+        />
+      ) : null}
       {debug ? (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-red-600">
           {placements.length ? `${placements.length} parts` : "no parts"}

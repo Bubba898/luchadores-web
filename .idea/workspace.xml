@@ -4,31 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="mask anim fix">
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Small styleing stuff">
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/luchador_bgm.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/eye2.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/eye3.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/eye4.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/eye5.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/eye6.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/eye7.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/eye8.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Eyes/right_eye1.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Mouth/mouth1.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Mouth/mouth2.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Mouth/mouth3.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Mouth/mouth4.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Mouth/mouth5.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Mouth/mouth6.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Mouth/mouth7.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Nose/nose1.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Nose/nose2.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Nose/nose3.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Nose/nose5.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Nose/nose6.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/FaceParts/Nose/nose7.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/arriba.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/ayayay.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/descansa en paz.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/dios mio.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/drumroll.aif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/epaa.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/listo.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/misterioso.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/ooh.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/sin miedo.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/VoiceBarks/uuh.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/click1.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/click2.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/click3.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/click4.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/audio/sfx/click5.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/endpoints/host.ws.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/endpoints/host.ws.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/endpoints/createRoom.route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/endpoints/createRoom.route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/memory/rooms.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/memory/rooms.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/types/room.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/types/room.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostClient.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerStageShell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerStageShell.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/ResultsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/ResultsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/BuildScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/BuildScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/JoinForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/JoinForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/PlayClient.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/PreviewScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PreviewScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/ResultsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/ResultsScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/UI_Bucket_PartsTracker.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/VoteScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/VoteScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/WaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/WaitingRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/page.tsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +118,7 @@
     "git-widget-placeholder": "main",
     "javascript.preferred.runtime.type.id": "bun",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/yannickwiggers/PycharmProjects/luchadores-web/frontend/app/components/screens/host",
+    "last_opened_file_path": "/Users/yannickwiggers/PycharmProjects/luchadores-web/frontend/public/audio/sfx",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -119,11 +144,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/public/audio/sfx" />
+      <recent name="$PROJECT_DIR$/frontend/public/audio" />
       <recent name="$PROJECT_DIR$/frontend/app/components/screens/host" />
       <recent name="$PROJECT_DIR$/frontend/public/fonts" />
       <recent name="$PROJECT_DIR$/frontend/public" />
-      <recent name="$PROJECT_DIR$/frontend/public/ui/button" />
-      <recent name="$PROJECT_DIR$/frontend/public/ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/app/components/screens/player" />
@@ -245,7 +270,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770057271389</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="More refactor">
+      <option name="closed" value="true" />
+      <created>1770058760794</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1770058760794</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Small styleing stuff">
+      <option name="closed" value="true" />
+      <created>1770059027682</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1770059027682</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +306,8 @@
     <MESSAGE value="changes backgrounds" />
     <MESSAGE value="Initial player screens" />
     <MESSAGE value="mask anim fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="mask anim fix" />
+    <MESSAGE value="More refactor" />
+    <MESSAGE value="Small styleing stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small styleing stuff" />
   </component>
 </project>
