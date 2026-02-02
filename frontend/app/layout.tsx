@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bangers, Geist, Geist_Mono } from "next/font/google";
+import GlobalPreload from "./components/GlobalPreload";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,7 +37,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${bangers.variable} antialiased`}
       >
-        {children}
+        <GlobalPreload>{children}</GlobalPreload>
       </body>
     </html>
   );

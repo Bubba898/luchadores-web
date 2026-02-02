@@ -1,0 +1,35 @@
+.blobs-bg {
+  background-color: #fee440;
+}
+
+.blobs-bg svg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.blobs-bg__links {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+.blobs-bg__links a {
+  text-decoration: none;
+  color: black;
+  margin-left: 1em;
+}
+
+.blobs-bg__links a:hover {
+  text-decoration: underline;
+}
+
+.blobs-bg__links a img.icon {
+  display: inline-block;
+  height: 1em;
+  margin: 0 0 -0.1em 0.3em;
+}

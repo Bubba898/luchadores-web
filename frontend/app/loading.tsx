@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
-    <div className="host-eye-bg flex min-h-screen items-center justify-center text-zinc-900">
-      <div className="flex flex-col items-center gap-6">
+    <div className="host-eye-bg host-eye-vignette flex min-h-screen items-center justify-center text-white">
+      <div className="relative z-10 flex flex-col items-center gap-6">
         <img
           src="/logo.png"
           alt="Los Luchadores"

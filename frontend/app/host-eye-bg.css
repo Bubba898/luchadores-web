@@ -1,0 +1,45 @@
+.host-eye-bg {
+  --s: 120px;
+  --_g: radial-gradient(#f4ead5 31%, #0000 32%);
+  --_l: radial-gradient(#594f4f 15%, #0000 16%);
+  background: var(--_l), var(--_l), var(--_g), var(--_g), #45ada8;
+  background-position: 0 0, var(--s) var(--s);
+  background-size: calc(2 * var(--s)) calc(2 * var(--s));
+  animation:
+    host-eye-x 3s cubic-bezier(0.5, 92, 0.5, -92) infinite,
+    host-eye-y 3s cubic-bezier(0.5, 92, 0.5, -92) infinite -0.5s;
+}
+
+.host-eye-vignette {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.host-eye-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.25) 55%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes host-eye-x {
+  to {
+    background-position-x: -0.25px, calc(var(--s) - 1px), -0.5px,
+      calc(var(--s) - 0.5px);
+  }
+}
+
+@keyframes host-eye-y {
+  to {
+    background-position-y: -0.25px, calc(var(--s) - 1px), 0.25px,
+      calc(var(--s) - 0.5px);
+  }
+}

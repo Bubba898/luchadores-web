@@ -1,0 +1,67 @@
+.triangle-grid-bg {
+  --triangle-grid-cols: 10;
+  --triangle-grid-rows: 6;
+  --triangle-grid-cells: 60;
+  --triangle-grid-bg: #6223d2;
+  --triangle-grid-shape-height: 230px;
+  --triangle-grid-shape-width: 200px;
+  margin: 0;
+  background-color: var(--triangle-grid-bg);
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.triangle-grid-bg__overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 2;
+  background: radial-gradient(
+    circle,
+    transparent 0%,
+    rgba(98, 35, 210, 0.85) 100%
+  );
+}
+
+.triangle-grid-bg__container {
+  display: grid;
+  grid-template-columns: repeat(10, var(--triangle-grid-shape-width));
+  grid-template-rows: repeat(6, var(--triangle-grid-shape-height));
+  transform: translate(-3%, -4%);
+}
+
+.triangle-grid-bg__shape {
+  width: var(--triangle-grid-shape-width);
+  height: var(--triangle-grid-shape-height);
+  -webkit-clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0 75%,
+    0 25%
+  );
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+.triangle-grid-bg__shape:nth-child(n + 11) {
+  transform: translate(-50%, -25%);
+}
+
+.triangle-grid-bg__shape:nth-child(n + 21) {
+  transform: translate(0%, -50%);
+}
+
+.triangle-grid-bg__shape:nth-child(n + 31) {
+  transform: translate(-50%, -75%);
+}
+
+.triangle-grid-bg__shape:nth-child(n + 41) {
+  transform: translate(0%, -100%);
+}
+
+.triangle-grid-bg__shape:nth-child(n + 51) {
+  transform: translate(-50%, -125%);
+}

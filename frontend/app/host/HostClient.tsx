@@ -131,25 +131,12 @@ export default function HostClient() {
   }, [prefillCode]);
 
   return (
-    <div className="host-eye-bg min-h-screen text-zinc-900">
+    <div className="host-eye-bg host-eye-vignette min-h-screen text-zinc-900">
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Sans:wght@400;500;600&display=swap");
       `}</style>
-      <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-6 py-16">
-        <header className="flex flex-col gap-3">
-          <p className="text-sm uppercase tracking-[0.3em] text-zinc-800/70">
-            Luchadores Host
-          </p>
-          <h1 className="text-5xl font-semibold text-zinc-950 [font-family:'Archivo_Black',sans-serif] sm:text-6xl">
-            Create a room. Rally the crowd.
-          </h1>
-          <p className="max-w-2xl text-lg text-zinc-900/80 [font-family:'Instrument_Sans',sans-serif]">
-            Spin up a fresh room and connect your host socket in a single tap.
-            Share the room code with players to start the match.
-          </p>
-        </header>
-
-        <main className="mt-12 grid gap-6 sm:grid-cols-[2fr_1fr]">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col px-6 py-16">
+        <main className="grid gap-6 sm:grid-cols-[2fr_1fr]">
           <section className="rounded-3xl border border-white/50 bg-white/70 p-8 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] backdrop-blur">
             <h2 className="text-xl font-semibold [font-family:'Archivo_Black',sans-serif]">
               Room Control

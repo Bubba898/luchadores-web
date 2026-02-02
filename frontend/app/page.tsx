@@ -25,7 +25,7 @@ export default function Home() {
         <main className="mt-10 flex w-full items-center justify-center">
           <div className="flex flex-col items-center justify-center gap-6">
             <Button href="/hostplay" className="min-w-[360px]">
-              Create & Join
+              Create Room
             </Button>
             <Button href="/play" className="min-w-[360px]">
               Join Room
@@ -33,6 +33,12 @@ export default function Home() {
             <Button href="/host" className="min-w-[360px]">
               Host Room
             </Button>
+            <span className="text-white text-xl w-200 text-center" style={{
+              textShadow:
+                "-1px -1px 0 rgba(0,0,0,0.6), 1px -1px 0 rgba(0,0,0,0.6), -1px 1px 0 rgba(0,0,0,0.6), 1px 1px 0 rgba(0,0,0,0.6)",
+            }}>
+              Hosting a Room is for hosting a room on a big tv screen and then have everyone join from their phone.
+            </span>
           </div>
         </main>
       </div>

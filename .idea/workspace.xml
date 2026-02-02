@@ -4,29 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Fixes sclaing">
-      <change afterPath="$PROJECT_DIR$/frontend/public/fonts/LiberationSans - OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/fonts/LiberationSans - OFL.txt.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/fonts/LiberationSans.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/fonts/LiberationSans.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/ui/UI_Fail_Notif.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/ui/UI_Victory_Notif.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/ui/button/UI_ButtonBG.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/ui/button/UI_ButtonBG_Pressed.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/ui/button/UI_Button_Container.png" afterDir="false" />
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Make home screen pretty">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/RoomSettingsForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/host/HostClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/host/HostClient.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/hostplay/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/hostplay/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/loading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/loading.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/BuildScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/BuildScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/JoinForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/JoinForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/play/VoteScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/play/VoteScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/vercel.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="90" />
+    <option name="cachedIndexableFilesCount" value="109" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -52,6 +36,10 @@
     &quot;accountId&quot;: &quot;15ddf938-38bf-47d1-9c95-4bd650a0f233&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -101,7 +89,7 @@
     <option name="spentUsd" value="0.3173775" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="4" />
+    <option name="suspendCountdown" value="3" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -181,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770035263399</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Make home screen pretty">
+      <option name="closed" value="true" />
+      <created>1770042309067</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1770042309067</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +191,7 @@
     <MESSAGE value="Fixes CORS errors on deployment, shows Backend status" />
     <MESSAGE value="Reworks flow for starting a game" />
     <MESSAGE value="Fixes sclaing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes sclaing" />
+    <MESSAGE value="Make home screen pretty" />
+    <option name="LAST_COMMIT_MESSAGE" value="Make home screen pretty" />
   </component>
 </project>
