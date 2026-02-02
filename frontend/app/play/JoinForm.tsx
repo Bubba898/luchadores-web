@@ -1,6 +1,7 @@
 "use client";
 
 import EmojiPicker, {EmojiClickData} from "emoji-picker-react";
+import Button from "../components/Button";
 
 type JoinFormProps = {
   roomCode: string;
@@ -35,6 +36,13 @@ export default function JoinForm({
 }: JoinFormProps) {
   return (
     <>
+      <div className="flex justify-center">
+        <img
+          src="/logo.png"
+          alt="Luchadores Arena"
+          className="mx-auto w-full max-w-[220px] object-contain"
+        />
+      </div>
       <div className="flex flex-col gap-5">
         {showRoomCode ? (
           <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
@@ -61,14 +69,14 @@ export default function JoinForm({
       <div className="mt-8">
         <p className="text-sm font-medium text-zinc-700">Pick any Emoji</p>
         <div className="mt-3 flex flex-col gap-4">
-          <button
-            type="button"
+          <Button
+            variant="plain"
             onClick={onTogglePicker}
-            className="flex items-center justify-between rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-4 text-left text-lg text-zinc-900"
+            className="flex w-full items-center justify-between rounded-2xl border border-zinc-900/10 bg-white/80 px-4 py-4 text-left text-lg text-zinc-900"
           >
             <span>{emoji || "Choose an emoji"}</span>
             <span className="text-2xl">{emoji || "😀"}</span>
-          </button>
+          </Button>
           {showPicker ? (
             <div className="overflow-hidden rounded-2xl border border-zinc-900/10 bg-white/80">
               <EmojiPicker
@@ -86,13 +94,9 @@ export default function JoinForm({
       </div>
 
       <div className="mt-10 flex flex-col items-start gap-4">
-        <button
-          type="button"
-          onClick={onJoin}
-          className="inline-flex w-full items-center justify-center rounded-full bg-zinc-950 px-6 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:translate-y-[-1px] hover:bg-zinc-900"
-        >
+        <Button onClick={onJoin} className="w-full">
           {joinLabel}
-        </button>
+        </Button>
         <div className="text-sm text-zinc-600">
           Status: <span className="font-medium text-zinc-900">{status}</span>
         </div>

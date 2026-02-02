@@ -28,6 +28,11 @@ export default function RoomSettingsForm({
 }: RoomSettingsFormProps) {
   return (
     <div className="grid gap-4">
+      <img
+        src="/logo.png"
+        alt="Luchadores Arena"
+        className="mx-auto w-full max-w-[220px] object-contain"
+      />
       <label className="flex flex-col gap-2 text-sm font-medium text-zinc-700">
         Preview time (seconds)
         <input

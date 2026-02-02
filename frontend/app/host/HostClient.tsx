@@ -5,6 +5,7 @@ import {useSearchParams} from "next/navigation";
 import {useEffect, useMemo, useRef, useState} from "react";
 import type {App} from "../../../backend/src";
 import BackendHealthBadge from "../components/BackendHealthBadge";
+import Button from "../components/Button";
 import RoomSettingsForm, {
   DEFAULT_ROOM_SETTINGS,
 } from "../components/RoomSettingsForm";
@@ -130,7 +131,7 @@ export default function HostClient() {
   }, [prefillCode]);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff6db_0%,_#f8d2a5_35%,_#f2a66a_70%,_#d76b3e_100%)] text-zinc-900">
+    <div className="host-eye-bg min-h-screen text-zinc-900">
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Sans:wght@400;500;600&display=swap");
       `}</style>
@@ -164,24 +165,24 @@ export default function HostClient() {
                 disabled={!!roomCode}
               />
             </div>
-            <button
-              type="button"
-              onClick={createAndConnect}
-              disabled={!!roomCode}
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-zinc-950 px-6 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:translate-y-[-1px] hover:bg-zinc-900 disabled:cursor-not-allowed disabled:bg-zinc-500"
-            >
-              Create & Connect
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                socketRef.current?.send(JSON.stringify({messageType: "start"}))
-              }
-              disabled={!roomCode || phase !== "join"}
-              className="ml-3 mt-6 inline-flex items-center justify-center rounded-full border border-zinc-900/20 px-6 py-3 text-xs uppercase tracking-[0.2em] text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900/40 disabled:cursor-not-allowed disabled:border-zinc-900/10"
-            >
-              Start Match
-            </button>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button
+                onClick={createAndConnect}
+                disabled={!!roomCode}
+                className="min-w-[220px]"
+              >
+                Create & Connect
+              </Button>
+              <Button
+                onClick={() =>
+                  socketRef.current?.send(JSON.stringify({messageType: "start"}))
+                }
+                disabled={!roomCode || phase !== "join"}
+                className="min-w-[220px]"
+              >
+                Start Match
+              </Button>
+            </div>
 
             {phase === "preview" ? (
               <div className="mt-8 rounded-2xl border border-zinc-900/10 bg-white/80 px-5 py-6 text-center">

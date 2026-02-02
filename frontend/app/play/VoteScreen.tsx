@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useState} from "react";
+import Button from "../components/Button";
 
 type Placement = {
   id: string;
@@ -101,8 +102,8 @@ export default function VoteScreen({
             key={entry.playerId}
             className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.35)]"
           >
-            <button
-              type="button"
+            <Button
+              variant="plain"
               onClick={() => {
                 onVote(entry.playerId);
               }}
@@ -117,7 +118,7 @@ export default function VoteScreen({
                 partSizes={partSizes}
                 debug={false}
               />
-            </button>
+            </Button>
             <div className="mt-4 flex items-center justify-between text-sm text-zinc-700">
               <span className="font-medium text-zinc-900">
                 {entry.emoji !== null

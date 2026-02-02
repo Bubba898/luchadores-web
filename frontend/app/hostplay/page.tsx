@@ -11,6 +11,7 @@ import ResultsScreen from "../play/ResultsScreen";
 import VoteScreen from "../play/VoteScreen";
 import WaitingRoom from "../play/WaitingRoom";
 import BackendHealthBadge from "../components/BackendHealthBadge";
+import Button from "../components/Button";
 import RoomSettingsForm, {
   DEFAULT_ROOM_SETTINGS,
 } from "../components/RoomSettingsForm";
@@ -309,18 +310,17 @@ export default function HostPlayPage() {
                   }
                 />
                 <div className="absolute bottom-20 left-0 right-0 flex items-center justify-center">
-                  <button
-                    type="button"
+                  <Button
                     onClick={() =>
                       hostSocketRef.current?.send(
                         JSON.stringify({messageType: "start"}),
                       )
                     }
                     disabled={phase !== "join"}
-                    className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/80 px-6 py-3 text-xs uppercase tracking-[0.2em] text-zinc-800 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 hover:border-white disabled:cursor-not-allowed disabled:border-white/40"
+                    className="min-w-[220px]"
                   >
                     Start Match
-                  </button>
+                  </Button>
                 </div>
               </div>
             )
@@ -340,14 +340,13 @@ export default function HostPlayPage() {
                     disabled={status !== "Idle"}
                   />
                 </div>
-                <button
-                  type="button"
+                <Button
                   onClick={createRoom}
                   disabled={status !== "Idle"}
-                  className="mt-6 inline-flex items-center justify-center rounded-full bg-zinc-950 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white transition hover:-translate-y-0.5 hover:bg-zinc-900 disabled:cursor-not-allowed disabled:bg-zinc-800"
+                  className="mt-6 min-w-[220px]"
                 >
                   Create room
-                </button>
+                </Button>
               </section>
             </>
           ) : (
@@ -386,14 +385,13 @@ export default function HostPlayPage() {
                   </span>
                 </div>
               ) : null}
-              <button
-                type="button"
+              <Button
                 onClick={() => setSetupStep("settings")}
                 disabled={status !== "Idle"}
-                className="mt-6 inline-flex items-center justify-center rounded-full border border-zinc-900/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900/40 disabled:cursor-not-allowed disabled:border-zinc-900/10"
+                className="mt-6 min-w-[220px]"
               >
                 Back to settings
-              </button>
+              </Button>
             </section>
           )}
             </main>

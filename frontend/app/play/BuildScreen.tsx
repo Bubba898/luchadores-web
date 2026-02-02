@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useRef, useState} from "react";
+import Button from "../components/Button";
 
 type FacePart = {
   id: string;
@@ -354,27 +355,27 @@ export default function BuildScreen({
         style={{top: "calc(100% - 20%)"}}
       >
         <div className="mx-auto flex w-full max-w-none items-center justify-between gap-3">
-          <button
-            type="button"
+          <Button
+            variant="plain"
             onClick={() => spawnPart(2)}
             className="flex h-80 flex-1 items-center justify-center rounded-2xl bg-transparent px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
           >
             Mouth
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant="plain"
             onClick={() => spawnPart(1)}
             className="flex h-80 flex-1 items-center justify-center rounded-2xl bg-transparent px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
           >
             Nose
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant="plain"
             onClick={() => spawnPart(0)}
             className="flex h-80 flex-1 items-center justify-center rounded-2xl bg-transparent px-4 py-4 text-sm uppercase tracking-[0.2em] text-transparent"
           >
             Eyes
-          </button>
+          </Button>
         </div>
         <div className="pointer-events-none absolute left-0 right-0 top-6 z-10 mx-auto flex w-full items-center justify-between px-12 text-xs font-semibold uppercase tracking-[0.3em] text-white">
           <span>Mouth</span>
@@ -393,10 +394,10 @@ export default function BuildScreen({
       {items
         .filter((item) => item.location !== "face")
         .map((item) => (
-          <button
+          <Button
             key={item.instanceId}
-            type="button"
             onPointerDown={(event) => handlePointerDown(event, item.instanceId)}
+            variant="plain"
             className={
               item.location === "dragging"
                 ? "absolute rounded-2xl bg-transparent p-0 shadow-none touch-none select-none"
@@ -421,7 +422,7 @@ export default function BuildScreen({
               }}
               draggable={false}
             />
-          </button>
+          </Button>
         ))}
     </div>
   );
