@@ -67,6 +67,9 @@ export default function GlobalPreload({
   const [transitionState, setTransitionState] = useState<
     "idle" | "cover" | "reveal"
   >("idle");
+  const showTransitionDebug =
+    typeof window !== "undefined" &&
+    window.location.search.includes("debugTransition=1");
   const pathname = usePathname();
   const previousPath = useRef(pathname);
   const transitionTimers = useRef<number[]>([]);
@@ -141,6 +144,31 @@ export default function GlobalPreload({
         }`}
         aria-hidden="true"
       />
+      {showTransitionDebug ? (
+        <div className="fixed bottom-4 left-4 z-[70] flex gap-2 rounded-full bg-black/60 p-2 text-xs text-white backdrop-blur">
+          <button
+            type="button"
+            className="rounded-full bg-white/10 px-3 py-1 transition hover:bg-white/20"
+            onClick={() => setTransitionState("idle")}
+          >
+            Idle
+          </button>
+          <button
+            type="button"
+            className="rounded-full bg-white/10 px-3 py-1 transition hover:bg-white/20"
+            onClick={() => setTransitionState("cover")}
+          >
+            Cover
+          </button>
+          <button
+            type="button"
+            className="rounded-full bg-white/10 px-3 py-1 transition hover:bg-white/20"
+            onClick={() => setTransitionState("reveal")}
+          >
+            Reveal
+          </button>
+        </div>
+      ) : null}
       {loading ? (
         <div
           className="h-full host-eye-bg host-eye-vignette fixed inset-0 z-50 flex items-center justify-center"

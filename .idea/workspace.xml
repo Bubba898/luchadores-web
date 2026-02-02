@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Make home screen pretty">
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Loading 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/host/HostClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/host/HostClient.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/loading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/loading.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/GlobalPreload.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/GlobalPreload.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/screen-transitions.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/screen-transitions.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +174,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770042309067</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Loading 1">
+      <option name="closed" value="true" />
+      <created>1770044927924</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1770044927926</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +197,7 @@
     <MESSAGE value="Reworks flow for starting a game" />
     <MESSAGE value="Fixes sclaing" />
     <MESSAGE value="Make home screen pretty" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make home screen pretty" />
+    <MESSAGE value="Loading 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loading 1" />
   </component>
 </project>
