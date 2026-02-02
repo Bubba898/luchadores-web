@@ -75,7 +75,7 @@ export default function HomeScreen({
               textShadow:
                 "-1px -1px 0 rgba(0,0,0,0.6), 1px -1px 0 rgba(0,0,0,0.6), -1px 1px 0 rgba(0,0,0,0.6), 1px 1px 0 rgba(0,0,0,0.6)",
             }}>
-              Hosting a Room is for hosting a room on a big tv screen and then have everyone join from their phone in party mode.
+              Hosting a Room is for showing on a big stv screen and then have everyone join from their phone in party mode.
             </span>
           </div>
         </main>

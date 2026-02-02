@@ -30,7 +30,8 @@ export default function GlobalAudio() {
     if (typeof window === "undefined") {
       return;
     }
-    audioRef.current = getGlobalAudio();
+    const audio = getGlobalAudio();
+    audioRef.current = audio;
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "true") {
       setMuted(true);
@@ -65,19 +66,24 @@ export default function GlobalAudio() {
     }
     audio.muted = mutedRef.current;
 
-    const tryPlay = () => {
+    const tryPlay = async () => {
       if (!audio || mutedRef.current || !audio.paused) {
-        return;
+        return true;
       }
-      audio.play().catch(() => {
-        // Autoplay may be blocked until user interaction.
-      });
+      try {
+        await audio.play();
+        return true;
+      } catch {
+        return false;
+      }
     };
 
-    const handleFirstInteraction = () => {
-      tryPlay();
-      window.removeEventListener("pointerdown", handleFirstInteraction);
-      window.removeEventListener("keydown", handleFirstInteraction);
+    const handleFirstInteraction = async () => {
+      const played = await tryPlay();
+      if (played) {
+        window.removeEventListener("pointerdown", handleFirstInteraction);
+        window.removeEventListener("keydown", handleFirstInteraction);
+      }
     };
 
     tryPlay();

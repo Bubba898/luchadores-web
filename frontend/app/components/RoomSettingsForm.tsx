@@ -105,7 +105,7 @@ export default function RoomSettingsForm({
               showMaskOnVote: event.target.checked,
             })
           }
-          className="h-5 w-5 accent-white"
+          className="h-5 w-5 accent-black bg-white border border-white/60"
         />
         Show masks during vote
       </label>

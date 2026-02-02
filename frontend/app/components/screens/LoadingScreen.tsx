@@ -90,7 +90,13 @@ export default function LoadingScreen({
 
   useEffect(() => {
     let active = true;
+    const start = Date.now();
     preloadAssets().finally(async() => {
+      const elapsed = Date.now() - start;
+      const remaining = Math.max(0, 1000 - elapsed);
+      if (remaining > 0) {
+        await new Promise((resolve) => setTimeout(resolve, remaining));
+      }
       if (active) {
         await setScreen("home")
       }
