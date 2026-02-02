@@ -8,7 +8,6 @@ const ROOM_CLEANUP_INTERVAL_MS = 5 * 60 * 1000;
 const phaseTimers = new Map<string, ReturnType<typeof setTimeout>>();
 const PHASE_ORDER: Phase[] = ["join", "preview", "build", "vote", "results"];
 const MASKS = ["mask1.png", "mask2.png", "mask3.png"];
-
 export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
   joinTimeSec: 20,
   previewTimeSec: 7,

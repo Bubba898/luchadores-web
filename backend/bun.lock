@@ -1,11 +1,11 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "backend",
       "dependencies": {
         "@elysiajs/cors": "^1.4.1",
+        "@sinclair/typebox": "^0.34.0",
         "elysia": "latest",
       },
       "devDependencies": {
