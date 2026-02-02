@@ -25,7 +25,7 @@
       #61a6ab 0 calc(25% / 2)
     );
   background-size: var(--s) calc(3 * var(--s) / 2);
-  animation: waves-bg-shift 2.5s infinite linear;
+  animation: waves-bg-shift 8s infinite linear;
 }
 
 @keyframes waves-bg-shift {
