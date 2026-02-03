@@ -78,18 +78,27 @@ async function preloadAssets() {
 
 export default function LoadingScreen({
   setScreen,
-  onReady
+  onReady,
+  layer = "full",
+  active = true,
 }: {
   setScreen: (screen: ScreenState) => Promise<void>,
-  onReady?: () => void
+  onReady?: () => void,
+  layer?: "background" | "content" | "full",
+  active?: boolean,
 }) {
 
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
   useEffect(() => {
-    let active = true;
+    if (layer === "background" || !active) {
+      return;
+    }
+    let isActive = true;
     const start = Date.now();
     preloadAssets().finally(async() => {
       const elapsed = Date.now() - start;
@@ -97,34 +106,49 @@ export default function LoadingScreen({
       if (remaining > 0) {
         await new Promise((resolve) => setTimeout(resolve, remaining));
       }
-      if (active) {
+      if (isActive && typeof setScreen === "function") {
         await setScreen("home")
       }
     });
     return () => {
-      active = false;
+      isActive = false;
     };
-  }, []);
+  }, [layer, active, setScreen]);
 
+  const background = (
+    <div className="fixed inset-0 host-eye-bg host-eye-vignette" />
+  );
+
+  const content = (
+    <div
+      className="fixed inset-0 z-500 flex items-center justify-center"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <div className="relative z-10 flex w-96 flex-col items-center gap-4 text-white">
+        <img
+          src="/logo.png"
+          alt="Los Luchadores"
+          data-home-logo
+          className="w-[1080px] max-w-[70vw] object-contain cursor-pointer"
+        />
+        <div className="h-20 w-20 animate-spin rounded-full border-4 border-white/40 border-t-white" />
+        <span className="text-2xl tracking-wide">Loading game...</span>
+      </div>
+    </div>
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
   return (
     <>
-        <div
-          className="h-screen host-eye-bg host-eye-vignette fixed inset-0 z-500 flex items-center justify-center"
-          role="status"
-          aria-live="polite"
-          aria-busy="true"
-        >
-          <div className="relative w-96 z-10 flex flex-col items-center gap-4 text-white">
-            <img
-              src="/logo.png"
-              alt="Los Luchadores"
-              data-home-logo
-              className="w-[1080px] max-w-[70vw] object-contain cursor-pointer"
-            />
-            <div className="h-20 w-20 animate-spin rounded-full border-4 border-white/40 border-t-white" />
-            <span className="text-2xl tracking-wide">Loading game...</span>
-          </div>
-        </div>
+      {background}
+      {content}
     </>
   );
 }

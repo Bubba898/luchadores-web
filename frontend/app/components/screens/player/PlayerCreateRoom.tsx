@@ -10,19 +10,30 @@ export default function PlayerCreateRoom({
   onCreate,
   isCreating,
   onBack,
+  layer = "full",
 }: {
   onReady?: () => void,
   onCreate: (settings: typeof DEFAULT_ROOM_SETTINGS) => void,
   isCreating?: boolean,
   onBack?: () => void,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
   const [settings, setSettings] = useState(DEFAULT_ROOM_SETTINGS);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="pattern-arches-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-white aling-items-center content-center">
       <div className="absolute left-6 top-16 z-10">
         <Button
@@ -32,10 +43,6 @@ export default function PlayerCreateRoom({
         >
           Back
         </Button>
-      </div>
-      <div className="absolute inset-0 -z-10">
-        <div className="pattern-arches-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
       </div>
       <PlayerStageShell>
         <div className="flex h-full w-full flex-col items-center justify-center px-6 text-white sm:px-10">
@@ -60,5 +67,18 @@ export default function PlayerCreateRoom({
         </div>
       </PlayerStageShell>
     </div>
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
   );
 }

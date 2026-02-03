@@ -22,6 +22,7 @@ export default function HostVoteRoom({
   counts,
   countdownSec,
   showMaskOnVote = false,
+  layer = "full",
 }: {
   onReady?: () => void,
   mask: string | null,
@@ -29,10 +30,13 @@ export default function HostVoteRoom({
   counts: Record<number, number>,
   countdownSec: number | null,
   showMaskOnVote?: boolean,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
   const {partMap, partSizes} = useFaceAssets();
   const sizesReady = Object.keys(partSizes).length > 0;
@@ -49,12 +53,15 @@ export default function HostVoteRoom({
   const maskLayout = useMemo(() => getVoteMaskLayout(mask), [mask]);
   const maskSrc = mask ? `/masks/${mask}` : null;
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="pattern-orbit-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
-      <div className="absolute inset-0 -z-10">
-        <div className="pattern-orbit-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
         <div className="mt-8 flex w-full flex-col items-center text-center">
           <p className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
@@ -99,7 +106,20 @@ export default function HostVoteRoom({
         </div>
       </div>
     </div>
-  )
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
+  );
 }
 
 type FaceDisplayProps = {

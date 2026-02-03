@@ -1,0 +1,35 @@
+.ts-transition-eyelid-black {
+  overflow: hidden;
+}
+
+.ts-transition-eyelid-black::before {
+  animation-name: eyelid-black-close;
+  animation-duration: var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 0 0 0 200vmax #000;
+  content: "";
+  height: 0%;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  will-change: height;
+  z-index: 2;
+}
+
+@keyframes eyelid-black-close {
+  0% {
+    height: 120%;
+  }
+  70% {
+    height: 12%;
+  }
+  100% {
+    height: 0%;
+  }
+}

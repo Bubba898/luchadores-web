@@ -14,22 +14,29 @@ export default function HostResultsRoom({
   mask,
   winner,
   onRestart,
+  layer = "full",
 }: {
   onReady?: () => void,
   mask: string | null,
   winner: Winner | null,
   onRestart?: () => void,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="pattern-rings-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-white">
-      <div className="absolute inset-0 -z-10">
-        <div className="pattern-rings-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <div className="relative mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 sm:px-10 sm:py-16">
         <ResultsScreen mask={mask} winner={winner} />
         {onRestart ? (
@@ -43,5 +50,18 @@ export default function HostResultsRoom({
         ) : null}
       </div>
     </div>
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
   );
 }

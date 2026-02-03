@@ -3,20 +3,27 @@ import {useEffect} from "react";
 export default function HostBuildRoom({
   onReady,
   countdownSec,
+  layer = "full",
 }: {
   onReady?: () => void,
   countdownSec: number | null,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="animated-squares-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
-      <div className="absolute inset-0 -z-10">
-        <div className="animated-squares-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <div className="mt-80 place-items-center mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
         <div className="mt-16 flex w-full flex-col items-center text-center">
           <p className="mt-6 text-4xl font-semibold uppercase tracking-[0.2em] text-white sm:text-6xl">
@@ -28,5 +35,18 @@ export default function HostBuildRoom({
         </div>
       </div>
     </div>
-  )
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
+  );
 }

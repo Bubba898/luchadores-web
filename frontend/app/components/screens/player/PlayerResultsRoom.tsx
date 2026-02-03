@@ -9,6 +9,7 @@ export default function PlayerResultsRoom({
   winner,
   canRestart,
   onRestart,
+  layer = "full",
 }: {
   onReady?: () => void,
   mask: string | null,
@@ -20,17 +21,23 @@ export default function PlayerResultsRoom({
   } | null,
   canRestart?: boolean,
   onRestart?: () => void,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="pattern-rings-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-white">
-      <div className="absolute inset-0 -z-10">
-        <div className="pattern-rings-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <PlayerStageShell>
         <div className="relative flex h-full w-full flex-col">
           <ResultsScreen mask={mask} winner={winner} />
@@ -49,5 +56,18 @@ export default function PlayerResultsRoom({
         </div>
       </PlayerStageShell>
     </div>
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
   );
 }

@@ -4,25 +4,32 @@ export default function HostPreviewRoom({
   onReady,
   mask,
   countdownSec,
+  layer = "full",
 }: {
   onReady?: () => void,
   mask: string | null,
   countdownSec: number | null,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
   const maskSrc = useMemo(() => {
     return mask ? `/masks/${mask}` : null;
   }, [mask]);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="waves-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
-      <div className="absolute inset-0 -z-10">
-        <div className="waves-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
         <div className="mt-10 flex w-full flex-col items-center text-center">
           <p className="mb-12 text-white text-8xl">
@@ -47,5 +54,18 @@ export default function HostPreviewRoom({
         </div>
       </div>
     </div>
-  )
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
+  );
 }

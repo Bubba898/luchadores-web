@@ -6,21 +6,28 @@ import {ScreenState} from "@/app/components/screens/screenState";
 
 export default function HomeScreen({
   setScreen,
-  onReady
+  onReady,
+  layer = "full",
 }: {
   setScreen: (screen: ScreenState) => Promise<void>,
-  onReady?: () => void
+  onReady?: () => void,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="host-eye-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <>
-      <div className="absolute inset-0 -z-10">
-        <div className="host-eye-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Space+Grotesk:wght@400;500;600&display=swap");
       `}</style>
@@ -81,4 +88,18 @@ export default function HomeScreen({
         </main>
       </div>
     </>
-  )}
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
+  );
+}

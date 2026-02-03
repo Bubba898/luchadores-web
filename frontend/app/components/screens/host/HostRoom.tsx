@@ -18,16 +18,20 @@ export default function HostRoom({
   hostSocketRef,
   setRoomCode,
   onHostMessage,
+  layer = "full",
 }: {
   setScreen: (screen: ScreenState) => Promise<void>,
   onReady?: () => void,
   hostSocketRef: RefObject<WebSocket | null>,
   setRoomCode: (code: string) => void,
-  onHostMessage: (event: any) => void
+  onHostMessage: (event: any) => void,
+  layer?: "background" | "content" | "full",
 }) {
     useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
   const [settings, setSettings] = useState(DEFAULT_ROOM_SETTINGS);
 
@@ -55,7 +59,14 @@ export default function HostRoom({
     }
   };
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="pattern-chevron-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
       <div className="absolute left-6 top-16 z-10">
         <Button
@@ -65,10 +76,6 @@ export default function HostRoom({
         >
           Back
         </Button>
-      </div>
-      <div className="absolute inset-0 -z-10">
-        <div className="pattern-chevron-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
       </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 sm:px-10 sm:py-16">
         <img
@@ -93,5 +100,18 @@ export default function HostRoom({
         </div>
       </div>
     </div>
-  )
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
+  );
 }

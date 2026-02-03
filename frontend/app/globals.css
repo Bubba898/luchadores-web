@@ -3,6 +3,7 @@
 @import url("./host-eye-bg.css");
 @import url("./pattern-bg.css");
 @import url("./screen-transitions.css");
+@import url("./components/transition/transition-eyelid-black.css");
 @import "tailwindcss";
 
 .vignette-strong {

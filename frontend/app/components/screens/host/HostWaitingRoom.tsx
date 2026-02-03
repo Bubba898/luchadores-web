@@ -7,15 +7,19 @@ export default function HostWaitingRoom({
   roomCode,
   playerCount,
   onStart,
+  layer = "full",
 }: {
   onReady?: () => void,
   roomCode?: string,
   playerCount: number,
   onStart?: () => void,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
   const [hostOrigin, setHostOrigin] = useState("");
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
@@ -31,6 +35,9 @@ export default function HostWaitingRoom({
     : "";
 
   useEffect(() => {
+    if (layer === "background") {
+      return;
+    }
     let isActive = true;
     if (!joinUrl) {
       setQrDataUrl(null);
@@ -57,14 +64,17 @@ export default function HostWaitingRoom({
     return () => {
       isActive = false;
     };
-  }, [joinUrl]);
+  }, [joinUrl, layer]);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="pattern-tiles-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-zinc-900 aling-items-center content-center">
-      <div className="absolute inset-0 -z-10">
-        <div className="pattern-tiles-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <div className="place-items-center mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-12 text-white sm:px-10 sm:py-16">
         <img
           src="/logo.png"
@@ -82,12 +92,12 @@ export default function HostWaitingRoom({
             {roomCode ?? "----"}
           </p>
 
-          <div className="mt-8 flex items-center justify-center h-96 w-96">
+          <div className="mt-8 flex h-96 w-96 items-center justify-center">
             {qrDataUrl ? (
               <img
                 src={qrDataUrl}
                 alt="Join QR code"
-                className="h-96 w-96 rounded-2xl bg-white p-3 object-contain "
+                className="h-96 w-96 rounded-2xl bg-white object-contain p-3 "
               />
             ) : (
               <div className="flex h-60 w-60 items-center justify-center rounded-2xl border border-dashed border-white/40 text-sm text-white/70 sm:h-72 sm:w-72">
@@ -109,5 +119,18 @@ export default function HostWaitingRoom({
         </div>
       </div>
     </div>
-  )
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
+  );
 }

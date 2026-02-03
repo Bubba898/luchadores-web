@@ -18,6 +18,7 @@ export default function PlayerVoteRoom({
   countdownSec,
   showMaskOnVote,
   onVote,
+  layer = "full",
 }: {
   onReady?: () => void,
   mask: string | null,
@@ -27,17 +28,23 @@ export default function PlayerVoteRoom({
   countdownSec: number | null,
   showMaskOnVote?: boolean,
   onVote: (targetPlayerId: number) => void,
+  layer?: "background" | "content" | "full",
 }) {
   useEffect(() => {
-    onReady?.();
-  }, [onReady]);
+    if (layer !== "background") {
+      onReady?.();
+    }
+  }, [onReady, layer]);
 
-  return (
+  const background = (
+    <div className={`absolute inset-0 ${layer === "background" ? "" : "-z-10"}`}>
+      <div className="pattern-orbit-bg h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    </div>
+  );
+
+  const content = (
     <div className="relative min-h-screen text-white">
-      <div className="absolute inset-0 -z-10">
-        <div className="pattern-orbit-bg h-full w-full" />
-        <div className="pointer-events-none absolute inset-0 vignette-strong" />
-      </div>
       <PlayerStageShell>
         <VoteScreen
           mask={mask}
@@ -50,5 +57,18 @@ export default function PlayerVoteRoom({
         />
       </PlayerStageShell>
     </div>
+  );
+
+  if (layer === "background") {
+    return background;
+  }
+  if (layer === "content") {
+    return content;
+  }
+  return (
+    <>
+      {background}
+      {content}
+    </>
   );
 }

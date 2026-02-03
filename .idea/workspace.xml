@@ -4,11 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Go hom eon logo">
+    <list default="true" id="7f713bf4-6a12-4061-9b38-3271f7203eb5" name="Changes" comment="Adds transition stack">
+      <change afterPath="$PROJECT_DIR$/frontend/app/components/transition/transition-eyelid-black.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/api/preload/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/api/preload/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/HomeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/LoadingScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/LoadingScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/Screens.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostBuildRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostBuildRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostPreviewRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostResultsRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostVoteRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/host/HostWaitingRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerBuildRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerCreateRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerPreviewRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerResultsRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerSettingsRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerVoteRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerWaitingRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/screens/player/PlayerWaitingRoom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/components/transition/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/components/transition/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +32,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="126" />
+    <option name="cachedIndexableFilesCount" value="203" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -73,7 +89,7 @@
     "git-widget-placeholder": "main",
     "javascript.preferred.runtime.type.id": "bun",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/yannickwiggers/PycharmProjects/luchadores-web/frontend/public/audio/sfx",
+    "last_opened_file_path": "/Users/yannickwiggers/PycharmProjects/luchadores-web/frontend/app/components/transition",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -95,15 +111,15 @@
     <option name="spentUsd" value="0.3173775" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="2" />
+    <option name="suspendCountdown" value="0" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/app/components/transition" />
       <recent name="$PROJECT_DIR$/frontend/public/audio/sfx" />
       <recent name="$PROJECT_DIR$/frontend/public/audio" />
       <recent name="$PROJECT_DIR$/frontend/app/components/screens/host" />
       <recent name="$PROJECT_DIR$/frontend/public/fonts" />
-      <recent name="$PROJECT_DIR$/frontend/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/app/components/screens/player" />
@@ -321,7 +337,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770063034722</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Adds transition stack">
+      <option name="closed" value="true" />
+      <created>1770129734275</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1770129734276</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,6 +377,7 @@
     <MESSAGE value="Fixes" />
     <MESSAGE value="Timer fixes" />
     <MESSAGE value="Go hom eon logo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Go hom eon logo" />
+    <MESSAGE value="Adds transition stack" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds transition stack" />
   </component>
 </project>

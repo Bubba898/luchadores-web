@@ -1,6 +1,15 @@
 import LoadingScreen from "@/app/components/screens/LoadingScreen";
 import {ScreenState} from "@/app/components/screens/screenState";
-import {useEffect, useMemo, useRef, useState} from "react";
+import {
+  useCallback,
+  createRef,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MutableRefObject,
+  type RefObject,
+} from "react";
 import HomeScreen from "@/app/components/screens/HomeScreen";
 import HostRoom from "@/app/components/screens/host/HostRoom";
 import {useSearchParams} from "next/navigation";
@@ -18,6 +27,74 @@ import PlayerVoteRoom from "@/app/components/screens/player/PlayerVoteRoom";
 import PlayerResultsRoom from "@/app/components/screens/player/PlayerResultsRoom";
 import {treaty} from "@elysiajs/eden";
 import type {App} from "../../../../backend/src";
+import type {
+  TransitionKind,
+  TransitionStackHandle,
+  TransitionTimings,
+} from "@/app/components/transition";
+import {TransitionStack} from "@/app/components/transition";
+
+const transitionOptions = [
+  "wipe",
+  "iris",
+  "eyelid",
+  "eyelid-black",
+  "curtain",
+  "stripes",
+  "diamond",
+  "zigzag",
+  "shatter",
+  "slice",
+  "frame",
+  "slit",
+  "corner",
+  "ripple",
+  "triad",
+  "saw",
+  "tunnel",
+  "prism",
+] as const;
+
+type TransitionOption = (typeof transitionOptions)[number];
+
+const screenKeys: ScreenState[] = [
+  "loading",
+  "home",
+  "hostRoom",
+  "playerCreate",
+  "playerJoin",
+  "hostWaitingRoom",
+  "playerWaitingRoom",
+  "playerPreview",
+  "hostPreview",
+  "playerBuild",
+  "hostBuild",
+  "playerVote",
+  "hostVote",
+  "playerResults",
+  "hostResults",
+];
+
+const backgroundConfig: Record<
+  ScreenState,
+  {className: string; vignette: "strong" | "host-eye" | "none"}
+> = {
+  loading: {className: "host-eye-bg", vignette: "strong"},
+  home: {className: "host-eye-bg", vignette: "strong"},
+  hostRoom: {className: "pattern-chevron-bg", vignette: "strong"},
+  playerCreate: {className: "pattern-arches-bg", vignette: "strong"},
+  playerJoin: {className: "host-eye-bg", vignette: "strong"},
+  hostWaitingRoom: {className: "pattern-tiles-bg", vignette: "strong"},
+  playerWaitingRoom: {className: "pattern-tiles-bg", vignette: "strong"},
+  playerPreview: {className: "waves-bg", vignette: "strong"},
+  hostPreview: {className: "waves-bg", vignette: "strong"},
+  playerBuild: {className: "animated-squares-bg", vignette: "strong"},
+  hostBuild: {className: "animated-squares-bg", vignette: "strong"},
+  playerVote: {className: "pattern-orbit-bg", vignette: "strong"},
+  hostVote: {className: "pattern-orbit-bg", vignette: "strong"},
+  playerResults: {className: "pattern-rings-bg", vignette: "strong"},
+  hostResults: {className: "pattern-rings-bg", vignette: "strong"},
+};
 
 
 export function Screens() {
@@ -113,26 +190,15 @@ export function Screens() {
     };
   }, [countdownSec]);
 
-  const [transitionState, setTransitionState] = useState<
-    "idle" | "cover" | "reveal"
-  >("idle");
-
   const hostSocketRef = useRef<WebSocket | null>(null);
   const playerSocketRef = useRef<WebSocket | null>(null);
   const countdownTimer = useRef<number | null>(null);
   const flowRef = useRef<null | "host" | "player">(null);
+  const stackRef = useRef<TransitionStackHandle>(null);
+  const screenRef = useRef<ScreenState>("loading");
+  const transitioningRef = useRef(false);
 
-  const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-
-  const readyResolver = useRef<null | (() => void)>(null);
-
-  const waitForNextScreenReady = () =>
-    new Promise<void>((resolve) => {
-      readyResolver.current = () => {
-        readyResolver.current = null;
-        resolve();
-      };
-    });
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
   const onHostMessage = (event: any) => {
       if (flowRef.current !== "host") {
@@ -357,15 +423,109 @@ export function Screens() {
     }
   };
 
-  const handleScreenReady = () => {
-    readyResolver.current?.();
+  const handleScreenReady = () => {};
+
+  const pickRandomTransition = (): TransitionOption => {
+    const index = Math.floor(Math.random() * transitionOptions.length);
+    return transitionOptions[index] ?? "fade";
   };
 
-  const transitionScreen = async(nextScreen: ScreenState) => {
-    setTransitionState("cover");
-    await delay(200)
-    const shouldWaitForReady = nextScreen !== screen;
-    const readyPromise = shouldWaitForReady ? waitForNextScreenReady() : Promise.resolve();
+  const baseTimings = useMemo<TransitionTimings>(
+    () => ({
+      conceal: 1000,
+      interim: 100,
+      reveal: 1000,
+    }),
+    [],
+  );
+
+  const backgroundRefs = useRef(
+    new Map<ScreenState, RefObject<HTMLDivElement>>(),
+  );
+  const contentRefs = useRef(
+    new Map<ScreenState, RefObject<HTMLDivElement>>(),
+  );
+  const componentMapRef = useRef(
+    new Map<
+      ScreenState,
+      {
+        key: ScreenState;
+        backgroundRef: RefObject<HTMLDivElement>;
+        contentRef: RefObject<HTMLDivElement>;
+        concealTransition: TransitionKind;
+        revealTransition: TransitionKind;
+        timings: TransitionTimings;
+      }
+    >(),
+  );
+
+  const getLayerRef = useCallback(
+    (
+      map: MutableRefObject<Map<ScreenState, RefObject<HTMLDivElement>>>,
+      key: ScreenState,
+    ) => {
+      const existing = map.current.get(key);
+      if (existing) return existing;
+      const created = createRef<HTMLDivElement>();
+      map.current.set(key, created);
+      return created;
+    },
+    [],
+  );
+
+  const getComponent = useCallback(
+    (key: ScreenState) => {
+      const existing = componentMapRef.current.get(key);
+      if (existing) return existing;
+      const fallbackTransition = pickRandomTransition() as TransitionKind;
+      const created = {
+        key,
+        backgroundRef: getLayerRef(backgroundRefs, key),
+        contentRef: getLayerRef(contentRefs, key),
+        concealTransition: fallbackTransition,
+        revealTransition: fallbackTransition,
+        timings: {...baseTimings},
+      };
+      componentMapRef.current.set(key, created);
+      return created;
+    },
+    [baseTimings, getLayerRef],
+  );
+
+  const components = useMemo(
+    () => screenKeys.map((key) => getComponent(key)),
+    [getComponent, screenKeys],
+  );
+
+  const updateTransitionSettings = (
+    fromScreen: ScreenState,
+    toScreen: ScreenState,
+  ) => {
+    const isLoadingToHome = fromScreen === "loading" && toScreen === "home";
+    const chosenTransition = isLoadingToHome
+      ? ("eyelid-black" as TransitionKind)
+      : (pickRandomTransition() as TransitionKind);
+
+    const fromComponent = getComponent(fromScreen);
+    fromComponent.concealTransition = chosenTransition;
+    fromComponent.timings.interim = isLoadingToHome ? 0 : baseTimings.interim;
+
+    const toComponent = getComponent(toScreen);
+    toComponent.revealTransition = chosenTransition;
+  };
+
+  const transitionScreen = async (nextScreen: ScreenState) => {
+    if (transitioningRef.current) {
+      return;
+    }
+    const currentScreen = screenRef.current;
+    if (currentScreen === nextScreen) {
+      return;
+    }
+
+    transitioningRef.current = true;
+    updateTransitionSettings(currentScreen, nextScreen);
+
     if (nextScreen.startsWith("host")) {
       flowRef.current = "host";
     } else if (nextScreen.startsWith("player")) {
@@ -380,69 +540,80 @@ export function Screens() {
         window.history.replaceState({}, "", url.toString());
       }
     }
-    setScreen(nextScreen)
-    await readyPromise;
-    await delay(100)
-    setTransitionState("reveal")
-    await delay(300)
-    setTransitionState("idle")
-  }
 
-  return (
-    <>
-      <div
-        className={`screen-wipe ${
-          transitionState === "cover"
-            ? "screen-wipe--cover"
-            : transitionState === "reveal"
-              ? "screen-wipe--reveal"
-              : ""
-        }`}
-        aria-hidden="true"
-      />
-    {
-      screen === "loading" && (
-        <LoadingScreen setScreen={transitionScreen} onReady={handleScreenReady}/>
-      )
+    await delay(0);
+    await stackRef.current?.transition(nextScreen);
+    screenRef.current = nextScreen;
+    setScreen(nextScreen);
+    transitioningRef.current = false;
+  };
+
+  const renderBackgroundOverlay = (key: ScreenState) => {
+    const config = backgroundConfig[key];
+    if (!config || config.vignette !== "strong") {
+      return null;
     }
-    {
-      screen === "home" && (
-        <HomeScreen setScreen={transitionScreen} onReady={handleScreenReady}/>
-      )
+    return (
+      <div className="pointer-events-none absolute inset-0 vignette-strong" />
+    );
+  };
+
+  const renderScreen = (key: ScreenState) => {
+    if (key === "loading") {
+      return (
+        <LoadingScreen
+          setScreen={transitionScreen}
+          onReady={handleScreenReady}
+          layer="content"
+          active={screen === "loading"}
+        />
+      );
     }
-    {
-      screen === "hostRoom" && (
+    if (key === "home") {
+      return (
+        <HomeScreen
+          setScreen={transitionScreen}
+          onReady={handleScreenReady}
+          layer="content"
+        />
+      );
+    }
+    if (key === "hostRoom") {
+      return (
         <HostRoom
           setScreen={transitionScreen}
           onReady={handleScreenReady}
           hostSocketRef={hostSocketRef}
           setRoomCode={setRoomCode}
           onHostMessage={onHostMessage}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "hostWaitingRoom" && (
+    if (key === "hostWaitingRoom") {
+      return (
         <HostWaitingRoom
           onReady={handleScreenReady}
           roomCode={roomCode}
           playerCount={playerCount}
           onStart={handleStartGame}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "playerCreate" && (
+    if (key === "playerCreate") {
+      return (
         <PlayerCreateRoom
           onReady={handleScreenReady}
           onCreate={handleCreatePlayerRoom}
           isCreating={isCreatingRoom}
           onBack={() => transitionScreen("home")}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "playerJoin" && (
+    if (key === "playerJoin") {
+      return (
         <PlayerSettingsRoom
           onReady={handleScreenReady}
           roomCode={roomCode}
@@ -458,11 +629,12 @@ export function Screens() {
             setPlayerEmoji(value);
           }}
           onJoin={connectPlayerSocket}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "playerWaitingRoom" && (
+    if (key === "playerWaitingRoom") {
+      return (
         <PlayerWaitingRoom
           onReady={handleScreenReady}
           roomCode={roomCode}
@@ -474,21 +646,23 @@ export function Screens() {
           }
           canStart={hostSocketRef.current?.readyState === WebSocket.OPEN}
           onStart={handleStartGame}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "playerPreview" && (
+    if (key === "playerPreview") {
+      return (
         <PlayerPreviewRoom
           onReady={handleScreenReady}
           mask={mask}
           countdownSec={countdownSec}
           playerCount={playerCount}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "playerBuild" && (
+    if (key === "playerBuild") {
+      return (
         <PlayerBuildRoom
           onReady={handleScreenReady}
           mask={mask}
@@ -504,11 +678,12 @@ export function Screens() {
               }),
             );
           }}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "playerVote" && (
+    if (key === "playerVote") {
+      return (
         <PlayerVoteRoom
           onReady={handleScreenReady}
           mask={mask}
@@ -536,39 +711,43 @@ export function Screens() {
               }),
             );
           }}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "playerResults" && (
+    if (key === "playerResults") {
+      return (
         <PlayerResultsRoom
           onReady={handleScreenReady}
           mask={mask}
           winner={resultsWinner}
           canRestart={hostSocketRef.current?.readyState === WebSocket.OPEN}
           onRestart={handleRestartGame}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "hostPreview" && (
+    if (key === "hostPreview") {
+      return (
         <HostPreviewRoom
           onReady={handleScreenReady}
           mask={mask}
           countdownSec={countdownSec}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "hostBuild" && (
+    if (key === "hostBuild") {
+      return (
         <HostBuildRoom
           onReady={handleScreenReady}
           countdownSec={countdownSec}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "hostVote" && (
+    if (key === "hostVote") {
+      return (
         <HostVoteRoom
           onReady={handleScreenReady}
           mask={mask}
@@ -576,18 +755,51 @@ export function Screens() {
           counts={voteCounts}
           countdownSec={countdownSec}
           showMaskOnVote={showMaskOnVote}
+          layer="content"
         />
-      )
+      );
     }
-    {
-      screen === "hostResults" && (
+    if (key === "hostResults") {
+      return (
         <HostResultsRoom
           onReady={handleScreenReady}
           mask={mask}
           winner={resultsWinner}
           onRestart={handleRestartGame}
+          layer="content"
         />
-      )
+      );
     }
-</>  )
+    return null;
+  };
+
+  return (
+    <div className="relative h-screen w-screen overflow-hidden">
+      {screenKeys.map((key) => {
+        const config = backgroundConfig[key];
+        const backgroundClasses = config
+          ? `${config.className} ${config.vignette === "host-eye" ? "host-eye-vignette" : ""}`
+          : "";
+        return (
+          <div key={key}>
+            <div
+              ref={getLayerRef(backgroundRefs, key)}
+              className={`ts-layer ${backgroundClasses}`}
+              aria-hidden="true"
+            >
+              {renderBackgroundOverlay(key)}
+            </div>
+            <div ref={getLayerRef(contentRefs, key)} className="ts-layer">
+              {renderScreen(key)}
+            </div>
+          </div>
+        );
+      })}
+      <TransitionStack
+        ref={stackRef}
+        components={components}
+        initialKey="loading"
+      />
+    </div>
+  );
 }
