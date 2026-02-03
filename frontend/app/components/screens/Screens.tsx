@@ -4,6 +4,7 @@ import {
   useCallback,
   createRef,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -40,7 +41,6 @@ const transitionOptions = [
   "eyelid",
   "eyelid-black",
   "curtain",
-  "stripes",
   "diamond",
   "zigzag",
   "shatter",
@@ -82,8 +82,8 @@ const backgroundConfig: Record<
   loading: {className: "host-eye-bg", vignette: "strong"},
   home: {className: "host-eye-bg", vignette: "strong"},
   hostRoom: {className: "pattern-chevron-bg", vignette: "strong"},
-  playerCreate: {className: "pattern-arches-bg", vignette: "strong"},
-  playerJoin: {className: "host-eye-bg", vignette: "strong"},
+  playerCreate: {className: "animated-squares-bg", vignette: "strong"},
+  playerJoin: {className: "waves-bg", vignette: "strong"},
   hostWaitingRoom: {className: "pattern-tiles-bg", vignette: "strong"},
   playerWaitingRoom: {className: "pattern-tiles-bg", vignette: "strong"},
   playerPreview: {className: "waves-bg", vignette: "strong"},
@@ -151,6 +151,24 @@ export function Screens() {
   }, [injectedRoomCode, screen]);
 
   useEffect(() => {
+    initialHiddenRef.current = false;
+  }, []);
+
+  useLayoutEffect(() => {
+    screenKeys.forEach((key) => {
+      const background = backgroundRefs.current.get(key)?.current ?? null;
+      const content = contentRefs.current.get(key)?.current ?? null;
+      if (key === screen) {
+        background?.classList.remove("ts-hidden-new");
+        content?.classList.remove("ts-hidden-new");
+      } else {
+        background?.classList.add("ts-hidden-new");
+        content?.classList.add("ts-hidden-new");
+      }
+    });
+  }, [screen]);
+
+  useEffect(() => {
     const handler = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
       if (!target) {
@@ -197,6 +215,7 @@ export function Screens() {
   const stackRef = useRef<TransitionStackHandle>(null);
   const screenRef = useRef<ScreenState>("loading");
   const transitioningRef = useRef(false);
+  const initialHiddenRef = useRef(true);
 
   const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -500,15 +519,26 @@ export function Screens() {
   const updateTransitionSettings = (
     fromScreen: ScreenState,
     toScreen: ScreenState,
+    forcedTransition?: TransitionKind,
   ) => {
     const isLoadingToHome = fromScreen === "loading" && toScreen === "home";
-    const chosenTransition = isLoadingToHome
-      ? ("eyelid-black" as TransitionKind)
-      : (pickRandomTransition() as TransitionKind);
+    const isToHome = toScreen === "home";
+    const isRestartFlow =
+      (fromScreen === "playerResults" && toScreen === "playerWaitingRoom") ||
+      (fromScreen === "hostResults" && toScreen === "hostWaitingRoom");
+    const forceEyelidBlack = isToHome || isRestartFlow;
+    const chosenTransition =
+      forcedTransition ??
+      (forceEyelidBlack
+        ? ("eyelid-black" as TransitionKind)
+        : (pickRandomTransition() as TransitionKind));
 
     const fromComponent = getComponent(fromScreen);
     fromComponent.concealTransition = chosenTransition;
-    fromComponent.timings.interim = isLoadingToHome ? 0 : baseTimings.interim;
+    fromComponent.timings.interim =
+      chosenTransition === "eyelid-black" || isLoadingToHome
+        ? 0
+        : baseTimings.interim;
 
     const toComponent = getComponent(toScreen);
     toComponent.revealTransition = chosenTransition;
@@ -524,7 +554,9 @@ export function Screens() {
     }
 
     transitioningRef.current = true;
-    updateTransitionSettings(currentScreen, nextScreen);
+    const forcedTransition =
+      nextScreen === "home" ? ("eyelid-black" as TransitionKind) : undefined;
+    updateTransitionSettings(currentScreen, nextScreen, forcedTransition);
 
     if (nextScreen.startsWith("host")) {
       flowRef.current = "host";
@@ -777,19 +809,27 @@ export function Screens() {
     <div className="relative h-screen w-screen overflow-hidden">
       {screenKeys.map((key) => {
         const config = backgroundConfig[key];
-        const backgroundClasses = config
-          ? `${config.className} ${config.vignette === "host-eye" ? "host-eye-vignette" : ""}`
-          : "";
+        const backgroundClass = config?.className ?? "";
+        const vignetteClass = config?.vignette === "host-eye" ? "host-eye-vignette" : "";
         return (
           <div key={key}>
             <div
               ref={getLayerRef(backgroundRefs, key)}
-              className={`ts-layer ${backgroundClasses}`}
+              className={`ts-layer ts-layer-background h-[100vh] w-[100vw] ${vignetteClass} ${
+                initialHiddenRef.current && key !== "loading" ? "ts-hidden-new" : ""
+              }`}
               aria-hidden="true"
             >
-              {renderBackgroundOverlay(key)}
+              <div className={`ts-layer__inner ${backgroundClass}`}>
+                {renderBackgroundOverlay(key)}
+              </div>
             </div>
-            <div ref={getLayerRef(contentRefs, key)} className="ts-layer">
+            <div
+              ref={getLayerRef(contentRefs, key)}
+              className={`ts-layer ts-layer-content ${
+                initialHiddenRef.current && key !== "loading" ? "ts-hidden-new" : ""
+              }`}
+            >
               {renderScreen(key)}
             </div>
           </div>

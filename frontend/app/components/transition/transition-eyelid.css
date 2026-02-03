@@ -3,21 +3,17 @@
   animation-direction: var(--ts-transition-direction, normal);
   animation-fill-mode: forwards;
   clip-path: ellipse(120% 60% at 50% 50%);
-  opacity: 1;
   will-change: clip-path, opacity;
 }
 
 @keyframes eyelid-close {
   0% {
     clip-path: ellipse(120% 60% at 50% 50%);
-    opacity: 1;
   }
   70% {
     clip-path: ellipse(120% 12% at 50% 50%);
-    opacity: 0.95;
   }
   100% {
     clip-path: ellipse(120% 0% at 50% 50%);
-    opacity: 0;
   }
 }

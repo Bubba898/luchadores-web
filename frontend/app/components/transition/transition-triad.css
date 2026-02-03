@@ -3,14 +3,12 @@
   animation-direction: var(--ts-transition-direction, normal);
   animation-fill-mode: forwards;
   clip-path: polygon(-40% -40%, 140% -40%, 170% 50%, 140% 140%, -40% 140%, -70% 50%);
-  opacity: 1;
   will-change: clip-path, opacity;
 }
 
 @keyframes triad-close {
   0% {
     clip-path: polygon(-40% -40%, 140% -40%, 170% 50%, 140% 140%, -40% 140%, -70% 50%);
-    opacity: 1;
   }
   100% {
     clip-path: polygon(
@@ -21,6 +19,5 @@
       50% 50%,
       50% 50%
     );
-    opacity: 0;
   }
 }

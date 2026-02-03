@@ -2,7 +2,6 @@
   position: fixed;
   inset: -80% -140%;
   z-index: 600;
-  opacity: 0;
   pointer-events: none;
   isolation: isolate;
   overflow: hidden;
@@ -19,10 +18,8 @@
 @keyframes screen-wipe-cover {
   from {
     -webkit-mask-position: 200px, 0;
-    opacity: 1;
   }
   to {
     -webkit-mask-position: 0, 0;
-    opacity: 0;
   }
 }

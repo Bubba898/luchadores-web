@@ -3,17 +3,14 @@
   animation-direction: var(--ts-transition-direction, normal);
   animation-fill-mode: forwards;
   clip-path: circle(260% at 50% 50%);
-  opacity: 1;
   will-change: clip-path, opacity;
 }
 
 @keyframes radar-scan {
   0% {
     clip-path: circle(260% at 50% 50%);
-    opacity: 1;
   }
   100% {
     clip-path: circle(0% at 85% 70%);
-    opacity: 0;
   }
 }

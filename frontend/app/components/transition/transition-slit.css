@@ -3,17 +3,14 @@
   animation-direction: var(--ts-transition-direction, normal);
   animation-fill-mode: forwards;
   clip-path: inset(0 0 0 0);
-  opacity: 1;
   will-change: clip-path, opacity;
 }
 
 @keyframes slit-close {
   0% {
     clip-path: inset(0 0 0 0);
-    opacity: 1;
   }
   100% {
     clip-path: inset(0 50% 0 50%);
-    opacity: 0;
   }
 }

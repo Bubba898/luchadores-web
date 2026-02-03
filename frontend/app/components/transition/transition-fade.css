@@ -13,9 +13,7 @@ img {
 
 @keyframes clip-fade {
   0% {
-    opacity: 100;
   }
   100% {
-      opacity: 0;
   }
 }

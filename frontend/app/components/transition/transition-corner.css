@@ -3,21 +3,17 @@
   animation-direction: var(--ts-transition-direction, normal);
   animation-fill-mode: forwards;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  opacity: 1;
   will-change: clip-path, opacity;
 }
 
 @keyframes corner-swipe {
   0% {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    opacity: 1;
   }
   70% {
     clip-path: polygon(0 0, 80% 0, 0 80%, 0 100%);
-    opacity: 0.9;
   }
   100% {
     clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-    opacity: 0;
   }
 }

@@ -3,17 +3,14 @@
   animation-direction: var(--ts-transition-direction, normal);
   animation-fill-mode: forwards;
   clip-path: polygon(50% -60%, 160% 50%, 50% 160%, -60% 50%);
-  opacity: 1;
   will-change: clip-path, opacity;
 }
 
 @keyframes diamond-collapse {
   0% {
     clip-path: polygon(50% -60%, 160% 50%, 50% 160%, -60% 50%);
-    opacity: 1;
   }
   100% {
     clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-    opacity: 0;
   }
 }

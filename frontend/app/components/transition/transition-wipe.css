@@ -3,7 +3,6 @@
   animation: clip-wipe var(--ts-transition-duration, 300ms);
   animation-direction: var(--ts-transition-direction, normal);
   animation-fill-mode: forwards;
-  opacity: 1;
   will-change: clip-path;
 }
 

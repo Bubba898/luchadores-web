@@ -1,5 +1,6 @@
 .ts-transition-eyelid-black {
   overflow: hidden;
+  isolation: isolate;
 }
 
 .ts-transition-eyelid-black::before {
@@ -19,7 +20,7 @@
   transform: translate(-50%, -50%);
   width: 120%;
   will-change: height;
-  z-index: 2;
+  z-index: 9999;
 }
 
 @keyframes eyelid-black-close {

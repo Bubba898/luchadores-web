@@ -10,7 +10,6 @@
     -40% 140%,
     -70% 60%
   );
-  opacity: 1;
   will-change: clip-path, opacity;
 }
 
@@ -24,10 +23,8 @@
       -40% 140%,
       -70% 60%
     );
-    opacity: 1;
   }
   100% {
     clip-path: polygon(100% 0, 100% 0, 100% 40%, 100% 100%, 100% 100%, 100% 60%);
-    opacity: 0;
   }
 }
