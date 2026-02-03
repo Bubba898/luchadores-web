@@ -1,0 +1,19 @@
+.ts-transition-blur {
+  animation: blur-out var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  filter: blur(0);
+  opacity: 1;
+  will-change: filter, opacity;
+}
+
+@keyframes blur-out {
+  0% {
+    filter: blur(0);
+    opacity: 1;
+  }
+  100% {
+    filter: blur(12px);
+    opacity: 0;
+  }
+}

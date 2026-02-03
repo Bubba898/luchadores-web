@@ -1,0 +1,19 @@
+.ts-transition-slide-left {
+  animation: slide-left var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  opacity: 1;
+  transform: translateX(0);
+  will-change: transform, opacity;
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}

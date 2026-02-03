@@ -1,0 +1,19 @@
+.ts-transition-ripple {
+  animation: ripple-close var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  clip-path: circle(240% at 50% 50%);
+  opacity: 1;
+  will-change: clip-path, opacity;
+}
+
+@keyframes ripple-close {
+  0% {
+    clip-path: circle(240% at 50% 50%);
+    opacity: 1;
+  }
+  100% {
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0;
+  }
+}

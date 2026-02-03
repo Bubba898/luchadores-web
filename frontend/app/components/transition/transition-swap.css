@@ -1,0 +1,38 @@
+.ts-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ts-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transition-property: clip-path, opacity;
+  transition-timing-function: ease-in-out;
+}
+
+[class^="ts-transition-"],
+[class*=" ts-transition-"] {
+  position: relative;
+}
+
+[class^="ts-transition-"] > *,
+[class*=" ts-transition-"] > * {
+  clip-path: inherit;
+}
+
+.ts-layer[data-hidden="true"] {
+  visibility: hidden;
+}
+
+.ts-hidden-new {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+
+.ts-incoming {
+  opacity: 100;
+  z-index: 1000;
+}

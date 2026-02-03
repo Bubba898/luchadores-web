@@ -1,0 +1,19 @@
+.ts-transition-slide-up {
+  animation: slide-up var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  opacity: 1;
+  transform: translateY(0);
+  will-change: transform, opacity;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}

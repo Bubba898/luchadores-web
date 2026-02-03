@@ -1,0 +1,70 @@
+.ts-transition-saw {
+  animation: saw-cut var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  clip-path: polygon(
+    -40% -40%,
+    140% -40%,
+    140% 8%,
+    102% 18%,
+    140% 28%,
+    102% 38%,
+    140% 48%,
+    102% 58%,
+    140% 68%,
+    102% 78%,
+    140% 88%,
+    102% 98%,
+    140% 108%,
+    102% 118%,
+    140% 140%,
+    -40% 140%
+  );
+  opacity: 1;
+  will-change: clip-path, opacity;
+}
+
+@keyframes saw-cut {
+  0% {
+    clip-path: polygon(
+      -40% -40%,
+      140% -40%,
+      140% 8%,
+      102% 18%,
+      140% 28%,
+      102% 38%,
+      140% 48%,
+      102% 58%,
+      140% 68%,
+      102% 78%,
+      140% 88%,
+      102% 98%,
+      140% 108%,
+      102% 118%,
+      140% 140%,
+      -40% 140%
+    );
+    opacity: 1;
+  }
+  100% {
+    clip-path: polygon(
+      0 0,
+      0 10%,
+      0 20%,
+      0 30%,
+      0 40%,
+      0 50%,
+      0 60%,
+      0 70%,
+      0 80%,
+      0 90%,
+      0 100%,
+      0 110%,
+      0 120%,
+      0 130%,
+      0 140%,
+      0 100%
+    );
+    opacity: 0;
+  }
+}

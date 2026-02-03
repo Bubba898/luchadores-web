@@ -1,0 +1,19 @@
+.ts-transition-curtain {
+  animation: curtain var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+  will-change: clip-path, opacity;
+}
+
+@keyframes curtain {
+  0% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(100% 0 0 0);
+    opacity: 1;
+  }
+}

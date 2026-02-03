@@ -1,0 +1,28 @@
+.ts-transition-stripes {
+  position: fixed;
+  inset: -80% -140%;
+  z-index: 600;
+  opacity: 0;
+  pointer-events: none;
+  isolation: isolate;
+  overflow: hidden;
+  -webkit-mask:
+    linear-gradient(90deg, #0000 50%, #000F 0) 0,
+    linear-gradient(90deg, #0000 50%, #000F 0) 0;
+  -webkit-mask-size: 400px 100%;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: screen-wipe-cover var(--ts-transition-duration, 300ms) var(--ts-transition-direction, normal) forwards;
+}
+
+
+@keyframes screen-wipe-cover {
+  from {
+    -webkit-mask-position: 200px, 0;
+    opacity: 1;
+  }
+  to {
+    -webkit-mask-position: 0, 0;
+    opacity: 0;
+  }
+}

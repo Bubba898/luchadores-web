@@ -1,0 +1,19 @@
+.ts-transition-slice {
+  animation: slice-sweep var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  clip-path: polygon(-40% 0, 120% 0, 140% 120%, -20% 120%);
+  opacity: 1;
+  will-change: clip-path, opacity;
+}
+
+@keyframes slice-sweep {
+  0% {
+    clip-path: polygon(-40% 0, 120% 0, 140% 120%, -20% 120%);
+    opacity: 1;
+  }
+  100% {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    opacity: 0;
+  }
+}

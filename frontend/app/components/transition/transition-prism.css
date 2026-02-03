@@ -1,0 +1,19 @@
+.ts-transition-prism {
+  animation: prism-collapse var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  clip-path: polygon(50% -40%, 130% 10%, 100% 130%, 0 130%, -30% 10%);
+  opacity: 1;
+  will-change: clip-path, opacity;
+}
+
+@keyframes prism-collapse {
+  0% {
+    clip-path: polygon(50% -40%, 130% 10%, 100% 130%, 0 130%, -30% 10%);
+    opacity: 1;
+  }
+  100% {
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    opacity: 0;
+  }
+}

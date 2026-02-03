@@ -1,0 +1,17 @@
+.ts-transition-wipe {
+  clip-path: inset(0 0 0 0);
+  animation: clip-wipe var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  opacity: 1;
+  will-change: clip-path;
+}
+
+@keyframes clip-wipe {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+}

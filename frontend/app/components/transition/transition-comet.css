@@ -1,0 +1,33 @@
+.ts-transition-comet {
+  animation: comet-swipe var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  clip-path: polygon(
+    -40% -40%,
+    140% -40%,
+    170% 30%,
+    150% 140%,
+    -40% 140%,
+    -70% 60%
+  );
+  opacity: 1;
+  will-change: clip-path, opacity;
+}
+
+@keyframes comet-swipe {
+  0% {
+    clip-path: polygon(
+      -40% -40%,
+      140% -40%,
+      170% 30%,
+      150% 140%,
+      -40% 140%,
+      -70% 60%
+    );
+    opacity: 1;
+  }
+  100% {
+    clip-path: polygon(100% 0, 100% 0, 100% 40%, 100% 100%, 100% 100%, 100% 60%);
+    opacity: 0;
+  }
+}

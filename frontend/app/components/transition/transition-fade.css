@@ -1,0 +1,21 @@
+
+.ts-transition-fade {
+  mask-image: linear-gradient(90deg, #fff, #fff, #fff);
+  mask-size: 300% 100%;
+  animation: clip-fade var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+}
+
+img {
+  max-width: 100%;
+}
+
+@keyframes clip-fade {
+  0% {
+    opacity: 100;
+  }
+  100% {
+      opacity: 0;
+  }
+}

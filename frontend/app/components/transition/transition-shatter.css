@@ -1,0 +1,46 @@
+.ts-transition-shatter {
+  animation: shatter-collapse var(--ts-transition-duration, 300ms);
+  animation-direction: var(--ts-transition-direction, normal);
+  animation-fill-mode: forwards;
+  clip-path: polygon(
+    -30% 10%,
+    20% -20%,
+    70% -20%,
+    130% 10%,
+    130% 70%,
+    90% 130%,
+    30% 130%,
+    -30% 90%
+  );
+  opacity: 1;
+  will-change: clip-path, opacity;
+}
+
+@keyframes shatter-collapse {
+  0% {
+    clip-path: polygon(
+      -30% 10%,
+      20% -20%,
+      70% -20%,
+      130% 10%,
+      130% 70%,
+      90% 130%,
+      30% 130%,
+      -30% 90%
+    );
+    opacity: 1;
+  }
+  100% {
+    clip-path: polygon(
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%
+    );
+    opacity: 0;
+  }
+}
