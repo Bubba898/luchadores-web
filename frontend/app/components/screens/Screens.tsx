@@ -486,6 +486,7 @@ export function Screens() {
       const existing = map.current.get(key);
       if (existing) return existing;
       const created = createRef<HTMLDivElement>();
+      //@ts-ignore
       map.current.set(key, created);
       return created;
     },
@@ -505,6 +506,7 @@ export function Screens() {
         revealTransition: fallbackTransition,
         timings: {...baseTimings},
       };
+      //@ts-ignore
       componentMapRef.current.set(key, created);
       return created;
     },
@@ -535,8 +537,8 @@ export function Screens() {
 
     const fromComponent = getComponent(fromScreen);
     fromComponent.concealTransition = chosenTransition;
-    fromComponent.timings.interim =
-      chosenTransition === "eyelid-black" || isLoadingToHome
+    //@ts-ignore
+    fromComponent.timings.interim = chosenTransition === "eyelid-black" || isLoadingToHome
         ? 0
         : baseTimings.interim;
 
@@ -596,7 +598,6 @@ export function Screens() {
         <LoadingScreen
           setScreen={transitionScreen}
           onReady={handleScreenReady}
-          layer="content"
           active={screen === "loading"}
         />
       );
@@ -649,7 +650,7 @@ export function Screens() {
         <PlayerSettingsRoom
           onReady={handleScreenReady}
           roomCode={roomCode}
-          showRoomCode={!roomCode}
+          showRoomCode
           name={playerName}
           emoji={playerEmoji}
           status={playerStatus}

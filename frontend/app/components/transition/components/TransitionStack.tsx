@@ -113,7 +113,7 @@ export const TransitionStack = React.forwardRef<TransitionStackHandle, Transitio
       if (content) {
         clearTransitionClasses(content);
         content.classList.add(`ts-transition-${component.revealTransition}`);
-        content.classList.add(`ts-incoming`);
+        content.classList.add("ts-incoming");
         content.style.setProperty(
           "--ts-transition-duration",
           `${Math.max(0, component.timings.reveal)}ms`,
